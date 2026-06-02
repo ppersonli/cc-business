@@ -27,7 +27,18 @@ export async function POST(request: Request) {
     // Generate JWT token
     const token = createToken(user.id, user.email);
 
-    return NextResponse.json({ token, userId: user.id, email: user.email });
+    const response = NextResponse.json({ token, userId: user.id, email: user.email });
+
+    // Set httpOnly cookie for cross-app auth (Chrome extension reads this)
+    response.cookies.set('auth_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60, // 7 days
+      path: '/',
+    });
+
+    return response;
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

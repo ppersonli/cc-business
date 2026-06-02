@@ -3,9 +3,9 @@ import { defineConfig } from 'wxt';
 export default defineConfig({
   modules: ['@wxt-dev/module-vue'],
   manifest: {
-    name: 'ScreenMind - AI Screenshot Analyzer',
+    name: 'SnapGen - AI Screenshot to Code',
     description: 'Screenshot → AI analysis: get descriptions, code, and UI feedback instantly',
-    permissions: ['activeTab', 'storage', 'contextMenus', 'scripting', 'notifications', 'sidePanel', 'commands'],
+    permissions: ['activeTab', 'storage', 'contextMenus', 'scripting', 'notifications', 'sidePanel', 'commands', 'cookies'],
     host_permissions: ['https://*/*', 'https://api.openai.com/*', 'https://api.anthropic.com/*'],
     icons: {
       16: 'icon/icon-16.png',
@@ -14,7 +14,7 @@ export default defineConfig({
       128: 'icon/icon-128.png',
     },
     action: {
-      default_title: 'ScreenMind',
+      default_title: 'SnapGen',
       default_icon: {
         16: 'icon/icon-16.png',
         32: 'icon/icon-32.png',

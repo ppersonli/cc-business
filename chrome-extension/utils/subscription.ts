@@ -9,17 +9,92 @@ export interface SubscriptionState {
   userId: string;
 }
 
+const SITE_DOMAIN = 'tools.pixiaoli.cn';
+const AUTH_COOKIE_NAME = 'auth_token';
+
 function isProPlan(plan: string): boolean {
   return plan === 'pro' || plan === 'pro-byok' || plan === 'pro-yearly';
 }
 
-// Generate a stable anonymous user ID based on extension install
-async function getOrCreateUserId(): Promise<string> {
-  const data = await browser.storage.local.get('userId');
+/**
+ * Decode a base64url-encoded JWT payload without verification.
+ * Used to extract userId from the auth_token cookie.
+ */
+function decodeJwtPayload(token: string): Record<string, unknown> | null {
+  try {
+    const parts = token.split('.');
+    if (parts.length !== 3) return null;
+    const payload = parts[1];
+    const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+    return JSON.parse(decoded);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Read the auth_token cookie from tools.pixiaoli.cn.
+ * Returns the decoded payload with userId and email, or null if not logged in.
+ */
+export async function getAuthCookie(): Promise<{ userId: string; email: string } | null> {
+  try {
+    // chrome.cookies.get requires the cookies permission
+    const cookie = await chrome.cookies.get({
+      url: `https://${SITE_DOMAIN}`,
+      name: AUTH_COOKIE_NAME,
+    });
+
+    if (!cookie?.value) return null;
+
+    const payload = decodeJwtPayload(cookie.value);
+    if (!payload) return null;
+
+    // Check expiration
+    if (payload.exp && typeof payload.exp === 'number' && payload.exp < Date.now() / 1000) {
+      return null;
+    }
+
+    const userId = String(payload.sub ?? '');
+    const email = String(payload.email ?? '');
+
+    if (!userId) return null;
+
+    return { userId, email };
+  } catch {
+    // cookies API not available (e.g. in test environment) — fall back
+    return null;
+  }
+}
+
+/**
+ * Get or create user ID:
+ * 1. If user is logged in (has auth_token cookie), use their DB user ID
+ * 2. Otherwise, use a local anonymous UUID
+ */
+export async function getOrCreateUserId(): Promise<string> {
+  // Try to get authenticated user ID from cookie first
+  const auth = await getAuthCookie();
+  if (auth) {
+    // Cache the logged-in user ID
+    await browser.storage.local.set({
+      userId: auth.userId,
+      loggedInEmail: auth.email,
+      isAnonymous: false,
+    });
+    return auth.userId;
+  }
+
+  // Fall back to anonymous UUID
+  const data = await browser.storage.local.get(['userId', 'isAnonymous']);
+  // If we previously had a logged-in user, keep their ID as fallback
+  if (data.userId && data.isAnonymous === false) {
+    return data.userId as string;
+  }
+
   if (data.userId) return data.userId as string;
 
   const id = crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
-  await browser.storage.local.set({ userId: id });
+  await browser.storage.local.set({ userId: id, isAnonymous: true });
   return id;
 }
 
@@ -46,7 +121,7 @@ export async function getSubscriptionState(): Promise<SubscriptionState> {
 
   // Refresh from backend (devtools-hub API)
   try {
-    const res = await fetch(`https://tools.pixiaoli.cn/api/subscription/status?userId=${encodeURIComponent(userId)}`);
+    const res = await fetch(`https://${SITE_DOMAIN}/api/subscription/status?userId=${encodeURIComponent(userId)}`);
     if (res.ok) {
       const status = await res.json();
       const resolvedPlan: PlanType = status.plan || (status.isPro ? 'pro' : 'free');

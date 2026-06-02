@@ -67,6 +67,24 @@ const mockStorage = {
   },
 };
 
+// Mock chrome.cookies API for testing auth cookie reading
+const mockCookies = {
+  data: {} as Record<string, string>,
+  async get(details: { url: string; name: string }) {
+    const value = mockCookies.data[details.name];
+    if (value !== undefined) {
+      return { name: details.name, value, domain: '.pixiaoli.cn', path: '/' };
+    }
+    return null;
+  },
+  async set(cookie: { name: string; value: string; domain?: string; path?: string }) {
+    mockCookies.data[cookie.name] = cookie.value;
+  },
+  async remove(details: { url: string; name: string }) {
+    delete mockCookies.data[details.name];
+  },
+};
+
 // Mock browser global
 (globalThis as any).browser = {
   storage: mockStorage,
@@ -99,5 +117,8 @@ const mockStorage = {
   },
 };
 
-// Also set as chrome for compatibility
-(globalThis as any).chrome = (globalThis as any).browser;
+// Also set as chrome for compatibility (includes cookies API)
+(globalThis as any).chrome = {
+  ...(globalThis as any).browser,
+  cookies: mockCookies,
+};

@@ -1,7 +1,7 @@
 {
-  "name": "screenmind",
+  "name": "snapgen",
   "version": "0.1.0",
-  "description": "AI screenshot analyzer browser extension",
+  "description": "Convert screenshots to code with AI - HTML, CSS, React, Vue",
   "private": true,
   "scripts": {
     "dev": "wxt",

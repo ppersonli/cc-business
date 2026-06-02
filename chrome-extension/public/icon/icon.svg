@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="50%" style="stop-color:#764ba2"/>
+      <stop offset="100%" style="stop-color:#f093fb"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <!-- Rounded square background -->
+  <rect x="4" y="4" width="120" height="120" rx="24" fill="url(#bg)"/>
+  <!-- Brain/neural icon -->
+  <g transform="translate(64,58)" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Neural network nodes -->
+    <circle cx="-20" cy="-12" r="6" fill="white" fill-opacity="0.9"/>
+    <circle cx="0" cy="-20" r="6" fill="white" fill-opacity="0.9"/>
+    <circle cx="20" cy="-12" r="6" fill="white" fill-opacity="0.9"/>
+    <circle cx="-12" cy="8" r="5" fill="white" fill-opacity="0.7"/>
+    <circle cx="12" cy="8" r="5" fill="white" fill-opacity="0.7"/>
+    <circle cx="0" cy="22" r="6" fill="white" fill-opacity="0.9"/>
+    <!-- Connections -->
+    <line x1="-20" y1="-12" x2="0" y2="-20" opacity="0.5"/>
+    <line x1="0" y1="-20" x2="20" y2="-12" opacity="0.5"/>
+    <line x1="-20" y1="-12" x2="-12" y2="8" opacity="0.5"/>
+    <line x1="20" y1="-12" x2="12" y2="8" opacity="0.5"/>
+    <line x1="-12" y1="8" x2="0" y2="22" opacity="0.5"/>
+    <line x1="12" y1="8" x2="0" y2="22" opacity="0.5"/>
+    <line x1="-12" y1="8" x2="12" y2="8" opacity="0.5"/>
+    <line x1="0" y1="-20" x2="0" y2="22" opacity="0.4"/>
+  </g>
+  <!-- "AI" text at bottom -->
+  <text x="64" y="106" text-anchor="middle" font-size="18" font-family="Arial, Helvetica, sans-serif" font-weight="bold" fill="white" letter-spacing="2">AI</text>
+</svg>

@@ -8,7 +8,7 @@ export default function Footer() {
       padding: '24px 16px',
       marginTop: 'auto',
     }}>
-      <div style={{
+      <div className="footer-inner" style={{
         maxWidth: 1200,
         margin: '0 auto',
         display: 'flex',
@@ -20,7 +20,7 @@ export default function Footer() {
         <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>
           DevTools Hub — Free online developer tools. 100% client-side, no data sent to servers.
         </span>
-        <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
           <Link href="/terms" style={{ color: 'var(--text-muted)', fontSize: 13, textDecoration: 'none' }}>
             Terms of Service
           </Link>

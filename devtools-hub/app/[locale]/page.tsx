@@ -23,13 +23,13 @@ export default function Home() {
   }
 
   return (
-    <div style={{ maxWidth: 1200, margin: '0 auto', padding: '48px 16px' }}>
+    <div style={{ maxWidth: 1200, margin: '0 auto', padding: '48px 16px' }} className="home-container">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div style={{ textAlign: 'center', marginBottom: 48 }}>
-        <h1 style={{ fontSize: 48, fontWeight: 800, marginBottom: 12, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+      <div style={{ textAlign: 'center', marginBottom: 48 }} className="hero-section">
+        <h1 style={{ fontSize: 48, fontWeight: 800, marginBottom: 12, letterSpacing: '-0.02em', color: 'var(--text-primary)' }} className="hero-title">
           {t('common.appName')}
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: 18, maxWidth: 560, margin: '0 auto' }}>
@@ -40,6 +40,7 @@ export default function Home() {
       {/* Featured: WeChat Markdown Editor */}
       <Link
         href={`/${locale}/tools/wechat-markdown-editor/`}
+        className="featured-card"
         style={{
           display: 'block',
           textDecoration: 'none',
@@ -72,6 +73,7 @@ export default function Home() {
             alignItems: 'center',
             justifyContent: 'center',
             color: '#07C160',
+            flexShrink: 0,
           }}>
             {iconMap['wechat-markdown-editor'] && (() => { const Icon = iconMap['wechat-markdown-editor']; return <Icon /> })()}
           </div>
@@ -129,7 +131,7 @@ export default function Home() {
           }}>
             {t(`categories.${cat}`)}
           </h2>
-          <div style={{
+          <div className="tools-grid" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
             gap: 12,
@@ -187,6 +189,18 @@ export default function Home() {
           </div>
         </section>
       ))}
+
+      <style jsx global>{`
+        @media (max-width: 640px) {
+          .home-container { padding: 24px 12px !important; }
+          .hero-title { font-size: 32px !important; }
+          .hero-section { margin-bottom: 28px !important; }
+          .featured-card { padding: 20px 16px !important; margin-bottom: 28px !important; }
+          .featured-card [style*="fontSize: 20"] { font-size: 17px !important; }
+          .featured-card [style*="fontSize: 15"] { font-size: 14px !important; }
+          .tools-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </div>
   )
 }

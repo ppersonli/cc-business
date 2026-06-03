@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { useRouter, usePathname } from '@/i18n/navigation'
 import LoginButton from '@/components/LoginButton'
 import UserMenu from '@/components/UserMenu'
+import ThemeToggle from '@/components/ThemeToggle'
 import { useSession } from '@/components/SessionProvider'
 import { useState, useRef, useEffect } from 'react'
 
@@ -25,6 +26,7 @@ export default function Header() {
   const router = useRouter()
   const pathname = usePathname()
   const [langOpen, setLangOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
   const langRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -40,13 +42,14 @@ export default function Header() {
   const switchLocale = (newLocale: string) => {
     router.replace(pathname, { locale: newLocale })
     setLangOpen(false)
+    setMobileOpen(false)
   }
 
   const currentLang = languages.find(l => l.code === locale) || languages[0]
 
   return (
     <header style={{
-      background: 'rgba(255, 255, 255, 0.8)',
+      background: 'var(--glass-bg)',
       backdropFilter: 'var(--glass-blur)',
       WebkitBackdropFilter: 'var(--glass-blur)',
       borderBottom: '1px solid var(--border)',
@@ -86,7 +89,9 @@ export default function Header() {
           </div>
           <span style={{ fontWeight: 700, fontSize: 18 }}>{t('common.appName')}</span>
         </Link>
-        <nav style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
+
+        {/* Desktop nav */}
+        <nav className="desktop-nav" style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
           <Link href="/" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: 14, fontWeight: 500 }}>
             {t('common.tools')}
           </Link>
@@ -179,12 +184,120 @@ export default function Header() {
             )}
           </div>
 
+          <ThemeToggle />
+
           {/* Auth section */}
           {!loading && (
             user ? <UserMenu /> : <LoginButton />
           )}
         </nav>
+
+        {/* Mobile controls */}
+        <div className="mobile-nav" style={{ display: 'none', alignItems: 'center', gap: 8 }}>
+          <ThemeToggle />
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Menu"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 34,
+              height: 34,
+              borderRadius: 'var(--radius-sm)',
+              border: '1px solid var(--border)',
+              background: 'transparent',
+              color: 'var(--text-secondary)',
+              cursor: 'pointer',
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              {mobileOpen ? (
+                <>
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </>
+              ) : (
+                <>
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                </>
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div style={{
+          borderTop: '1px solid var(--border)',
+          background: 'var(--bg-primary)',
+          padding: '12px 16px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 4,
+        }}>
+          <Link
+            href="/"
+            onClick={() => setMobileOpen(false)}
+            style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: 14, fontWeight: 500, padding: '8px 0' }}
+          >
+            {t('common.tools')}
+          </Link>
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: 14, fontWeight: 500, padding: '8px 0' }}
+          >
+            {t('common.github')}
+          </a>
+          <div style={{ borderTop: '1px solid var(--border)', margin: '4px 0', paddingTop: 8 }}>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              Language
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 4 }}>
+              {languages.map(lang => (
+                <button
+                  key={lang.code}
+                  onClick={() => switchLocale(lang.code)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    padding: '8px 10px',
+                    borderRadius: 'var(--radius-sm)',
+                    border: 'none',
+                    background: locale === lang.code ? 'var(--bg-hover)' : 'transparent',
+                    color: locale === lang.code ? 'var(--accent)' : 'var(--text-secondary)',
+                    fontSize: 13,
+                    fontWeight: locale === lang.code ? 600 : 400,
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                  }}
+                >
+                  <span>{lang.flag}</span>
+                  <span>{lang.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div style={{ borderTop: '1px solid var(--border)', margin: '4px 0', paddingTop: 8 }}>
+            {!loading && (
+              user ? <UserMenu /> : <LoginButton />
+            )}
+          </div>
+        </div>
+      )}
+
+      <style jsx global>{`
+        @media (max-width: 640px) {
+          .desktop-nav { display: none !important; }
+          .mobile-nav { display: flex !important; }
+        }
+      `}</style>
     </header>
   )
 }

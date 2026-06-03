@@ -63,7 +63,7 @@ export default function CSSFlexbox() {
         Generate CSS Flexbox layouts visually with live preview. Copy the CSS code directly to your project.
       </p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '340px 1fr', gap: 24 }}>
+      <div className="flexbox-layout" style={{ display: 'grid', gridTemplateColumns: '340px 1fr', gap: 24 }}>
         {/* Controls */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div>
@@ -227,6 +227,13 @@ export default function CSSFlexbox() {
           </p>
         </div>
       </section>
+
+      <style jsx global>{`
+        @media (max-width: 768px) {
+          .flexbox-layout { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </div>
   )
 }
+

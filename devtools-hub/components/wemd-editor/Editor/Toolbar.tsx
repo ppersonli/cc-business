@@ -98,13 +98,16 @@ export default function Toolbar() {
     <div
       style={{
         display: 'flex',
-        flexWrap: 'wrap',
+        flexWrap: 'nowrap',
         gap: '3px',
         padding: '6px 8px',
         backgroundColor: bg,
         borderBottom: `1px solid ${border}`,
         alignItems: 'center',
         flexShrink: 0,
+        overflowX: 'auto',
+        overflowY: 'hidden',
+        WebkitOverflowScrolling: 'touch',
       }}
     >
       {actions.map((action) => (
@@ -127,6 +130,7 @@ export default function Toolbar() {
             minWidth: '26px',
             textAlign: 'center' as const,
             transition: 'background-color 0.15s',
+            flexShrink: 0,
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.backgroundColor = btnHover

@@ -20,6 +20,17 @@ import HistoryPane from '../Sidebar/HistoryPane'
 import MarkdownPreview from '../Preview/MarkdownPreview'
 import ThemePanel from '../Theme/ThemePanel'
 
+function useIsMobile(breakpoint = 768) {
+  const [mobile, setMobile] = useState(false)
+  useEffect(() => {
+    const check = () => setMobile(window.innerWidth <= breakpoint)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [breakpoint])
+  return mobile
+}
+
 export default function EditorLayout() {
   const { content, setSaveStatus, setLastSaved } = useEditorStore()
   const { currentThemeId } = useThemeStore()
@@ -29,7 +40,7 @@ export default function EditorLayout() {
   const [copiedHTML, setCopiedHTML] = useState(false)
   const [splitRatio, setSplitRatio] = useState(0.5)
   const [isDragging, setIsDragging] = useState(false)
-  const [showSidebar, setShowSidebar] = useState(true)
+  const [showSidebar, setShowSidebar] = useState(false)
   const [previewTab, setPreviewTab] = useState<'preview' | 'wechat'>('preview')
   const [showStorageModal, setShowStorageModal] = useState(false)
   const [showImageHostModal, setShowImageHostModal] = useState(false)
@@ -37,6 +48,7 @@ export default function EditorLayout() {
   const editorWrapRef = useRef<HTMLDivElement>(null)
   const previewRef = useRef<HTMLDivElement>(null)
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const isMobile = useIsMobile()
 
   // Auto-save to IndexedDB
   useEffect(() => {
@@ -130,12 +142,12 @@ export default function EditorLayout() {
   const btnHover = isDarkUI ? '#475569' : '#e2e8f0'
 
   const headerBtnStyle = {
-    padding: '5px 12px',
+    padding: isMobile ? '4px 6px' : '5px 12px',
     backgroundColor: btnBg,
     border: `1px solid ${border}`,
     borderRadius: '6px',
     color: text,
-    fontSize: '13px',
+    fontSize: isMobile ? '12px' : '13px',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
@@ -160,42 +172,47 @@ export default function EditorLayout() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '6px 12px',
+          padding: isMobile ? '4px 8px' : '6px 12px',
           backgroundColor: headerBg,
           borderBottom: `1px solid ${border}`,
           gap: '8px',
           flexShrink: 0,
+          overflow: 'hidden',
         }}
       >
         {/* Left: Logo + Title */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#07c160" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#07c160" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
-          <span style={{ fontSize: '15px', fontWeight: 700, color: text }}>
-            WeMD 公众号 Markdown 排版编辑器
-          </span>
+          {!isMobile && (
+            <span style={{ fontSize: '15px', fontWeight: 700, color: text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              WeMD 公众号 Markdown 排版编辑器
+            </span>
+          )}
         </div>
 
         {/* Right: Action Buttons */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
           {/* 存储模式 */}
           <button
             onClick={() => setShowStorageModal(!showStorageModal)}
             style={headerBtnStyle}
+            title="存储模式"
             onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = btnHover }}
             onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = btnBg }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
             </svg>
-            存储模式
+            {!isMobile && '存储模式'}
           </button>
 
           {/* 图床设置 */}
           <button
             onClick={() => setShowImageHostModal(!showImageHostModal)}
             style={headerBtnStyle}
+            title="图床设置"
             onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = btnHover }}
             onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = btnBg }}
           >
@@ -204,13 +221,14 @@ export default function EditorLayout() {
               <circle cx="8.5" cy="8.5" r="1.5" />
               <polyline points="21 15 16 10 5 21" />
             </svg>
-            图床设置
+            {!isMobile && '图床设置'}
           </button>
 
           {/* 主题管理 */}
           <button
             onClick={() => setShowThemePanel(true)}
             style={headerBtnStyle}
+            title="主题管理"
             onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = btnHover }}
             onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = btnBg }}
           >
@@ -219,13 +237,14 @@ export default function EditorLayout() {
               <circle cx="6" cy="12" r="2.5" />
               <circle cx="18" cy="12" r="2.5" />
             </svg>
-            主题管理
+            {!isMobile && '主题管理'}
           </button>
 
           {/* 复制 HTML */}
           <button
             onClick={handleCopyHTML}
             style={headerBtnStyle}
+            title="复制 HTML"
             onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = btnHover }}
             onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = btnBg }}
           >
@@ -234,7 +253,7 @@ export default function EditorLayout() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#07c160" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                已复制
+                {!isMobile && '已复制'}
               </>
             ) : (
               <>
@@ -242,7 +261,7 @@ export default function EditorLayout() {
                   <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
                   <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
                 </svg>
-                复制 HTML
+                {!isMobile && '复制 HTML'}
               </>
             )}
           </button>
@@ -251,7 +270,7 @@ export default function EditorLayout() {
           <button
             onClick={handleCopy}
             style={{
-              padding: '5px 14px',
+              padding: isMobile ? '5px 10px' : '5px 14px',
               backgroundColor: copied ? '#16a34a' : accentBg,
               border: 'none',
               borderRadius: '6px',
@@ -265,6 +284,7 @@ export default function EditorLayout() {
               transition: 'background-color 0.15s',
               whiteSpace: 'nowrap',
             }}
+            title="复制到公众号"
             onMouseEnter={(e) => {
               if (!copied) e.currentTarget.style.backgroundColor = accentHover
             }}
@@ -277,7 +297,7 @@ export default function EditorLayout() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                已复制!
+                {!isMobile && '已复制!'}
               </>
             ) : (
               <>
@@ -285,7 +305,7 @@ export default function EditorLayout() {
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                 </svg>
-                复制到公众号
+                {!isMobile && '复制到公众号'}
               </>
             )}
           </button>
@@ -335,16 +355,17 @@ export default function EditorLayout() {
         </button>
       </div>
 
-      {/* Main content: 3-column */}
+      {/* Main content: 3-column (desktop) / column (mobile) */}
       <div
         style={{
           flex: 1,
           display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
           overflow: 'hidden',
         }}
       >
-        {/* Left Sidebar - History */}
-        {showSidebar && (
+        {/* Left Sidebar - History (hidden on mobile) */}
+        {showSidebar && !isMobile && (
           <div style={{ width: '250px', flexShrink: 0, overflow: 'hidden' }}>
             <HistoryPane />
           </div>
@@ -358,8 +379,10 @@ export default function EditorLayout() {
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
-            borderLeft: showSidebar ? `1px solid ${border}` : 'none',
-            borderRight: `1px solid ${border}`,
+            borderLeft: showSidebar && !isMobile ? `1px solid ${border}` : 'none',
+            borderRight: isMobile ? 'none' : `1px solid ${border}`,
+            borderBottom: isMobile ? `1px solid ${border}` : 'none',
+            minHeight: isMobile ? '40vh' : undefined,
           }}
         >
           <Toolbar />
@@ -376,6 +399,7 @@ export default function EditorLayout() {
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
+            minHeight: isMobile ? '40vh' : undefined,
           }}
         >
           {/* Preview tabs */}
@@ -456,6 +480,7 @@ export default function EditorLayout() {
               zIndex: 999,
               boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
               minWidth: '320px',
+              maxWidth: '90vw',
             }}
           >
             <h3 style={{ margin: '0 0 16px', fontSize: '16px', fontWeight: 600, color: text }}>
@@ -518,7 +543,8 @@ export default function EditorLayout() {
               padding: '24px',
               zIndex: 999,
               boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
-              minWidth: '400px',
+              minWidth: '320px',
+              maxWidth: '90vw',
             }}
           >
             <h3 style={{ margin: '0 0 16px', fontSize: '16px', fontWeight: 600, color: text }}>

@@ -15,8 +15,12 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   toggleDarkUI: () =>
     set((state) => {
       const next = !state.isDarkUI
+      // Sync with global data-theme
+      if (typeof document !== 'undefined') {
+        document.documentElement.setAttribute('data-theme', next ? 'dark' : 'light')
+      }
       if (typeof window !== 'undefined') {
-        localStorage.setItem('wemd-dark-ui', String(next))
+        localStorage.setItem('theme', next ? 'dark' : 'light')
       }
       return { isDarkUI: next }
     }),
@@ -24,10 +28,19 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   setShowThemePanel: (show) => set({ showThemePanel: show }),
 }))
 
-// Load saved dark mode from localStorage
+// Sync isDarkUI with global [data-theme]
 if (typeof window !== 'undefined') {
-  const saved = localStorage.getItem('wemd-dark-ui')
-  if (saved === 'true') {
-    useSettingsStore.setState({ isDarkUI: true })
-  }
+  const readTheme = () =>
+    document.documentElement.getAttribute('data-theme') === 'dark'
+
+  useSettingsStore.setState({ isDarkUI: readTheme() })
+
+  // Listen for global theme changes (from ThemeToggle)
+  const observer = new MutationObserver(() => {
+    useSettingsStore.setState({ isDarkUI: readTheme() })
+  })
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme'],
+  })
 }

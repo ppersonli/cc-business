@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd devtools-hub && pnpm build",
+  "outputDirectory": "devtools-hub/.next",
+  "installCommand": "pnpm install",
+  "framework": "nextjs"
+}

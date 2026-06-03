@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@codemirror/commands':
+        specifier: ^6.10.3
+        version: 6.10.3
       '@codemirror/lang-markdown':
         specifier: ^6.5.0
         version: 6.5.0
@@ -2434,7 +2437,7 @@ packages:
     hasBin: true
 
   seq@https://github.com/dsc/node-seq/tarball/master:
-    resolution: {integrity: sha512-zUeoTyYP7J5Q0E9hWHhHZb0aIR5Zv7gQdfadvi6wan/v6o+Mg8N7B8KXJZIpvDCi6oFZg1me1bfDfqe3bTGHEg==, tarball: https://github.com/dsc/node-seq/tarball/master}
+    resolution: {tarball: https://github.com/dsc/node-seq/tarball/master}
     version: 0.3.4
 
   set-function-length@1.2.2:

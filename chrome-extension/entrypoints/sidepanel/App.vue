@@ -141,7 +141,7 @@ async function handleCopy() {
 function handleDownload() {
   if (!screenshot.value) return;
   const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-  downloadScreenshot(screenshot.value, `screenmind-${ts}.png`);
+  downloadScreenshot(screenshot.value, `snapgen-${ts}.png`);
 }
 
 async function handleClearHistory() {
@@ -203,7 +203,7 @@ function sendMessage(type: string, payload?: any): Promise<any> {
   <div class="sidepanel">
     <header class="header">
       <div class="header-left">
-        <h1>ScreenMind</h1>
+        <h1>SnapGen</h1>
         <span v-if="isPro" class="pro-badge">Pro</span>
         <span v-else class="usage">{{ usageCount }}/{{ usageLimit }} today</span>
       </div>

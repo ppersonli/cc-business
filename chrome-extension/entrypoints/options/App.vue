@@ -91,7 +91,7 @@ async function handleUpgrade() {
 <template>
   <div class="settings-page">
     <header class="header">
-      <h1>ScreenMind — Settings</h1>
+      <h1>SnapGen — Settings</h1>
     </header>
 
     <main class="form">

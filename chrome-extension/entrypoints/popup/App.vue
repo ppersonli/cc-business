@@ -130,7 +130,7 @@ async function handleCopy() {
 function handleDownload() {
   if (!screenshot.value) return;
   const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-  downloadScreenshot(screenshot.value, `screenmind-${ts}.png`);
+  downloadScreenshot(screenshot.value, `snapgen-${ts}.png`);
 }
 
 async function handleUpgrade() {
@@ -161,7 +161,7 @@ function sendMessage(type: string, payload?: any): Promise<any> {
 <template>
   <div class="popup">
     <header class="header">
-      <h1>ScreenMind</h1>
+      <h1>SnapGen</h1>
       <div class="header-right">
         <span v-if="isPro" class="pro-badge">Pro</span>
         <div v-else class="usage">

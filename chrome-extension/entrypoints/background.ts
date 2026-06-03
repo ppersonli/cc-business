@@ -4,7 +4,7 @@ import { analyzeScreenshot, type AnalysisMode } from '~/utils/ai-vision';
 import { saveToHistory, type CapturedScreenshot } from '~/utils/screenshot';
 
 export default defineBackground(() => {
-  console.log('ScreenMind background service worker started');
+  console.log('SnapGen background service worker started');
 
   if (chrome.sidePanel) {
     chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(() => {});
@@ -26,7 +26,7 @@ export default defineBackground(() => {
     if (reason === 'install' || reason === 'update') {
       browser.contextMenus?.create({
         id: 'analyze-screenshot',
-        title: 'ScreenMind: Capture & Analyze',
+        title: 'SnapGen: Capture & Analyze',
         contexts: ['page'],
       });
     }

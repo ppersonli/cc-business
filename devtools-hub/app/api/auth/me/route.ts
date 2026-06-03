@@ -3,8 +3,18 @@ import { findUserById, getSubscriptionByUserId } from '@/lib/db';
 import { extractToken, verifyToken } from '@/lib/auth';
 export async function GET(request: Request) {
   try {
+    // Try Authorization header first, then cookie
     const authorization = request.headers.get('authorization');
-    const token = extractToken(authorization || undefined);
+    let token = extractToken(authorization || undefined);
+    
+    if (!token) {
+      // Try reading from auth_token cookie
+      const cookieHeader = request.headers.get('cookie') || '';
+      const match = cookieHeader.match(/auth_token=([^;]+)/);
+      if (match) {
+        token = match[1];
+      }
+    }
 
     if (!token) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
@@ -16,13 +26,13 @@ export async function GET(request: Request) {
     }
 
     // Get user
-    const user = findUserById(payload.userId);
+    const user = await findUserById(payload.userId);
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     // Get subscription
-    const subscription = getSubscriptionByUserId(user.id);
+    const subscription = await getSubscriptionByUserId(user.id);
     const isPro = subscription?.status === 'active' && subscription.plan !== 'free';
 
     return NextResponse.json({

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/db';
+import { getSubscriptionByUserId } from '@/lib/db';
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -9,10 +9,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'userId required' }, { status: 400 });
     }
 
-    const db = getDb();
-    const subscription = db.prepare(
-      'SELECT * FROM subscriptions WHERE user_id = ? ORDER BY created_at DESC LIMIT 1'
-    ).get(userId) as any;
+    const subscription = await getSubscriptionByUserId(Number(userId));
 
     if (!subscription) {
       return NextResponse.json({ plan: 'free', isPro: false });

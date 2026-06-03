@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { findUserByEmail, createUser } from '@/lib/db';
+import { findUserByEmail, createUser, initSchema } from '@/lib/db';
 import { hashPassword, createToken } from '@/lib/auth';
 export async function POST(request: Request) {
   try {
@@ -9,15 +9,18 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
     }
 
+    // Ensure database tables exist
+    await initSchema();
+
     // Check if user already exists
-    const existing = findUserByEmail(email);
+    const existing = await findUserByEmail(email);
     if (existing) {
       return NextResponse.json({ error: 'User already exists' }, { status: 409 });
     }
 
     // Hash password and create user
     const passwordHash = await hashPassword(password);
-    const user = createUser(email, passwordHash);
+    const user = await createUser(email, passwordHash);
 
     // Generate JWT token
     const token = createToken(user.id, user.email);

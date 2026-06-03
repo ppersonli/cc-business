@@ -1,15 +1,52 @@
 'use client'
 
 import Link from 'next/link'
+import { useTranslations, useLocale } from 'next-intl'
+import { useRouter, usePathname } from '@/i18n/navigation'
 import LoginButton from '@/components/LoginButton'
 import UserMenu from '@/components/UserMenu'
 import { useSession } from '@/components/SessionProvider'
+import { useState, useRef, useEffect } from 'react'
+
+const languages = [
+  { code: 'en', label: 'English', flag: '🇺🇸' },
+  { code: 'pt', label: 'Português', flag: '🇧🇷' },
+  { code: 'es', label: 'Español', flag: '🇪🇸' },
+  { code: 'ja', label: '日本語', flag: '🇯🇵' },
+  { code: 'ko', label: '한국어', flag: '🇰🇷' },
+]
 
 export default function Header() {
   const { user, loading } = useSession()
+  const t = useTranslations()
+  const locale = useLocale()
+  const router = useRouter()
+  const pathname = usePathname()
+  const [langOpen, setLangOpen] = useState(false)
+  const langRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setLangOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const switchLocale = (newLocale: string) => {
+    router.replace(pathname, { locale: newLocale })
+    setLangOpen(false)
+  }
+
+  const currentLang = languages.find(l => l.code === locale) || languages[0]
+
   return (
     <header style={{
-      background: 'var(--bg-secondary)',
+      background: 'rgba(255, 255, 255, 0.8)',
+      backdropFilter: 'var(--glass-blur)',
+      WebkitBackdropFilter: 'var(--glass-blur)',
       borderBottom: '1px solid var(--border)',
       position: 'sticky',
       top: 0,
@@ -34,8 +71,8 @@ export default function Header() {
           <div style={{
             width: 32,
             height: 32,
-            borderRadius: 8,
-            background: 'var(--accent)',
+            borderRadius: 'var(--radius-sm)',
+            background: 'var(--accent-gradient)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -45,11 +82,11 @@ export default function Header() {
           }}>
             D
           </div>
-          <span style={{ fontWeight: 700, fontSize: 18 }}>DevTools Hub</span>
+          <span style={{ fontWeight: 700, fontSize: 18 }}>{t('common.appName')}</span>
         </Link>
         <nav style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
           <Link href="/" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: 14, fontWeight: 500 }}>
-            Tools
+            {t('common.tools')}
           </Link>
           <a
             href="https://github.com"
@@ -57,8 +94,89 @@ export default function Header() {
             rel="noopener noreferrer"
             style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: 14, fontWeight: 500 }}
           >
-            GitHub
+            {t('common.github')}
           </a>
+
+          {/* Language Switcher */}
+          <div ref={langRef} style={{ position: 'relative' }}>
+            <button
+              onClick={() => setLangOpen(!langOpen)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '6px 10px',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px solid var(--border)',
+                background: 'transparent',
+                color: 'var(--text-secondary)',
+                fontSize: 13,
+                fontWeight: 500,
+                cursor: 'pointer',
+                transition: 'all 0.15s',
+              }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent)'}
+              onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
+            >
+              <span>{currentLang.flag}</span>
+              <span style={{ textTransform: 'uppercase' }}>{locale}</span>
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none" style={{ color: 'var(--text-muted)' }}>
+                <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+            {langOpen && (
+              <div style={{
+                position: 'absolute',
+                top: '100%',
+                right: 0,
+                marginTop: 4,
+                minWidth: 160,
+                background: 'var(--bg-primary)',
+                border: '1px solid var(--border)',
+                borderRadius: 'var(--radius-md)',
+                padding: 4,
+                boxShadow: 'var(--shadow-lg)',
+                zIndex: 100,
+              }}>
+                {languages.map(lang => (
+                  <button
+                    key={lang.code}
+                    onClick={() => switchLocale(lang.code)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 10,
+                      width: '100%',
+                      padding: '8px 12px',
+                      borderRadius: 'var(--radius-sm)',
+                      border: 'none',
+                      background: locale === lang.code ? 'var(--bg-hover)' : 'transparent',
+                      color: locale === lang.code ? 'var(--accent)' : 'var(--text-secondary)',
+                      fontSize: 13,
+                      fontWeight: locale === lang.code ? 600 : 400,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s',
+                      textAlign: 'left',
+                    }}
+                    onMouseEnter={e => {
+                      if (locale !== lang.code) {
+                        e.currentTarget.style.background = 'var(--bg-secondary)'
+                      }
+                    }}
+                    onMouseLeave={e => {
+                      if (locale !== lang.code) {
+                        e.currentTarget.style.background = 'transparent'
+                      }
+                    }}
+                  >
+                    <span>{lang.flag}</span>
+                    <span>{lang.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Auth section */}
           {!loading && (
             user ? <UserMenu /> : <LoginButton />

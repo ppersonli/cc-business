@@ -1,0 +1,297 @@
+{
+  "common": {
+    "appName": "DevTools Hub",
+    "tagline": "31개 이상의 무료 클라이언트 사이드 개발자 도구",
+    "subtitle": "무료 온라인 개발자 도구. 100% 클라이언트 사이드, 서버로 데이터를 전송하지 않습니다.",
+    "tools": "도구",
+    "github": "GitHub",
+    "signInWithGoogle": "Google로 로그인",
+    "signOut": "로그아웃",
+    "relatedTools": "관련 도구",
+    "backToTools": "← 모든 도구로 돌아가기",
+    "termsOfService": "서비스 약관",
+    "privacyPolicy": "개인정보 처리방침",
+    "builtWith": "Next.js + Tailwind CSS로 제작",
+    "freeOnlineTools": "무료 온라인 개발자 도구. 100% 클라이언트 사이드, 서버로 데이터를 전송하지 않습니다.",
+    "copy": "복사",
+    "copied": "복사됨!",
+    "format": "포맷",
+    "minify": "최소화",
+    "encode": "인코딩",
+    "decode": "디코딩",
+    "input": "입력",
+    "output": "출력",
+    "generate": "생성",
+    "reset": "초기화",
+    "indent": "들여쓰기",
+    "spaces": "공백",
+    "about": "소개",
+    "clientSide": "100% 클라이언트 사이드:",
+    "clientSideDesc": "데이터는 브라우저를 벗어나지 않습니다. 서버로 데이터가 전송되지 않습니다.",
+    "features": "기능",
+    "select": "선택",
+    "convert": "변환",
+    "validate": "검증",
+    "lookup": "조회",
+    "calculate": "계산",
+    "preview": "미리보기",
+    "compress": "압축",
+    "compare": "비교",
+    "count": "카운트",
+    "remove": "제거",
+    "add": "추가",
+    "clear": "지우기",
+    "save": "저장",
+    "download": "다운로드",
+    "upload": "업로드",
+    "paste": "여기에 코드를 붙여넣으세요...",
+    "result": "결과",
+    "error": "오류",
+    "success": "성공",
+    "invalid": "유효하지 않음",
+    "valid": "유효함",
+    "length": "길이",
+    "size": "크기",
+    "bytes": "바이트",
+    "lines": "줄",
+    "words": "단어",
+    "characters": "문자",
+    "sentences": "문장",
+    "paragraphs": "문단",
+    "readingTime": "읽기 시간",
+    "minutes": "분",
+    "seconds": "초",
+    "type": "유형",
+    "options": "옵션",
+    "settings": "설정",
+    "customize": "사용자 정의",
+    "language": "언어",
+    "searchTools": "도구 검색...",
+    "noResults": "도구를 찾을 수 없습니다"
+  },
+  "home": {
+    "subtitle": "무료 온라인 개발자 도구. 100% 클라이언트 사이드, 서버로 데이터를 전송하지 않습니다."
+  },
+  "categories": {
+    "Data": "데이터",
+    "Encoding": "인코딩",
+    "Crypto": "암호화",
+    "Code": "코드",
+    "Utility": "유틸리티",
+    "Design": "디자인",
+    "Text": "텍스트",
+    "Network": "네트워크"
+  },
+  "tools": {
+    "json-formatter": {
+      "name": "JSON 포맷터",
+      "description": "JSON 데이터를 즉시 포맷, 검증, 최소화",
+      "about": "JSON 포맷터는 JSON 데이터를 즉시 포맷, 검증, 최소화합니다. JSON 데이터를 붙여넣고 적절한 들여쓰기가 적용된 포맷된 출력을 받으세요.",
+      "features": "스마트 들여쓰기(2 또는 4 공백), 구문 검증, 오류 보고, 최소화 모드."
+    },
+    "base64": {
+      "name": "Base64 인코더/디코더",
+      "description": "UTF-8 지원으로 Base64 문자열 인코딩 및 디코딩",
+      "about": "텍스트를 Base64로 인코딩하거나 Base64를 텍스트로 디코딩합니다. 국제 문자에 대한 완전한 UTF-8 지원.",
+      "features": "UTF-8 지원, 실시간 인코딩/디코딩, 특수 문자 지원."
+    },
+    "urls": {
+      "name": "URL 인코더/디코더",
+      "description": "URL 및 URI 컴포넌트 인코딩 및 디코딩",
+      "about": "URL의 특수 문자를 인코딩하거나 인코딩된 URL을 읽을 수 있는 형식으로 디코딩합니다.",
+      "features": "완전한 URL 인코딩/디코딩, 컴포넌트 수준 인코딩, URL 구조 유지."
+    },
+    "hash": {
+      "name": "해시 계산기",
+      "description": "MD5, SHA-1, SHA-256, SHA-512 해시 생성",
+      "about": "모든 입력 문자열에 대한 암호화 해시 값을 계산합니다. MD5, SHA-1, SHA-256, SHA-512 알고리즘을 지원합니다.",
+      "features": "다중 해시 알고리즘, 실시간 계산, 클립보드에 복사."
+    },
+    "regex-tester": {
+      "name": "정규식 테스터",
+      "description": "실시간 매칭 하이라이팅으로 정규 표현식 테스트",
+      "about": "실시간 매칭 하이라이팅으로 입력 문자열에 대해 정규 표현식을 테스트합니다.",
+      "features": "실시간 매칭, 매칭 하이라이팅, 그룹 캡처, 다중 테스트 문자열."
+    },
+    "qr": {
+      "name": "QR 코드 생성기",
+      "description": "URL, 텍스트, 연락처 정보용 QR 코드 생성",
+      "about": "URL, 텍스트, 이메일, 전화번호, WiFi 인증 정보용 QR 코드를 생성합니다. PNG로 다운로드 가능.",
+      "features": "다중 QR 유형, 사용자 정의 가능한 크기, 이미지로 다운로드."
+    },
+    "uuid-generator": {
+      "name": "UUID 생성기",
+      "description": "한 번에 최대 100개의 배치 생성으로 UUID v4 생성",
+      "about": "애플리케이션용 무작위 UUID v4 식별자를 생성합니다. 최대 100개의 UUID를 배치로 생성.",
+      "features": "UUID v4 생성, 배치 모드, 개별 또는 전체 복사."
+    },
+    "jwt-decoder": {
+      "name": "JWT 디코더",
+      "description": "JWT 토큰 디코딩, 헤더/페이로드 검사, 만료 검증",
+      "about": "JSON Web 토큰을 디코딩하고 검사합니다. 헤더, �페이로드, 서명을 표시합니다.",
+      "features": "헤더/페이로드 검사, 만료 확인, 포맷된 출력."
+    },
+    "password-generator": {
+      "name": "비밀번호 생성기",
+      "description": "사용자 정의 가능한 길이와 문자 집합으로 안전한 비밀번호 생성",
+      "about": "사용자 정의 가능한 길이와 문자 옵션으로 암호학적으로 안전한 무작위 비밀번호를 생성합니다.",
+      "features": "사용자 정의 가능한 길이, 문자 유형, 클립보드에 복사."
+    },
+    "timestamp": {
+      "name": "타임스탬프 변환기",
+      "description": "실시간 시계와 배치 지원으로 Unix 타임스탬프와 사람이 읽을 수 있는 날짜 간 변환",
+      "about": "Unix 타임스탬프를 사람이 읽을 수 있는 날짜로 변환하고 그 반대도 가능합니다. 실시간 시계와 배치 변환을 포함합니다.",
+      "features": "양방향 변환, 실시간 시계, 배치 모드, 시간대 지원."
+    },
+    "unit-converter": {
+      "name": "단위 변환기",
+      "description": "길이, 무게, 온도, 부피, 속도, 데이터 저장 단위 간 변환",
+      "about": "길이, 무게, 온도, 부피 등 다양한 측정 단위 간 변환을 지원합니다.",
+      "features": "다중 카테고리, 실시간 변환, 정확한 계산."
+    },
+    "color-picker": {
+      "name": "색상 선택기",
+      "description": "HEX, RGB, HSL 값으로 색상을 선택하고 CSS 코드 생성",
+      "about": "모든 색상을 선택하고 HEX, RGB, HSL 값을 얻습니다. 사용 가능한 CSS 코드를 생성합니다.",
+      "features": "다중 색상 형식, CSS 코드 생성, 비주얼 색상 선택기."
+    },
+    "markdown": {
+      "name": "Markdown 미리보기",
+      "description": "실시간 렌더링과 구문 하이라이팅으로 Markdown 미리보기",
+      "about": "왼쪽에 Markdown을 작성하고 오른쪽에 렌더링된 미리보기를 확인합니다. 완전한 Markdown 구문을 지원합니다.",
+      "features": "실시간 미리보기, 완전한 Markdown 지원, 분할 뷰."
+    },
+    "css-minifier": {
+      "name": "CSS 미니파이어",
+      "description": "공백, 주석, 중복 코드를 제거하여 CSS 압축",
+      "about": "불필요한 공백, 주석을 제거하고 셀렉터를 최적화하여 CSS 코드를 미니파이합니다.",
+      "features": "공백 제거, 주석 제거, 크기 비교."
+    },
+    "html-minifier": {
+      "name": "HTML 미니파이어",
+      "description": "공백, 주석, 선택적 태그를 제거하여 HTML 압축 및 크기 비교",
+      "about": "공백, 주석, 선택적 속성을 제거하여 HTML 코드를 미니파이합니다.",
+      "features": "공백 제거, 주석 제거, 크기 비교."
+    },
+    "diff-checker": {
+      "name": "차이점 비교기",
+      "description": "두 텍스트를 나란히 비교하고 추가, 삭제, 변경 사항을 하이라이팅",
+      "about": "두 텍스트를 나란히 비교하고 추가, 삭제, 수정 사항을 색상으로 하이라이팅합니다.",
+      "features": "나란히 비교, 색상 코딩된 차이점, 줄별 차이점."
+    },
+    "json-schema-validator": {
+      "name": "JSON 스키마 검증기",
+      "description": "JSON 스키마에 대해 JSON 데이터를 검증하고 상세한 오류 보고",
+      "about": "JSON 스키마 정의에 대해 JSON 데이터를 검증합니다. 상세한 오류 보고를 받습니다.",
+      "features": "스키마 검증, 상세한 오류, 실시간 검증."
+    },
+    "html-encoder": {
+      "name": "HTML 인코더/디코더",
+      "description": "명명된 참조와 숫자 참조를 포함한 HTML 엔티티 인코딩 및 디코딩",
+      "about": "특수 문자를 HTML 엔티티로 인코딩하거나 HTML 엔티티를 읽을 수 있는 텍스트로 디코딩합니다.",
+      "features": "명명 및 숫자 엔티티, 배치 처리."
+    },
+    "markdown-to-html": {
+      "name": "Markdown에서 HTML",
+      "description": "실시간 미리보기와 복사 가능한 출력으로 Markdown을 HTML로 변환",
+      "about": "Markdown 텍스트를 실시간 미리보기와 함께 깔끔한 HTML로 변환합니다. 생성된 HTML 코드를 복사할 수 있습니다.",
+      "features": "실시간 미리보기, 깔끔한 HTML 출력, 클립보드에 복사."
+    },
+    "ip-lookup": {
+      "name": "IP 주소 조회",
+      "description": "공개 IP를 표시하고 무료 API로 모든 IP의 지리적 위치 조회",
+      "about": "공개 IP 주소를 찾고 모든 IP 주소의 지리적 위치 정보를 조회합니다.",
+      "features": "공개 IP 감지, 지리적 위치 조회, ISP 정보."
+    },
+    "api-tester": {
+      "name": "API 테스터",
+      "description": "메서드 선택기, 사용자 정의 헤더, 요청 본문으로 API 엔드포인트 테스트",
+      "about": "메서드 선택, 사용자 정의 헤더, 응답 검사로 REST API 엔드포인트를 테스트합니다.",
+      "features": "다중 HTTP 메서드, 사용자 정의 헤더, 응답 뷰어."
+    },
+    "colors": {
+      "name": "색상 변환기",
+      "description": "HEX, RGB, HSL, CMYK 색상 형식 간 변환",
+      "about": "HEX, RGB, HSL, CMYK 색상 형식 간 즉시 변환을 지원합니다.",
+      "features": "다중 색상 형식, 즉시 변환, 값 복사."
+    },
+    "color-palette": {
+      "name": "색상 팔레트 생성기",
+      "description": "기본 색상에서 조화로운 색상 팔레트 생성",
+      "about": "다양한 색상 조화 알고리즘을 사용하여 기본 색상에서 아름다운 색상 팔레트를 생성합니다.",
+      "features": "다중 조화 유형, 비주얼 미리보기, CSS 변수 출력."
+    },
+    "js-formatter": {
+      "name": "JavaScript 포맷터",
+      "description": "적절한 들여쓰기로 JavaScript 코드 포맷,美化, 최소화",
+      "about": "적절한 들여쓰기로 JavaScript 코드를 포맷하고美化합니다. 최소화도 지원합니다.",
+      "features": "스마트 들여쓰기, 문자열과 주석 유지, 최소화 모드."
+    },
+    "css-flexbox": {
+      "name": "CSS Flexbox 생성기",
+      "description": "실시간 미리보기와 복사 가능한 코드로 CSS Flexbox 레이아웃을 비주얼하게 생성",
+      "about": "실시간 미리보기와 복사 가능한 CSS 코드로 CSS Flexbox 레이아웃을 비주얼하게 만듭니다.",
+      "features": "비주얼 컨트롤, 실시간 미리보기, CSS 코드 복사."
+    },
+    "gradient-generator": {
+      "name": "그라디언트 생성기",
+      "description": "리니어, 라디얼, 코닉 유형과 프리셋으로 CSS 그라디언트를 비주얼하게 생성",
+      "about": "비주얼 컨트롤로 아름다운 CSS 그라디언트를 만듭니다. 리니어, 라디얼, 코닉 유형을 지원합니다.",
+      "features": "다중 그라디언트 유형, 색상 스톱, CSS 출력, 프리셋."
+    },
+    "box-shadow": {
+      "name": "박스 그림자 생성기",
+      "description": "비주얼 컨트롤, 불투명도, inset 옵션으로 CSS box-shadow 코드 생성",
+      "about": "오프셋, 블러, 스프레드, 색상 비주얼 컨트롤로 CSS box-shadow 코드를 생성합니다.",
+      "features": "비주얼 컨트롤, 불투명도, inset 옵션, CSS 출력."
+    },
+    "text-case": {
+      "name": "텍스트 대소문자 변환기",
+      "description": "대문자, 소문자, 제목 케이스, camelCase, snake_case 등 변환",
+      "about": "대문자, 소문자, 제목, camelCase, snake_case 등 다양한 형식 간 텍스트를 변환합니다.",
+      "features": "다중 형식, 즉시 변환, 결과 복사."
+    },
+    "word-counter": {
+      "name": "단어 카운터",
+      "description": "단어, 문자, 문장, 문단을 카운트하고 읽기 시간 추정",
+      "about": "텍스트의 단어, 문자, 문장, 문단을 카운트합니다. 읽기 시간 추정을 포함합니다.",
+      "features": "단어 카운트, 문자 카운트, 읽기 시간, 문단 카운트."
+    },
+    "json-to-go": {
+      "name": "JSON에서 Go Struct",
+      "description": "json 태그, 중첩된 유형, 포인터 옵션으로 JSON에서 Go 구조체 생성",
+      "about": "JSON 데이터를 적절한 태그와 유형 추론이 포함된 Go 구조체 정의로 변환합니다.",
+      "features": "중첩된 유형, json 태그, 포인터 옵션, 유형 추론."
+    },
+    "json-to-typescript": {
+      "name": "JSON에서 TypeScript",
+      "description": "추론된 유형과 중첩 지원으로 JSON 데이터를 TypeScript 인터페이스로 변환",
+      "about": "추론된 유형으로 JSON 데이터를 TypeScript 인터페이스 정의로 변환합니다.",
+      "features": "유형 추론, 중첩된 인터페이스, 배열 지원."
+    },
+    "sql-formatter": {
+      "name": "SQL 포맷터",
+      "description": "적절한 들여쓰기와 키워드 하이라이팅으로 SQL 쿼리 포맷, 최소화, 대문자 변환",
+      "about": "적절한 들여쓰기와 키워드 대문자 변환으로 SQL 쿼리를 포맷하고美化합니다.",
+      "features": "프리티 프린트, 최소화, 키워드 하이라이팅."
+    },
+    "cron-generator": {
+      "name": "Cron 표현식 생성기",
+      "description": "사람이 읽을 수 있는 설명과 다음 실행 시간으로 Cron 스케줄 표현식 생성 및 이해",
+      "about": "사람이 읽을 수 있는 설명으로 Cron 표현식을 생성합니다. 다음 실행 시간을 확인합니다.",
+      "features": "사람이 읽을 수 있는 설명, 다음 실행, 표현식 복사."
+    },
+    "csv-json": {
+      "name": "CSV ⇄ JSON 변환기",
+      "description": "적절한 이스케이프, 헤더, 다중 구분자 지원으로 CSV와 JSON 형식 간 변환",
+      "about": "헤더 지원과 적절한 이스케이프로 CSV와 JSON 형식 간 변환을 지원합니다.",
+      "features": "양방향 변환, 헤더 지원, 사용자 정의 구분자."
+    },
+    "wechat-markdown-editor": {
+      "name": "WeChat 마크다운 에디터",
+      "description": "실시간 미리보기로 마크다운을 작성하고 스타일 콘텐츠를 원클릭으로 WeChat에 복사",
+      "about": "WeChat 공식 계정을 위한 풀기능 마크다운 에디터. 실시간 미리보기로 마크다운을 작성하고, 10개 이상의 아름다운 테마를 선택하며, 스타일 HTML을 원클릭으로 WeChat에 복사할 수 있습니다.",
+      "features": "10개 이상의 테마, WeChat 원클릭 복사, CodeMirror 에디터, 실시간 미리보기, 구문 강조, 다크 모드, 로컬 저장소."
+    }
+  }
+}

@@ -361,6 +361,17 @@ export function JsonGoIcon() {
   )
 }
 
+export function WechatMarkdownIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      <path d="M8 9v6" />
+      <path d="m8 12 3-3 3 3" />
+      <path d="M16 12v3" />
+    </svg>
+  )
+}
+
 export const iconMap: Record<string, React.FC> = {
   'json-formatter': JsonIcon,
   'base64': EncodeIcon,
@@ -393,4 +404,5 @@ export const iconMap: Record<string, React.FC> = {
   'word-counter': WordCountIcon,
   'json-to-go': JsonGoIcon,
   'json-to-typescript': JsFormatterIcon,
+  'wechat-markdown-editor': WechatMarkdownIcon,
 }

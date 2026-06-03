@@ -1,0 +1,297 @@
+{
+  "common": {
+    "appName": "DevTools Hub",
+    "tagline": "31以上の無料クライアントサイド開発者ツール",
+    "subtitle": "無料のオンライン開発者ツール。100%クライアントサイド、サーバーにデータを送信しません。",
+    "tools": "ツール",
+    "github": "GitHub",
+    "signInWithGoogle": "Googleでサインイン",
+    "signOut": "サインアウト",
+    "relatedTools": "関連ツール",
+    "backToTools": "← すべてのツールに戻る",
+    "termsOfService": "利用規約",
+    "privacyPolicy": "プライバシーポリシー",
+    "builtWith": "Next.js + Tailwind CSS で構築",
+    "freeOnlineTools": "無料のオンライン開発者ツール。100%クライアントサイド、サーバーにデータを送信しません。",
+    "copy": "コピー",
+    "copied": "コピーしました！",
+    "format": "フォーマット",
+    "minify": "ミニファイ",
+    "encode": "エンコード",
+    "decode": "デコード",
+    "input": "入力",
+    "output": "出力",
+    "generate": "生成",
+    "reset": "リセット",
+    "indent": "インデント",
+    "spaces": "スペース",
+    "about": "概要",
+    "clientSide": "100%クライアントサイド：",
+    "clientSideDesc": "データはブラウザから出ていません。サーバーにデータは送信されません。",
+    "features": "機能",
+    "select": "選択",
+    "convert": "変換",
+    "validate": "検証",
+    "lookup": "検索",
+    "calculate": "計算",
+    "preview": "プレビュー",
+    "compress": "圧縮",
+    "compare": "比較",
+    "count": "カウント",
+    "remove": "削除",
+    "add": "追加",
+    "clear": "クリア",
+    "save": "保存",
+    "download": "ダウンロード",
+    "upload": "アップロード",
+    "paste": "コードをここに貼り付けてください...",
+    "result": "結果",
+    "error": "エラー",
+    "success": "成功",
+    "invalid": "無効",
+    "valid": "有効",
+    "length": "長さ",
+    "size": "サイズ",
+    "bytes": "バイト",
+    "lines": "行",
+    "words": "単語",
+    "characters": "文字",
+    "sentences": "文",
+    "paragraphs": "段落",
+    "readingTime": "読書時間",
+    "minutes": "分",
+    "seconds": "秒",
+    "type": "タイプ",
+    "options": "オプション",
+    "settings": "設定",
+    "customize": "カスタマイズ",
+    "language": "言語",
+    "searchTools": "ツールを検索...",
+    "noResults": "ツールが見つかりません"
+  },
+  "home": {
+    "subtitle": "無料のオンライン開発者ツール。100%クライアントサイド、サーバーにデータを送信しません。"
+  },
+  "categories": {
+    "Data": "データ",
+    "Encoding": "エンコーディング",
+    "Crypto": "暗号化",
+    "Code": "コード",
+    "Utility": "ユーティリティ",
+    "Design": "デザイン",
+    "Text": "テキスト",
+    "Network": "ネットワーク"
+  },
+  "tools": {
+    "json-formatter": {
+      "name": "JSONフォーマッター",
+      "description": "JSONデータを即座にフォーマット、検証、ミニファイ",
+      "about": "JSONフォーマッターは、JSONデータを即座にフォーマット、検証、ミニファイします。JSONデータを貼り付けて、適切なインデント付きのフォーマットされた出力を取得します。",
+      "features": "スマートインデント（2または4スペース）、構文検証、エラー報告、ミニファイモード。"
+    },
+    "base64": {
+      "name": "Base64エンコーダー/デコーダー",
+      "description": "UTF-8サポートでBase64文字列をエンコードおよびデコード",
+      "about": "テキストをBase64にエンコードしたり、Base64をテキストにデコードします。国際文字の完全なUTF-8サポート。",
+      "features": "UTF-8サポート、リアルタイムエンコード/デコード、特殊文字対応。"
+    },
+    "urls": {
+      "name": "URLエンコーダー/デコーダー",
+      "description": "URLとURIコンポーネントをエンコードおよびデコード",
+      "about": "URLの特殊文字をエンコードしたり、エンコードされたURLを読みやすい形式にデコードします。",
+      "features": "完全なURLエンコード/デコード、コンポーネントレベルエンコード、URL構造を保持。"
+    },
+    "hash": {
+      "name": "ハッシュ計算機",
+      "description": "MD5、SHA-1、SHA-256、SHA-512ハッシュを生成",
+      "about": "入力文字列の暗号ハッシュ値を計算します。MD5、SHA-1、SHA-256、SHA-512アルゴリズムをサポート。",
+      "features": "複数のハッシュアルゴリズム、リアルタイム計算、クリップボードにコピー。"
+    },
+    "regex-tester": {
+      "name": "正規表現テスター",
+      "description": "リアルタイムの一致ハイライトで正規表現をテスト",
+      "about": "正規表現を入力文字列に対してリアルタイムの一致ハイライトでテストします。",
+      "features": "リアルタイム一致、一致ハイライト、グループキャプチャ、複数テスト文字列。"
+    },
+    "qr": {
+      "name": "QRコードジェネレーター",
+      "description": "URL、テキスト、連絡先情報のQRコードを生成",
+      "about": "URL、テキスト、メール、電話番号、WiFi資格情報のQRコードを生成。PNGとしてダウンロード。",
+      "features": "複数のQRタイプ、カスタマイズ可能なサイズ、画像としてダウンロード。"
+    },
+    "uuid-generator": {
+      "name": "UUIDジェネレーター",
+      "description": "一度に最大100個のバッチ生成でUUID v4を生成",
+      "about": "アプリケーション用のランダムUUID v4識別子を生成。最大100個のUUIDをバッチ生成。",
+      "features": "UUID v4生成、バッチモード、個別または全コピー。"
+    },
+    "jwt-decoder": {
+      "name": "JWTデコーダー",
+      "description": "JWTトークンをデコードし、ヘッダー/ペイロードを検証し、有効期限を確認",
+      "about": "JSON Webトークンをデコードして検証。ヘッダー、ペイロード、署名を表示。",
+      "features": "ヘッダー/ペイロード検証、有効期限チェック、整形出力。"
+    },
+    "password-generator": {
+      "name": "パスワードジェネレーター",
+      "description": "カスタマイズ可能な長さと文字セットで安全なパスワードを生成",
+      "about": "カスタマイズ可能な長さと文字オプションで暗号学的に安全なランダムパスワードを生成。",
+      "features": "カスタマイズ可能な長さ、文字タイプ、クリップボードにコピー。"
+    },
+    "timestamp": {
+      "name": "タイムスタンプコンバーター",
+      "description": "ライブクロックとバッチサポートでUnixタイムスタンプと人間が読める日付を変換",
+      "about": "Unixタイムスタンプを人間が読める日付に、その逆も変換。ライブクロックとバッチ変換を含む。",
+      "features": "双方向変換、ライブクロック、バッチモード、タイムゾーンサポート。"
+    },
+    "unit-converter": {
+      "name": "ユニットコンバーター",
+      "description": "長さ、重さ、温度、体積、速度、データストレージの単位を変換",
+      "about": "長さ、重さ、温度、体積など various 測定単位を変換します。",
+      "features": "複数のカテゴリ、リアルタイム変換、正確な計算。"
+    },
+    "color-picker": {
+      "name": "カラーピッカー",
+      "description": "HEX、RGB、HSL値で色を選び、CSSコードを生成",
+      "about": "任意の色を選んでHEX、RGB、HSL値を取得。使用可能なCSSコードを生成。",
+      "features": "複数のカラーフォーマット、CSSコード生成、ビジュアルカラーピッカー。"
+    },
+    "markdown": {
+      "name": "Markdownプレビュー",
+      "description": "ライブレンダリングとシンタックスハイライトでMarkdownをプレビュー",
+      "about": "左にMarkdownを書き、右にレンダリングされたプレビューを表示。完全なMarkdown構文をサポート。",
+      "features": "ライブプレビュー、完全なMarkdownサポート、分割ビュー。"
+    },
+    "css-minifier": {
+      "name": "CSSミニファイアー",
+      "description": "空白、コメント、冗長コードを削除してCSSを圧縮",
+      "about": "不要な空白、コメントを削除し、セレクターを最適化してCSSコードをミニファイ。",
+      "features": "空白削除、コメント削除、サイズ比較。"
+    },
+    "html-minifier": {
+      "name": "HTMLミニファイアー",
+      "description": "空白、コメント、オプションタグを削除してHTMLを圧縮し、サイズを比較",
+      "about": "空白、コメント、オプション属性を削除してHTMLコードをミニファイ。",
+      "features": "空白削除、コメント削除、サイズ比較。"
+    },
+    "diff-checker": {
+      "name": "差分チェッカー",
+      "description": "2つのテキストを並べて比較し、追加、削除、変更をハイライト",
+      "about": "2つのテキストを並べて比較し、追加、削除、変更を色分けしてハイライト。",
+      "features": "並べて比較、色分けされた差分、行ごとの差分。"
+    },
+    "json-schema-validator": {
+      "name": "JSONスキーマバリデーター",
+      "description": "JSONスキーマに対してJSONデータを検証し、詳細なエラーレポートを表示",
+      "about": "JSONスキーマ定義に対してJSONデータを検証。無効なデータの詳細なエラーレポートを取得。",
+      "features": "スキーマ検証、詳細なエラー、リアルタイム検証。"
+    },
+    "html-encoder": {
+      "name": "HTMLエンコーダー/デコーダー",
+      "description": "名前付きおよび数値参照を含むHTMLエンティティをエンコードおよびデコード",
+      "about": "特殊文字をHTMLエンティティにエンコードしたり、HTMLエンティティを読みやすいテキストにデコード。",
+      "features": "名前付きおよび数値エンティティ、バッチ処理。"
+    },
+    "markdown-to-html": {
+      "name": "MarkdownからHTML",
+      "description": "ライブプレビューとコピー可能な出力でMarkdownをHTMLに変換",
+      "about": "Markdownテキストをライブプレビュー付きのクリーンHTMLに変換。生成されたHTMLコードをコピー。",
+      "features": "ライブプレビュー、クリーンHTML出力、クリップボードにコピー。"
+    },
+    "ip-lookup": {
+      "name": "IPアドレスルックアップ",
+      "description": "パブリックIPを表示し、無料APIで任意のIPのジオロケーションを検索",
+      "about": "パブリックIPアドレスを取得し、任意のIPアドレスのジオロケーション情報を検索。",
+      "features": "パブリックIP検出、ジオロケーション検索、ISP情報。"
+    },
+    "api-tester": {
+      "name": "APIテスター",
+      "description": "メソッドセレクター、カスタムヘッダー、リクエストボディでAPIエンドポイントをテスト",
+      "about": "メソッド選択、カスタムヘッダー、レスポンス検証でREST APIエンドポイントをテスト。",
+      "features": "複数のHTTPメソッド、カスタムヘッダー、レスポンスビューア。"
+    },
+    "colors": {
+      "name": "カラーコンバーター",
+      "description": "HEX、RGB、HSL、CMYKカラーフォーマット間で変換",
+      "about": "カラーフォーマット間でHEX、RGB、HSL、CMYKを即座に変換。",
+      "features": "複数のカラーフォーマット、即時変換、値のコピー。"
+    },
+    "color-palette": {
+      "name": "カラーパレットジェネレーター",
+      "description": "ベースカラーから調和のとれたカラーパレットを生成",
+      "about": " various のカラーハーモニーアルゴリズムを使用して、ベースカラーから美しいカラーパレットを生成。",
+      "features": "複数のハーモニータイプ、ビジュアルプレビュー、CSS変数出力。"
+    },
+    "js-formatter": {
+      "name": "JavaScriptフォーマッター",
+      "description": "適切なインデントでJavaScriptコードをフォーマット、美化、ミニファイ",
+      "about": "適切なインデントでJavaScriptコードをフォーマットして美化。ミニファイもサポート。",
+      "features": "スマートインデント、文字列とコメントを保持、ミニファイモード。"
+    },
+    "css-flexbox": {
+      "name": "CSS Flexboxジェネレーター",
+      "description": "ライブプレビューとコピー可能なコードでCSS Flexboxレイアウトをビジュアルに生成",
+      "about": "ライブプレビューとコピー可能なCSSコードでCSS Flexboxレイアウトをビジュアルに作成。",
+      "features": "ビジュアルコントロール、ライブプレビュー、CSSコードのコピー。"
+    },
+    "gradient-generator": {
+      "name": "グラデーションジェネレーター",
+      "description": "リニア、ラジアル、コニックタイプとプリセットでCSSグラデーションをビジュアルに作成",
+      "about": "ビジュアルコントロールで美しいCSSグラデーションを作成。リニア、ラジアル、コニックタイプをサポート。",
+      "features": "複数のグラデーションタイプ、カラーストップ、CSS出力、プリセット。"
+    },
+    "box-shadow": {
+      "name": "ボックスシャドウジェネレーター",
+      "description": "ビジュアルコントロール、不透明度、インセットオプションでCSS box-shadowコードを生成",
+      "about": "オフセット、ブラード、スプレッド、カラービジュアルコントロールでCSS box-shadowコードを生成。",
+      "features": "ビジュアルコントロール、不透明度、インセットオプション、CSS出力。"
+    },
+    "text-case": {
+      "name": "テキストケースコンバーター",
+      "description": "大文字、小文字、タイトルケース、camelCase、snake_caseなどを変換",
+      "about": "大文字、小文字、タイトル、camelCase、snake_caseなど various のフォーマット間でテキストを変換。",
+      "features": "複数のフォーマット、即時変換、結果のコピー。"
+    },
+    "word-counter": {
+      "name": "ワードカウンター",
+      "description": "単語、文字、文、段落をカウントし、読書時間を推定",
+      "about": "テキストの単語、文字、文、段落をカウント。読書時間の推定を含む。",
+      "features": "単語カウント、文字カウント、読書時間、段落カウント。"
+    },
+    "json-to-go": {
+      "name": "JSONからGo Struct",
+      "description": "jsonタグ、ネストされたタイプ、ポインタオプションでJSONからGo構造体を生成",
+      "about": "JSONデータを適切なタグと型推論付きのGo構造体定義に変換。",
+      "features": "ネストされたタイプ、jsonタグ、ポインタオプション、型推論。"
+    },
+    "json-to-typescript": {
+      "name": "JSONからTypeScript",
+      "description": "推論された型とネストサポートでJSONデータをTypeScriptインターフェースに変換",
+      "about": "推論された型でJSONデータをTypeScriptインターフェース定義に変換。",
+      "features": "型推論、ネストされたインターフェース、配列サポート。"
+    },
+    "sql-formatter": {
+      "name": "SQLフォーマッター",
+      "description": "適切なインデントとキーワードハイライトでSQLクエリをフォーマット、ミニファイ、大文字化",
+      "about": "適切なインデントとキーワード大文字化でSQLクエリをフォーマットして美化。",
+      "features": "プリティプリント、ミニファイ、キーワードハイライト。"
+    },
+    "cron-generator": {
+      "name": "Cron式ジェネレーター",
+      "description": "人間が読める説明と次回実行時刻でcronスケジュール式を生成して理解",
+      "about": "人間が読める説明でcron式を生成。次回実行時刻を確認。",
+      "features": "人間が読める説明、次回実行、式のコピー。"
+    },
+    "csv-json": {
+      "name": "CSV ⇄ JSONコンバーター",
+      "description": "適切なエスケープ、ヘッダー、複数の区切り文字サポートでCSVとJSON形式を変換",
+      "about": "ヘッダーサポートと適切なエスケープでCSVとJSON形式を変換。",
+      "features": "双方向変換、ヘッダーサポート、カスタム区切り文字。"
+    },
+    "wechat-markdown-editor": {
+      "name": "WeChat Markdownエディタ",
+      "description": "ライブプレビュー付きでMarkdownを書き、スタイリッシュなコンテンツをワンクリックでWeChatにコピー",
+      "about": "WeChat公式アカウント向けのフル機能Markdownエディタ。ライブプレビュー付きでMarkdownを書き、10以上の美しいテーマから選択し、スタイリッシュなHTMLをワンクリックでWeChatにコピーできます。",
+      "features": "10以上のテーマ、WeChatへのワンクリックコピー、CodeMirrorエディタ、ライブプレビュー、シンタックスハイライト、ダークモード、ローカルストレージ。"
+    }
+  }
+}

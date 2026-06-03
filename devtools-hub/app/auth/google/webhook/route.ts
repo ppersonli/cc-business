@@ -4,7 +4,7 @@
  */
 import { NextResponse } from 'next/server';
 import { exchangeCodeForTokens, getGoogleUserInfo } from '@/lib/google-auth';
-import { findOrCreateGoogleUser } from '@/lib/db';
+import { findOrCreateGoogleUser, initSchema } from '@/lib/db';
 import { createToken } from '@/lib/auth';
 
 export async function GET(request: Request) {
@@ -39,8 +39,11 @@ export async function GET(request: Request) {
     // Get user info from Google
     const googleUser = await getGoogleUserInfo(tokens.access_token);
 
+    // Ensure database tables exist
+    await initSchema();
+
     // Find or create user in our database
-    const user = findOrCreateGoogleUser(
+    const user = await findOrCreateGoogleUser(
       googleUser.id,
       googleUser.email,
       googleUser.name,
@@ -72,8 +75,9 @@ export async function GET(request: Request) {
     });
 
     return response;
-  } catch (err) {
+  } catch (err: any) {
     console.error('Google OAuth callback error:', err);
-    return NextResponse.redirect(new URL('/?error=auth_failed', request.url));
+    const detail = err?.message || String(err);
+    return NextResponse.redirect(new URL(`/?error=auth_failed&detail=${encodeURIComponent(detail)}`, request.url));
   }
 }

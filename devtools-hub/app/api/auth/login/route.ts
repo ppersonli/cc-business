@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { findUserByEmail } from '@/lib/db';
+import { findUserByEmail, initSchema } from '@/lib/db';
 import { verifyPassword, createToken } from '@/lib/auth';
 export async function POST(request: Request) {
   try {
@@ -9,8 +9,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
     }
 
+    // Ensure database tables exist
+    await initSchema();
+
     // Find user
-    const user = findUserByEmail(email);
+    const user = await findUserByEmail(email);
     if (!user) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }

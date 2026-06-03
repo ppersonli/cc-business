@@ -1,0 +1,297 @@
+{
+  "common": {
+    "appName": "DevTools Hub",
+    "tagline": "31+ ferramentas gratuitas para desenvolvedores, no lado do cliente",
+    "subtitle": "Ferramentas de desenvolvimento gratuitas online. 100% no lado do cliente, sem envio de dados para servidores.",
+    "tools": "Ferramentas",
+    "github": "GitHub",
+    "signInWithGoogle": "Entrar com Google",
+    "signOut": "Sair",
+    "relatedTools": "Ferramentas Relacionadas",
+    "backToTools": "← Voltar para todas as ferramentas",
+    "termsOfService": "Termos de Serviço",
+    "privacyPolicy": "Política de Privacidade",
+    "builtWith": "Feito com Next.js + Tailwind CSS",
+    "freeOnlineTools": "Ferramentas de desenvolvimento gratuitas online. 100% no lado do cliente, sem envio de dados para servidores.",
+    "copy": "Copiar",
+    "copied": "Copiado!",
+    "format": "Formatar",
+    "minify": "Minificar",
+    "encode": "Codificar",
+    "decode": "Decodificar",
+    "input": "Entrada",
+    "output": "Saída",
+    "generate": "Gerar",
+    "reset": "Redefinir",
+    "indent": "Recuo",
+    "spaces": "espaços",
+    "about": "Sobre",
+    "clientSide": "100% no lado do cliente:",
+    "clientSideDesc": "Seus dados nunca saem do seu navegador. Nenhum dado é enviado para qualquer servidor.",
+    "features": "Recursos",
+    "select": "Selecionar",
+    "convert": "Converter",
+    "validate": "Validar",
+    "lookup": "Consultar",
+    "calculate": "Calcular",
+    "preview": "Visualizar",
+    "compress": "Comprimir",
+    "compare": "Comparar",
+    "count": "Contar",
+    "remove": "Remover",
+    "add": "Adicionar",
+    "clear": "Limpar",
+    "save": "Salvar",
+    "download": "Baixar",
+    "upload": "Enviar",
+    "paste": "Cole seu código aqui...",
+    "result": "Resultado",
+    "error": "Erro",
+    "success": "Sucesso",
+    "invalid": "Inválido",
+    "valid": "Válido",
+    "length": "Comprimento",
+    "size": "Tamanho",
+    "bytes": "bytes",
+    "lines": "linhas",
+    "words": "palavras",
+    "characters": "caracteres",
+    "sentences": "frases",
+    "paragraphs": "parágrafos",
+    "readingTime": "Tempo de leitura",
+    "minutes": "minutos",
+    "seconds": "segundos",
+    "type": "Tipo",
+    "options": "Opções",
+    "settings": "Configurações",
+    "customize": "Personalizar",
+    "language": "Idioma",
+    "searchTools": "Pesquisar ferramentas...",
+    "noResults": "Nenhuma ferramenta encontrada"
+  },
+  "home": {
+    "subtitle": "Ferramentas de desenvolvimento gratuitas online. 100% no lado do cliente, sem envio de dados para servidores."
+  },
+  "categories": {
+    "Data": "Dados",
+    "Encoding": "Codificação",
+    "Crypto": "Criptografia",
+    "Code": "Código",
+    "Utility": "Utilidade",
+    "Design": "Design",
+    "Text": "Texto",
+    "Network": "Rede"
+  },
+  "tools": {
+    "json-formatter": {
+      "name": "Formatador JSON",
+      "description": "Formate, valide e minifique dados JSON instantaneamente",
+      "about": "Nosso formatador JSON ajuda você a formatar, validar e minificar dados JSON instantaneamente. Cole seus dados JSON e obtenha uma saída bem formatada com recuo adequado.",
+      "features": "Recuo inteligente (2 ou 4 espaços), validação de sintaxe, relatório de erros, modo de minificação."
+    },
+    "base64": {
+      "name": "Codificador/Decodificador Base64",
+      "description": "Codifique e decodifique strings Base64 com suporte a UTF-8",
+      "about": "Codifique texto em Base64 ou decodifique Base64 em texto. Suporte completo a UTF-8 para caracteres internacionais.",
+      "features": "Suporte a UTF-8, codificação/decodificação em tempo real, caracteres especiais."
+    },
+    "urls": {
+      "name": "Codificador/Decodificador URL",
+      "description": "Codifique e decodifique URLs e componentes URI",
+      "about": "Codifique caracteres especiais em URLs ou decodifique URLs codificadas de volta ao formato legível.",
+      "features": "Codificação/decodificação completa de URLs, codificação por componente, preserva estrutura."
+    },
+    "hash": {
+      "name": "Calculadora de Hash",
+      "description": "Gere hashes MD5, SHA-1, SHA-256 e SHA-512",
+      "about": "Calcule valores de hash criptográficos para qualquer string de entrada. Suporta algoritmos MD5, SHA-1, SHA-256 e SHA-512.",
+      "features": "Múltiplos algoritmos de hash, cálculo em tempo real, copiar para área de transferência."
+    },
+    "regex-tester": {
+      "name": "Testador de Regex",
+      "description": "Teste expressões regulares com destaque de correspondência em tempo real",
+      "about": "Teste suas expressões regulares contra strings de entrada com destaque de correspondência em tempo real.",
+      "features": "Correspondência em tempo real, destaque, captura de grupos, múltiplas strings de teste."
+    },
+    "qr": {
+      "name": "Gerador de QR Code",
+      "description": "Gere QR codes para URLs, textos e informações de contato",
+      "about": "Gere QR codes para URLs, textos, email, números de telefone e credenciais WiFi. Baixe como PNG.",
+      "features": "Múltiplos tipos de QR, tamanho personalizável, download como imagem."
+    },
+    "uuid-generator": {
+      "name": "Gerador de UUID",
+      "description": "Gere UUIDs v4 com geração em lote de até 100 de uma vez",
+      "about": "Gere identificadores UUID v4 aleatórios para suas aplicações. Gere até 100 UUIDs em lote.",
+      "features": "Geração UUID v4, modo lote, copiar individual ou todos."
+    },
+    "jwt-decoder": {
+      "name": "Decodificador JWT",
+      "description": "Decodifique tokens JWT, inspecione cabeçalho/carga e valide expiração",
+      "about": "Decodifique e inspecione JSON Web Tokens. Visualize cabeçalho, carga e assinatura.",
+      "features": "Inspecção de cabeçalho/carga, verificação de expiração, saída formatada."
+    },
+    "password-generator": {
+      "name": "Gerador de Senhas",
+      "description": "Gere senhas seguras com comprimento e conjuntos de caracteres personalizáveis",
+      "about": "Gere senhas aleatórias criptograficamente seguras com comprimento e opções de caracteres personalizáveis.",
+      "features": "Comprimento personalizável, tipos de caracteres, copiar para área de transferência."
+    },
+    "timestamp": {
+      "name": "Conversor de Timestamp",
+      "description": "Converta entre timestamps Unix e datas legíveis com relógio ao vivo e suporte em lote",
+      "about": "Converta timestamps Unix em datas legíveis e vice-versa. Inclui relógio ao vivo e conversão em lote.",
+      "features": "Conversão bidirecional, relógio ao vivo, modo lote, suporte a fuso horário."
+    },
+    "unit-converter": {
+      "name": "Conversor de Unidades",
+      "description": "Converta entre unidades de comprimento, peso, temperatura, volume, velocidade e armazenamento",
+      "about": "Converta entre várias unidades de medida incluindo comprimento, peso, temperatura, volume e mais.",
+      "features": "Múltiplas categorias, conversão em tempo real, cálculos precisos."
+    },
+    "color-picker": {
+      "name": "Seletor de Cores",
+      "description": "Selecione cores com valores HEX, RGB, HSL e gere código CSS",
+      "about": "Selecione qualquer cor e obtenha seus valores HEX, RGB e HSL. Gere código CSS pronto para uso.",
+      "features": "Múltiplos formatos de cor, geração de código CSS, seletor visual."
+    },
+    "markdown": {
+      "name": "Visualizador Markdown",
+      "description": "Visualize Markdown com renderização ao vivo e destaque de sintaxe",
+      "about": "Escreva Markdown à esquerda e veja a visualização renderizada à direita. Suporta sintaxe Markdown completa.",
+      "features": "Visualização ao vivo, suporte Markdown completo, visualização dividida."
+    },
+    "css-minifier": {
+      "name": "Minificador CSS",
+      "description": "Comprima CSS removendo espaços em branco, comentários e código redundante",
+      "about": "Minifique código CSS removendo espaços desnecessários, comentários e otimizando seletores.",
+      "features": "Remoção de espaços, remoção de comentários, comparação de tamanho."
+    },
+    "html-minifier": {
+      "name": "Minificador HTML",
+      "description": "Comprima HTML removendo espaços em branco, comentários e tags opcionais com comparação de tamanho",
+      "about": "Minifique código HTML removendo espaços, comentários e atributos opcionais.",
+      "features": "Remoção de espaços, remoção de comentários, comparação de tamanho."
+    },
+    "diff-checker": {
+      "name": "Comparador de Diferenças",
+      "description": "Compare dois textos lado a lado e destaque adições, remoções e alterações",
+      "about": "Compare dois textos lado a lado com diferenças destacadas mostrando adições, remoções e modificações.",
+      "features": "Comparação lado a lado, diferenças coloridas, diff linha por linha."
+    },
+    "json-schema-validator": {
+      "name": "Validador de JSON Schema",
+      "description": "Valide dados JSON contra um JSON Schema com relatório detalhado de erros",
+      "about": "Valide dados JSON contra uma definição de JSON Schema. Obtenha relatórios detalhados de erros.",
+      "features": "Validação de schema, erros detalhados, validação em tempo real."
+    },
+    "html-encoder": {
+      "name": "Codificador/Decodificador HTML",
+      "description": "Codifique e decodifique entidades HTML incluindo referências nomeadas e numéricas",
+      "about": "Codifique caracteres especiais em entidades HTML ou decodifique entidades HTML de volta para texto legível.",
+      "features": "Entidades nomeadas e numéricas, processamento em lote."
+    },
+    "markdown-to-html": {
+      "name": "Markdown para HTML",
+      "description": "Converta Markdown para HTML com visualização ao vivo e saída copiável",
+      "about": "Converta texto Markdown em HTML limpo com visualização ao vivo. Copie o código HTML gerado.",
+      "features": "Visualização ao vivo, saída HTML limpa, copiar para área de transferência."
+    },
+    "ip-lookup": {
+      "name": "Consulta de Endereço IP",
+      "description": "Mostre seu IP público e consulte geolocalização para qualquer IP usando API gratuita",
+      "about": "Encontre seu endereço IP público e consulte informações de geolocalização para qualquer endereço IP.",
+      "features": "Detecção de IP público, consulta de geolocalização, informações de ISP."
+    },
+    "api-tester": {
+      "name": "Testador de API",
+      "description": "Teste endpoints de API com seletor de método, cabeçalhos personalizados e inspeção de resposta",
+      "about": "Teste endpoints de API REST com seleção de método, cabeçalhos personalizados e inspeção de resposta.",
+      "features": "Múltiplos métodos HTTP, cabeçalhos personalizados, visualizador de resposta."
+    },
+    "colors": {
+      "name": "Conversor de Cores",
+      "description": "Converta entre formatos de cor HEX, RGB, HSL e CMYK",
+      "about": "Converta cores entre formatos HEX, RGB, HSL e CMYK instantaneamente.",
+      "features": "Múltiplos formatos de cor, conversão instantânea, copiar valores."
+    },
+    "color-palette": {
+      "name": "Gerador de Paleta de Cores",
+      "description": "Gere paletas de cores harmoniosas a partir de uma cor base",
+      "about": "Gere paletas de cores bonitas a partir de uma cor base usando vários algoritmos de harmonia.",
+      "features": "Múltiplos tipos de harmonia, visualização, saída de variáveis CSS."
+    },
+    "js-formatter": {
+      "name": "Formatador JavaScript",
+      "description": "Formate, embeleze e minifique código JavaScript com recuo adequado",
+      "about": "Formate e embeleze código JavaScript com recuo adequado. Também suporta minificação.",
+      "features": "Recuo inteligente, preserva strings e comentários, modo de minificação."
+    },
+    "css-flexbox": {
+      "name": "Gerador CSS Flexbox",
+      "description": "Gere layouts CSS Flexbox visualmente com visualização ao vivo e código copiável",
+      "about": "Crie visualmente layouts CSS Flexbox com visualização ao vivo e código CSS copiável.",
+      "features": "Controles visuais, visualização ao vivo, copiar código CSS."
+    },
+    "gradient-generator": {
+      "name": "Gerador de Gradiente",
+      "description": "Crie gradientes CSS visualmente com tipos linear, radial e cônico além de predefinições",
+      "about": "Crie gradientes CSS bonitos com controles visuais. Suporta tipos linear, radial e cônico.",
+      "features": "Múltiplos tipos de gradiente, paradas de cor, saída CSS, predefinições."
+    },
+    "box-shadow": {
+      "name": "Gerador de Box Shadow",
+      "description": "Gere código CSS box-shadow com controles visuais, opacidade e opções inset",
+      "about": "Gere código CSS box-shadow com controles visuais para deslocamento, desfoque, propagação e cor.",
+      "features": "Controles visuais, opacidade, opção inset, saída CSS."
+    },
+    "text-case": {
+      "name": "Conversor de Caixa de Texto",
+      "description": "Converta texto entre maiúsculas, minúsculas, título, camelCase, snake_case e mais",
+      "about": "Converta texto entre vários formatos incluindo MAIÚSCULAS, minúsculas, Título, camelCase e snake_case.",
+      "features": "Múltiplos formatos, conversão instantânea, copiar resultado."
+    },
+    "word-counter": {
+      "name": "Contador de Palavras",
+      "description": "Conte palavras, caracteres, frases, parágrafos e estime tempo de leitura",
+      "about": "Conte palavras, caracteres, frases e parágrafos no seu texto. Inclui estimativa de tempo de leitura.",
+      "features": "Contagem de palavras, caracteres, tempo de leitura, parágrafos."
+    },
+    "json-to-go": {
+      "name": "JSON para Go Struct",
+      "description": "Gere structs Go a partir de JSON com tags json, tipos aninhados e opções de ponteiro",
+      "about": "Converta dados JSON em definições de struct Go com tags adequadas e inferência de tipo.",
+      "features": "Tipos aninhados, tags json, opções de ponteiro, inferência de tipo."
+    },
+    "json-to-typescript": {
+      "name": "JSON para TypeScript",
+      "description": "Converta dados JSON em interfaces TypeScript com tipos inferidos e suporte aninhado",
+      "about": "Converta dados JSON em definições de interface TypeScript com tipos inferidos.",
+      "features": "Inferência de tipos, interfaces aninhadas, suporte a arrays."
+    },
+    "sql-formatter": {
+      "name": "Formatador SQL",
+      "description": "Formate, minifique e capitalize consultas SQL com recuo adequado",
+      "about": "Formate e embeleze consultas SQL com recuo adequado e capitalização de palavras-chave.",
+      "features": "Pretty print, minificação, destaque de palavras-chave."
+    },
+    "cron-generator": {
+      "name": "Gerador de Expressão Cron",
+      "description": "Gere e entenda expressões cron com descrições legíveis e próximos horários de execução",
+      "about": "Gere expressões cron com descrições legíveis. Veja os próximos horários de execução.",
+      "features": "Descrições legíveis, próximas execuções, copiar expressão."
+    },
+    "csv-json": {
+      "name": "Conversor CSV ⇄ JSON",
+      "description": "Converta entre formatos CSV e JSON com escape adequado, cabeçalhos e suporte a delimitadores",
+      "about": "Converta entre formatos CSV e JSON com suporte a cabeçalhos e escape adequado.",
+      "features": "Conversão bidirecional, suporte a cabeçalhos, delimitadores personalizados."
+    },
+    "wechat-markdown-editor": {
+      "name": "Editor Markdown WeChat",
+      "description": "Escreva Markdown com preview ao vivo e copie conteúdo estilizado para o WeChat com um clique",
+      "about": "Editor Markdown completo para contas públicas do WeChat. Escreva Markdown com preview ao vivo, escolha entre mais de 10 temas e copie HTML estilizado diretamente para o WeChat.",
+      "features": "Mais de 10 temas, cópia para WeChat com um clique, editor CodeMirror, preview ao vivo, realce de sintaxe, modo escuro, armazenamento local."
+    }
+  }
+}

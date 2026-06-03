@@ -1,18 +1,23 @@
 'use client'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { useLocale } from 'next-intl'
 import { tools, categories } from '@/lib/tools'
 import { iconMap } from '@/components/Icons'
 
 export default function Home() {
+  const t = useTranslations()
+  const locale = useLocale()
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'DevTools Hub',
-    url: 'https://tools.pixiaoli.cn',
-    description: '30+ free, client-side developer tools. JSON formatter, regex tester, JavaScript formatter, CSS flexbox generator, and more.',
+    url: `https://tools.pixiaoli.cn/${locale}/`,
+    description: t('common.subtitle'),
     potentialAction: {
       '@type': 'SearchAction',
-      target: 'https://tools.pixiaoli.cn/?q={search_term_string}',
+      target: `https://tools.pixiaoli.cn/${locale}/?q={search_term_string}`,
       'query-input': 'required name=search_term_string',
     },
   }
@@ -24,11 +29,11 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div style={{ textAlign: 'center', marginBottom: 48 }}>
-        <h1 style={{ fontSize: 48, fontWeight: 800, marginBottom: 12, letterSpacing: '-0.02em' }}>
-          DevTools Hub
+        <h1 style={{ fontSize: 48, fontWeight: 800, marginBottom: 12, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+          {t('common.appName')}
         </h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: 18, maxWidth: 560, margin: '0 auto' }}>
-          Free online developer tools. 100% client-side, no data sent to servers.
+        <p style={{ color: 'var(--text-muted)', fontSize: 18, maxWidth: 560, margin: '0 auto' }}>
+          {t('home.subtitle')}
         </p>
       </div>
 
@@ -42,7 +47,7 @@ export default function Home() {
             letterSpacing: '0.05em',
             marginBottom: 16,
           }}>
-            {cat}
+            {t(`categories.${cat}`)}
           </h2>
           <div style={{
             display: 'grid',
@@ -54,32 +59,35 @@ export default function Home() {
               return (
                 <Link
                   key={tool.slug}
-                  href={`/tools/${tool.slug}/`}
+                  href={`/${locale}/tools/${tool.slug}/`}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
                     gap: 16,
                     padding: '16px 20px',
-                    background: 'var(--bg-secondary)',
+                    background: 'var(--bg-primary)',
                     border: '1px solid var(--border)',
-                    borderRadius: 12,
+                    borderRadius: 'var(--radius-md)',
                     textDecoration: 'none',
                     color: 'var(--text-primary)',
-                    transition: 'border-color 0.15s, background 0.15s',
+                    transition: 'all 0.2s ease',
+                    boxShadow: 'var(--shadow-sm)',
                   }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.borderColor = tool.color
-                    e.currentTarget.style.background = 'var(--bg-tertiary)'
+                    e.currentTarget.style.borderColor = 'var(--accent)'
+                    e.currentTarget.style.boxShadow = 'var(--shadow-md)'
+                    e.currentTarget.style.transform = 'translateY(-2px)'
                   }}
                   onMouseLeave={e => {
                     e.currentTarget.style.borderColor = 'var(--border)'
-                    e.currentTarget.style.background = 'var(--bg-secondary)'
+                    e.currentTarget.style.boxShadow = 'var(--shadow-sm)'
+                    e.currentTarget.style.transform = 'translateY(0)'
                   }}
                 >
                   <div style={{
                     width: 44,
                     height: 44,
-                    borderRadius: 10,
+                    borderRadius: 'var(--radius-sm)',
                     background: `${tool.color}15`,
                     display: 'flex',
                     alignItems: 'center',
@@ -90,8 +98,8 @@ export default function Home() {
                     {Icon && <Icon />}
                   </div>
                   <div>
-                    <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 2 }}>{tool.name}</div>
-                    <div style={{ color: 'var(--text-muted)', fontSize: 13, lineHeight: 1.4 }}>{tool.description}</div>
+                    <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 2 }}>{t(`tools.${tool.slug}.name`)}</div>
+                    <div style={{ color: 'var(--text-muted)', fontSize: 13, lineHeight: 1.4 }}>{t(`tools.${tool.slug}.description`)}</div>
                   </div>
                 </Link>
               )

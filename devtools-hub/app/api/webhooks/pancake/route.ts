@@ -39,9 +39,9 @@ export async function POST(request: Request) {
       const expiresAt = event.data?.expires_at;
 
       if (email) {
-        const user = findUserByEmail(email);
+        const user = await findUserByEmail(email);
         if (user) {
-          upsertSubscription(user.id, plan, 'active', event.data?.id, expiresAt);
+          await upsertSubscription(user.id, plan, 'active', event.data?.id, expiresAt);
         }
       }
 
@@ -51,9 +51,9 @@ export async function POST(request: Request) {
     if (event.type === 'subscription.cancelled' || event.type === 'subscription.expired') {
       const email = event.data?.customer_email;
       if (email) {
-        const user = findUserByEmail(email);
+        const user = await findUserByEmail(email);
         if (user) {
-          upsertSubscription(user.id, 'free', 'cancelled');
+          await upsertSubscription(user.id, 'free', 'cancelled');
         }
       }
 

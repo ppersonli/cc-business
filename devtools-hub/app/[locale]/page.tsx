@@ -37,6 +37,86 @@ export default function Home() {
         </p>
       </div>
 
+      {/* Featured: WeChat Markdown Editor */}
+      <Link
+        href={`/${locale}/tools/wechat-markdown-editor/`}
+        style={{
+          display: 'block',
+          textDecoration: 'none',
+          marginBottom: 48,
+          borderRadius: 'var(--radius-lg, 16px)',
+          background: 'linear-gradient(135deg, #07C16010 0%, #07C16008 50%, transparent 100%)',
+          border: '1px solid #07C16030',
+          padding: '32px 36px',
+          transition: 'all 0.25s ease',
+          boxShadow: 'var(--shadow-sm)',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.borderColor = '#07C160'
+          e.currentTarget.style.boxShadow = '0 8px 30px #07C16018'
+          e.currentTarget.style.transform = 'translateY(-3px)'
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.borderColor = '#07C16030'
+          e.currentTarget.style.boxShadow = 'var(--shadow-sm)'
+          e.currentTarget.style.transform = 'translateY(0)'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+          <div style={{
+            width: 48,
+            height: 48,
+            borderRadius: 'var(--radius-sm)',
+            background: '#07C16018',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#07C160',
+          }}>
+            {iconMap['wechat-markdown-editor'] && (() => { const Icon = iconMap['wechat-markdown-editor']; return <Icon /> })()}
+          </div>
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 20, color: 'var(--text-primary)' }}>
+              {t('tools.wechat-markdown-editor.name')}
+            </div>
+            <span style={{
+              fontSize: 11,
+              fontWeight: 600,
+              color: '#07C160',
+              background: '#07C16015',
+              padding: '2px 8px',
+              borderRadius: 4,
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+            }}>
+              ★ {locale === 'zh' ? '精选工具' : locale === 'de' ? 'Empfohlen' : 'Featured'}
+            </span>
+          </div>
+        </div>
+        <p style={{ color: 'var(--text-secondary)', fontSize: 15, lineHeight: 1.6, margin: 0 }}>
+          {t('tools.wechat-markdown-editor.about')}
+        </p>
+        <div style={{ display: 'flex', gap: 8, marginTop: 16, flexWrap: 'wrap' }}>
+          {(locale === 'zh'
+            ? ['10+ 主题', '一键复制到微信', '实时预览', 'KaTeX 公式', 'Mermaid 图表']
+            : locale === 'de'
+            ? ['10+ Themes', 'Ein-Klick-Kopie', 'Live-Vorschau', 'KaTeX-Formeln', 'Mermaid-Diagramme']
+            : ['10+ Themes', 'One-click Copy', 'Live Preview', 'KaTeX Math', 'Mermaid Diagrams']
+          ).map(tag => (
+            <span key={tag} style={{
+              fontSize: 12,
+              color: 'var(--text-muted)',
+              background: 'var(--bg-secondary)',
+              border: '1px solid var(--border)',
+              padding: '4px 10px',
+              borderRadius: 6,
+            }}>
+              {tag}
+            </span>
+          ))}
+        </div>
+      </Link>
+
       {categories.map(cat => (
         <section key={cat} style={{ marginBottom: 40 }}>
           <h2 style={{

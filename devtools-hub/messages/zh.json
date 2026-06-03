@@ -1,0 +1,297 @@
+{
+  "common": {
+    "appName": "DevTools Hub",
+    "tagline": "31+ 免费客户端开发者工具",
+    "subtitle": "免费在线开发者工具。100% 客户端运行，数据不会发送到服务器。",
+    "tools": "工具",
+    "github": "GitHub",
+    "signInWithGoogle": "使用 Google 登录",
+    "signOut": "退出登录",
+    "relatedTools": "相关工具",
+    "backToTools": "← 返回所有工具",
+    "termsOfService": "服务条款",
+    "privacyPolicy": "隐私政策",
+    "builtWith": "使用 Next.js + Tailwind CSS 构建",
+    "freeOnlineTools": "免费在线开发者工具。100% 客户端运行，数据不会发送到服务器。",
+    "copy": "复制",
+    "copied": "已复制！",
+    "format": "格式化",
+    "minify": "压缩",
+    "encode": "编码",
+    "decode": "解码",
+    "input": "输入",
+    "output": "输出",
+    "generate": "生成",
+    "reset": "重置",
+    "indent": "缩进",
+    "spaces": "空格",
+    "about": "关于",
+    "clientSide": "100% 客户端运行：",
+    "clientSideDesc": "您的数据永远不会离开浏览器，不会发送到任何服务器。",
+    "features": "功能特性",
+    "select": "选择",
+    "convert": "转换",
+    "validate": "验证",
+    "lookup": "查询",
+    "calculate": "计算",
+    "preview": "预览",
+    "compress": "压缩",
+    "compare": "对比",
+    "count": "计数",
+    "remove": "移除",
+    "add": "添加",
+    "clear": "清除",
+    "save": "保存",
+    "download": "下载",
+    "upload": "上传",
+    "paste": "在此粘贴您的代码...",
+    "result": "结果",
+    "error": "错误",
+    "success": "成功",
+    "invalid": "无效",
+    "valid": "有效",
+    "length": "长度",
+    "size": "大小",
+    "bytes": "字节",
+    "lines": "行",
+    "words": "词",
+    "characters": "字符",
+    "sentences": "句子",
+    "paragraphs": "段落",
+    "readingTime": "阅读时间",
+    "minutes": "分钟",
+    "seconds": "秒",
+    "type": "类型",
+    "options": "选项",
+    "settings": "设置",
+    "customize": "自定义",
+    "language": "语言",
+    "searchTools": "搜索工具...",
+    "noResults": "未找到工具"
+  },
+  "home": {
+    "subtitle": "免费在线开发者工具。100% 客户端运行，数据不会发送到服务器。"
+  },
+  "categories": {
+    "Data": "数据",
+    "Encoding": "编码",
+    "Crypto": "加密",
+    "Code": "代码",
+    "Utility": "实用工具",
+    "Design": "设计",
+    "Text": "文本",
+    "Network": "网络"
+  },
+  "tools": {
+    "json-formatter": {
+      "name": "JSON 格式化",
+      "description": "即时格式化、验证和压缩 JSON 数据",
+      "about": "JSON 格式化工具帮助您即时格式化、验证和压缩 JSON 数据。粘贴 JSON 数据即可获得格式优美的输出结果。",
+      "features": "智能缩进（2 或 4 空格）、语法验证、错误报告、压缩模式。"
+    },
+    "base64": {
+      "name": "Base64 编码/解码",
+      "description": "支持 UTF-8 的 Base64 字符串编码和解码",
+      "about": "将文本编码为 Base64 或将 Base64 解码为文本。完整支持 UTF-8 国际字符。",
+      "features": "UTF-8 支持、实时编码/解码、特殊字符处理。"
+    },
+    "urls": {
+      "name": "URL 编码/解码",
+      "description": "编码和解码 URL 及 URI 组件",
+      "about": "编码 URL 中的特殊字符或解码已编码的 URL 为可读格式。",
+      "features": "完整 URL 编码/解码、组件级编码、保留 URL 结构。"
+    },
+    "hash": {
+      "name": "哈希计算器",
+      "description": "生成 MD5、SHA-1、SHA-256 和 SHA-512 哈希值",
+      "about": "计算任意输入字符串的加密哈希值。支持 MD5、SHA-1、SHA-256 和 SHA-512 算法。",
+      "features": "多种哈希算法、实时计算、一键复制。"
+    },
+    "regex-tester": {
+      "name": "正则表达式测试",
+      "description": "实时高亮匹配的正则表达式测试",
+      "about": "测试正则表达式，实时高亮匹配结果并显示分组捕获。",
+      "features": "实时匹配、匹配高亮、分组捕获、多测试字符串。"
+    },
+    "qr": {
+      "name": "二维码生成器",
+      "description": "为网址、文本和联系信息生成二维码",
+      "about": "为 URL、文本、邮箱、电话号码和 WiFi 凭据生成二维码。支持下载为 PNG。",
+      "features": "多种二维码类型、自定义大小、下载为图片。"
+    },
+    "uuid-generator": {
+      "name": "UUID 生成器",
+      "description": "生成 v4 UUID，支持批量生成最多 100 个",
+      "about": "为应用程序生成随机 UUID v4 标识符。支持批量生成最多 100 个 UUID。",
+      "features": "UUID v4 生成、批量模式、单独或全部复制。"
+    },
+    "jwt-decoder": {
+      "name": "JWT 解码器",
+      "description": "解码 JWT 令牌，查看头部/载荷，并验证过期时间",
+      "about": "解码和检查 JSON Web Tokens。查看头部、载荷和签名。检查过期状态。",
+      "features": "头部/载荷检查、过期检查、美化输出。"
+    },
+    "password-generator": {
+      "name": "密码生成器",
+      "description": "生成安全密码，可自定义长度和字符集",
+      "about": "生成加密安全的随机密码，可自定义长度和字符选项。",
+      "features": "可自定义长度、字符类型、一键复制、强度指示器。"
+    },
+    "timestamp": {
+      "name": "时间戳转换",
+      "description": "在 Unix 时间戳和可读日期之间转换，支持实时时钟和批量转换",
+      "about": "将 Unix 时间戳转换为可读日期，反之亦然。包含实时时钟和批量转换。",
+      "features": "双向转换、实时时钟、批量模式、时区支持。"
+    },
+    "unit-converter": {
+      "name": "单位转换器",
+      "description": "在长度、重量、温度、体积、速度和数据存储单位之间转换",
+      "about": "在各种测量单位之间转换，包括长度、重量、温度、体积、速度和数据存储。",
+      "features": "多种单位类别、实时转换、精确计算。"
+    },
+    "color-picker": {
+      "name": "颜色选择器",
+      "description": "选取颜色并获取 HEX、RGB、HSL 值，生成 CSS 代码",
+      "about": "选取任意颜色并获取其 HEX、RGB 和 HSL 值。生成可直接使用的 CSS 代码。",
+      "features": "多种颜色格式、CSS 代码生成、可视化颜色选择器。"
+    },
+    "markdown": {
+      "name": "Markdown 预览",
+      "description": "实时渲染和语法高亮的 Markdown 预览",
+      "about": "在左侧编写 Markdown，右侧实时查看渲染预览。支持完整 Markdown 语法。",
+      "features": "实时预览、完整 Markdown 支持、分屏视图。"
+    },
+    "css-minifier": {
+      "name": "CSS 压缩器",
+      "description": "通过删除空白、注释和冗余代码压缩 CSS",
+      "about": "通过删除不必要的空白、注释和优化选择器来压缩 CSS 代码。",
+      "features": "空白删除、注释清除、大小对比。"
+    },
+    "html-minifier": {
+      "name": "HTML 压缩器",
+      "description": "通过删除空白、注释和可选标签压缩 HTML，并对比大小",
+      "about": "通过删除空白、注释和可选属性压缩 HTML 代码，并进行大小对比。",
+      "features": "空白删除、注释清除、大小对比。"
+    },
+    "diff-checker": {
+      "name": "差异对比",
+      "description": "并排对比两段文本，高亮显示新增、删除和修改内容",
+      "about": "并排对比两段文本，高亮显示差异，展示新增、删除和修改内容。",
+      "features": "并排对比、彩色差异、逐行差异。"
+    },
+    "json-schema-validator": {
+      "name": "JSON Schema 验证器",
+      "description": "使用 JSON Schema 验证 JSON 数据，并提供详细错误报告",
+      "about": "根据 JSON Schema 定义验证 JSON 数据。获取详细的无效数据错误报告。",
+      "features": "Schema 验证、详细错误、实时验证。"
+    },
+    "html-encoder": {
+      "name": "HTML 编码/解码",
+      "description": "编码和解码 HTML 实体，包括命名和数字引用",
+      "about": "将特殊字符编码为 HTML 实体或将 HTML 实体解码为可读文本。",
+      "features": "命名和数字实体、批量处理。"
+    },
+    "markdown-to-html": {
+      "name": "Markdown 转 HTML",
+      "description": "将 Markdown 转换为 HTML，支持实时预览和可复制输出",
+      "about": "将 Markdown 文本转换为干净的 HTML 代码，支持实时预览。复制生成的 HTML 代码。",
+      "features": "实时预览、干净 HTML 输出、一键复制。"
+    },
+    "ip-lookup": {
+      "name": "IP 地址查询",
+      "description": "显示您的公网 IP 地址，使用免费 API 查询任意 IP 的地理位置",
+      "about": "查找您的公网 IP 地址，查询任意 IP 地址的地理位置信息。",
+      "features": "公网 IP 检测、地理位置查询、ISP 信息。"
+    },
+    "api-tester": {
+      "name": "API 测试器",
+      "description": "测试 API 端点，支持方法选择、自定义请求头、请求体和响应检查",
+      "about": "测试 REST API 端点，支持方法选择、自定义请求头、请求体和响应检查。",
+      "features": "多种 HTTP 方法、自定义请求头、响应查看器、状态码。"
+    },
+    "colors": {
+      "name": "颜色转换器",
+      "description": "在 HEX、RGB、HSL 和 CMYK 颜色格式之间转换",
+      "about": "即时在 HEX、RGB、HSL 和 CMYK 格式之间转换颜色。",
+      "features": "多种颜色格式、即时转换、复制数值。"
+    },
+    "color-palette": {
+      "name": "调色板生成器",
+      "description": "从基础颜色生成和谐调色板，支持互补、三色和类似色方案",
+      "about": "使用各种颜色和谐算法从基础颜色生成美丽的调色板。",
+      "features": "多种和谐类型、可视化预览、CSS 变量输出。"
+    },
+    "js-formatter": {
+      "name": "JavaScript 格式化",
+      "description": "格式化、美化和压缩 JavaScript 代码，正确缩进",
+      "about": "格式化和美化 JavaScript 代码，支持正确缩进。也支持压缩。",
+      "features": "智能缩进、保留字符串和注释、压缩模式。"
+    },
+    "css-flexbox": {
+      "name": "CSS Flexbox 生成器",
+      "description": "可视化生成 CSS Flexbox 布局，支持实时预览和代码复制",
+      "about": "可视化创建 CSS Flexbox 布局，支持实时预览和可复制的 CSS 代码。",
+      "features": "可视化控制、实时预览、复制 CSS 代码。"
+    },
+    "gradient-generator": {
+      "name": "渐变生成器",
+      "description": "可视化创建 CSS 渐变，支持线性、径向和锥形类型及预设",
+      "about": "使用可视化控件创建美丽的 CSS 渐变。支持线性、径向和锥形类型。",
+      "features": "多种渐变类型、颜色节点、CSS 输出、预设。"
+    },
+    "box-shadow": {
+      "name": "盒阴影生成器",
+      "description": "通过可视化控制生成 CSS box-shadow 代码，支持透明度和内阴影",
+      "about": "通过可视化控制偏移、模糊、扩展和颜色生成 CSS box-shadow 代码。",
+      "features": "可视化控制、透明度、内阴影选项、CSS 输出。"
+    },
+    "text-case": {
+      "name": "大小写转换",
+      "description": "在大写、小写、标题大小写、camelCase、snake_case 等格式之间转换文本",
+      "about": "在各种大小写格式之间转换文本，包括大写、小写、标题大小写、camelCase 和 snake_case。",
+      "features": "多种大小写格式、即时转换、复制结果。"
+    },
+    "word-counter": {
+      "name": "字数统计",
+      "description": "统计单词、字符、句子、段落数量，并估算阅读时间",
+      "about": "统计文本中的单词、字符、句子和段落数量。包含阅读时间估算。",
+      "features": "单词统计、字符统计、阅读时间、段落统计。"
+    },
+    "json-to-go": {
+      "name": "JSON 转 Go 结构体",
+      "description": "从 JSON 生成 Go 结构体，支持 json 标签、嵌套类型和指针选项",
+      "about": "将 JSON 数据转换为带有正确标签和类型推断的 Go 结构体定义。",
+      "features": "嵌套类型、json 标签、指针选项、类型推断。"
+    },
+    "json-to-typescript": {
+      "name": "JSON 转 TypeScript",
+      "description": "将 JSON 数据转换为 TypeScript 接口，支持类型推断和嵌套",
+      "about": "将 JSON 数据转换为带类型推断的 TypeScript 接口定义。",
+      "features": "类型推断、嵌套接口、数组支持。"
+    },
+    "sql-formatter": {
+      "name": "SQL 格式化",
+      "description": "格式化、压缩和大写 SQL 查询，支持正确缩进和关键字高亮",
+      "about": "格式化和美化 SQL 查询，支持正确缩进和关键字大写。",
+      "features": "美化打印、压缩、关键字高亮、缩进。"
+    },
+    "cron-generator": {
+      "name": "Cron 表达式生成器",
+      "description": "生成和理解 cron 调度表达式，支持可读描述和下次运行时间",
+      "about": "生成带可读描述的 cron 表达式。查看下次运行时间。",
+      "features": "可读描述、下次运行时间、复制表达式。"
+    },
+    "csv-json": {
+      "name": "CSV ⇄ JSON 转换器",
+      "description": "在 CSV 和 JSON 格式之间转换，支持正确转义、表头和多种分隔符",
+      "about": "在 CSV 和 JSON 格式之间转换，支持表头和正确转义。",
+      "features": "双向转换、表头支持、自定义分隔符。"
+    },
+    "wechat-markdown-editor": {
+      "name": "微信 Markdown 编辑器",
+      "description": "编写 Markdown 实时预览，一键复制精美样式内容到微信",
+      "about": "专为微信公众号设计的全功能 Markdown 编辑器。编写 Markdown 实时预览，选择 10+ 精美主题，一键复制带样式的 HTML 到微信。",
+      "features": "10+ 内置主题、一键复制到微信、CodeMirror 编辑器、实时预览、语法高亮、暗色模式、本地存储。"
+    }
+  }
+}

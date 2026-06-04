@@ -32,8 +32,8 @@ export default function IpLookup() {
     try {
       const target = ip || ipInput.trim() || ''
       const url = target
-        ? `http://ip-api.com/json/${target}?fields=66846719`
-        : `http://ip-api.com/json/?fields=66846719`
+        ? `https://ip-api.com/json/${target}?fields=66846719`
+        : `https://ip-api.com/json/?fields=66846719`
       const res = await fetch(url)
       if (!res.ok) throw new Error('API request failed')
       const data = await res.json()
@@ -121,7 +121,7 @@ export default function IpLookup() {
       )}
 
       <div style={{ marginTop: 16, padding: '12px 16px', background: 'var(--bg-secondary)', border: '1px solid var(--border)', borderRadius: 8, fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.6 }}>
-        Powered by <a href="http://ip-api.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)' }}>ip-api.com</a> free API. 45 requests per minute limit. Geolocation data is approximate.
+        Powered by <a href="https://ip-api.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)' }}>ip-api.com</a> free API. 45 requests per minute limit. Geolocation data is approximate.
       </div>
     </ToolLayout>
   )

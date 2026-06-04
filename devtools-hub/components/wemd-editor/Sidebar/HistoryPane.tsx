@@ -42,11 +42,11 @@ export default function HistoryPane() {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        height: '100%',
+        flex: 1,
+        minHeight: 0,
         backgroundColor: bg,
         borderRight: `1px solid ${border}`,
         overflow: 'hidden',
-        minHeight: 0,
       }}
     >
       {/* Header */}

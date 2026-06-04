@@ -43,7 +43,6 @@ const MarkdownPreview = forwardRef<HTMLDivElement, MarkdownPreviewProps>(
   ({ content, wechatMode }, ref) => {
     const { currentThemeId, customThemes } = useThemeStore()
     const { isDarkUI } = useSettingsStore()
-    const contentRef = useRef<HTMLDivElement>(null)
 
     const html = useMemo(() => parser.render(content), [content])
     const allThemes = getAllThemes(customThemes)
@@ -54,10 +53,9 @@ const MarkdownPreview = forwardRef<HTMLDivElement, MarkdownPreviewProps>(
 
     // Initialize mermaid diagrams after render
     useEffect(() => {
-      const el = contentRef.current
-      if (!el) return
-
       const renderMermaid = () => {
+        const el = document.querySelector('.wemd-preview')
+        if (!el) return false
         const mermaidEls = el.querySelectorAll('.mermaid')
         if (mermaidEls.length === 0) return false
 
@@ -127,7 +125,6 @@ const MarkdownPreview = forwardRef<HTMLDivElement, MarkdownPreviewProps>(
           ` : ''}
         ` }} />
         <div
-          ref={contentRef}
           className="wemd-preview"
           style={{
             maxWidth: wechatMode ? '375px' : '780px',

@@ -386,14 +386,14 @@ export default function EditorLayout() {
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
+            minHeight: isMobile ? '40vh' : 0,
             borderLeft: showSidebar && !isMobile ? `1px solid ${border}` : 'none',
             borderRight: isMobile ? 'none' : `1px solid ${border}`,
             borderBottom: isMobile ? `1px solid ${border}` : 'none',
-            minHeight: isMobile ? '40vh' : undefined,
           }}
         >
           <Toolbar />
-          <div ref={editorWrapRef} style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+          <div ref={editorWrapRef} style={{ flex: 1, overflow: 'hidden', minHeight: 0 }}>
             <CodeMirrorEditor />
           </div>
           <StatusBar />
@@ -406,7 +406,7 @@ export default function EditorLayout() {
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
-            minHeight: isMobile ? '40vh' : undefined,
+            minHeight: isMobile ? '40vh' : 0,
           }}
         >
           {/* Preview tabs */}

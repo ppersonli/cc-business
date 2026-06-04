@@ -111,8 +111,6 @@ export default function CodeMirrorEditor() {
         flex: 1,
         minHeight: 0,
         overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
       }}
     />
   )

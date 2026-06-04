@@ -393,7 +393,7 @@ export default function EditorLayout() {
           }}
         >
           <Toolbar />
-          <div ref={editorWrapRef} style={{ flex: 1, overflow: 'hidden' }}>
+          <div ref={editorWrapRef} style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
             <CodeMirrorEditor />
           </div>
           <StatusBar />
@@ -454,7 +454,7 @@ export default function EditorLayout() {
           </div>
 
           {/* Preview content */}
-          <div style={{ flex: 1, overflow: 'hidden' }}>
+          <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
             <MarkdownPreview
               ref={previewRef}
               content={content}

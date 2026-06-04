@@ -38,8 +38,30 @@ const MarkdownPreview = forwardRef<HTMLDivElement, MarkdownPreviewProps>(
       const mermaidEls = el.querySelectorAll('.mermaid')
       if (mermaidEls.length === 0) return
 
-      // Dynamic import mermaid (client-side only)
-      import('mermaid').then(({ default: mermaid }) => {
+      // Load mermaid via script tag (more reliable than dynamic import in Next.js)
+      const loadMermaid = (): Promise<typeof import('mermaid').default> => {
+        return new Promise((resolve, reject) => {
+          // Already loaded
+          if ((window as any).mermaid) {
+            resolve((window as any).mermaid)
+            return
+          }
+          const existing = document.querySelector('script[data-mermaid]') as HTMLScriptElement
+          if (existing) {
+            existing.addEventListener('load', () => resolve((window as any).mermaid))
+            existing.addEventListener('error', () => reject(new Error('Failed to load mermaid')))
+            return
+          }
+          const script = document.createElement('script')
+          script.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js'
+          script.dataset.mermaid = 'true'
+          script.onload = () => resolve((window as any).mermaid)
+          script.onerror = () => reject(new Error('Failed to load mermaid'))
+          document.head.appendChild(script)
+        })
+      }
+
+      loadMermaid().then((mermaid) => {
         mermaid.initialize({
           startOnLoad: false,
           theme: isDarkUI ? 'dark' : 'default',
@@ -53,7 +75,6 @@ const MarkdownPreview = forwardRef<HTMLDivElement, MarkdownPreviewProps>(
             const { svg } = await mermaid.render(`mermaid-${Date.now()}-${i}`, code)
             mEl.innerHTML = svg
           } catch (err) {
-            // Show friendly error fallback instead of raw mermaid error
             const errMsg = err instanceof Error ? err.message : String(err)
             mEl.innerHTML = `<div style="padding:12px 16px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;color:#991b1b;font-size:13px;text-align:left;max-width:100%;overflow:auto;">
               <div style="font-weight:600;margin-bottom:4px;">⚠️ Mermaid 渲染失败</div>
@@ -63,7 +84,6 @@ const MarkdownPreview = forwardRef<HTMLDivElement, MarkdownPreviewProps>(
           }
         })
       }).catch(() => {
-        // mermaid not available — show placeholder
         mermaidEls.forEach((mEl) => {
           const code = mEl.textContent || ''
           if (!code.trim()) return

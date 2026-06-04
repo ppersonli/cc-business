@@ -15,7 +15,7 @@ import { useEditorStore } from '../../../lib/wemd/stores/editorStore'
 import { useSettingsStore } from '../../../lib/wemd/stores/settingsStore'
 
 const lightTheme = EditorView.theme({
-  '&': { backgroundColor: '#ffffff', color: '#1e293b' },
+  '&': { backgroundColor: '#ffffff', color: '#1e293b', minHeight: 0 },
   '.cm-content': { fontFamily: "'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace", fontSize: '14px', lineHeight: '1.7' },
   '.cm-gutters': { backgroundColor: '#f8fafc', color: '#94a3b8', borderRight: '1px solid #e2e8f0' },
   '.cm-activeLineGutter': { backgroundColor: '#e2e8f0' },
@@ -28,7 +28,7 @@ const lightTheme = EditorView.theme({
 }, { dark: false })
 
 const darkTheme = EditorView.theme({
-  '&': { backgroundColor: '#0f172a', color: '#e2e8f0' },
+  '&': { backgroundColor: '#0f172a', color: '#e2e8f0', minHeight: 0 },
   '.cm-content': { fontFamily: "'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace", fontSize: '14px', lineHeight: '1.7' },
   '.cm-gutters': { backgroundColor: '#1e293b', color: '#475569', borderRight: '1px solid #334155' },
   '.cm-activeLineGutter': { backgroundColor: '#334155' },

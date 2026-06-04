@@ -24,8 +24,14 @@ function loadMermaid(): Promise<any> {
       resolve((window as any).mermaid)
       return
     }
-    const existing = document.querySelector('script[data-mermaid]')
+    const existing = document.querySelector('script[data-mermaid]') as HTMLScriptElement | null
     if (existing) {
+      // Script already loaded
+      if ((window as any).mermaid) {
+        resolve((window as any).mermaid)
+        return
+      }
+      // Script tag exists but not loaded yet — wait
       existing.addEventListener('load', () => resolve((window as any).mermaid))
       existing.addEventListener('error', () => reject(new Error('Failed to load mermaid')))
       return

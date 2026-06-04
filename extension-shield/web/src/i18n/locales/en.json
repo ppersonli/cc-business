@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "scan": "Scan",
+    "history": "History",
+    "pricing": "Pricing"
+  },
+  "footer": {
+    "copyright": "ExtensionShield. All rights reserved.",
+    "tagline": "Chrome extension security scanning — 100% client-side."
+  },
+  "home": {
+    "heroTitle": "Scan Chrome Extensions for Security Risks",
+    "heroSubtitle": "Analyze permissions, detect secrets, check CASA compliance — all running 100% in your browser. No data leaves your device.",
+    "ctaScan": "Scan an Extension",
+    "ctaPricing": "View Pricing",
+    "featurePermissions": {
+      "title": "Permission Analysis",
+      "desc": "Detect overly broad permissions, dangerous combinations, and host pattern abuse."
+    },
+    "featureCasa": {
+      "title": "CASA Pre-Scan",
+      "desc": "Check your extension against the Cloud Application Security Assessment framework before submission."
+    },
+    "featureSecrets": {
+      "title": "Secrets Detection",
+      "desc": "Find leaked API keys, tokens, and credentials hidden in extension source files."
+    },
+    "featureRemoteCode": {
+      "title": "Remote Code Detection",
+      "desc": "Flag eval(), dynamic imports, and remote script loading that violate Chrome Web Store policy."
+    },
+    "featureCsp": {
+      "title": "CSP Audit",
+      "desc": "Analyze Content Security Policy headers for unsafe-eval, unsafe-inline, and data: URI usage."
+    },
+    "featureObfuscation": {
+      "title": "Obfuscation Detection",
+      "desc": "Identify minified, encoded, or obfuscated code that may hide malicious behavior."
+    }
+  },
+  "upload": {
+    "title": "Upload Extension",
+    "subtitle": "Drag and drop a .crx or .zip file to scan for security risks.",
+    "dropzone": "Drop your .crx or .zip file here, or click to browse",
+    "acceptedFormats": "Accepted formats: .crx, .zip",
+    "scanning": "Scanning extension...",
+    "error": "Scan failed. Please check your file and try again.",
+    "scanAnother": "Scan Another"
+  },
+  "report": {
+    "title": "Security Report",
+    "riskScore": "Risk Score",
+    "summary": "Summary",
+    "critical": "Critical",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "total": "Total",
+    "categoryBreakdown": "Category Breakdown",
+    "findings": "Findings",
+    "noFindings": "No issues found. This extension passes all checks.",
+    "casaCompliance": "CASA Compliance",
+    "exportHtml": "Export HTML",
+    "exportJson": "Export JSON",
+    "scanNew": "Scan New Extension",
+    "notFound": "Report not found. It may have been cleared from local storage.",
+    "scannedAt": "Scanned",
+    "extensionName": "Extension",
+    "version": "Version",
+    "manifestVersion": "Manifest",
+    "suggestion": "Suggestion"
+  },
+  "history": {
+    "title": "Scan History",
+    "empty": "No scans yet. Upload an extension to get started.",
+    "extension": "Extension",
+    "riskScore": "Risk Score",
+    "riskLevel": "Risk Level",
+    "date": "Date",
+    "findings": "Findings",
+    "actions": "Actions",
+    "viewReport": "View",
+    "delete": "Delete"
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "subtitle": "Choose the plan that fits your security workflow.",
+    "singleScan": {
+      "name": "Single Scan",
+      "price": "$49",
+      "period": "per scan",
+      "feature1": "Full security analysis",
+      "feature2": "CASA compliance check",
+      "feature3": "HTML + JSON report export",
+      "feature4": "Permission & CSP audit",
+      "feature5": "Secrets & obfuscation detection",
+      "cta": "Start Scan"
+    },
+    "pro": {
+      "name": "Shield Pro",
+      "price": "$9.99",
+      "period": "/month",
+      "feature1": "Unlimited scans",
+      "feature2": "Priority scanning",
+      "feature3": "CI/CD integration",
+      "feature4": "Team collaboration",
+      "feature5": "Historical comparison",
+      "badge": "Popular",
+      "cta": "Subscribe"
+    },
+    "guarantee": "All scanning runs 100% client-side. No extension data is uploaded."
+  },
+  "severity": {
+    "critical": "Critical",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "categories": {
+    "permission": "Permissions",
+    "csp": "CSP",
+    "remote-code": "Remote Code",
+    "content-script": "Content Scripts",
+    "secrets": "Secrets",
+    "privacy": "Privacy",
+    "single-purpose": "Single Purpose",
+    "obfuscation": "Obfuscation",
+    "network": "Network",
+    "dependency": "Dependencies"
+  }
+}

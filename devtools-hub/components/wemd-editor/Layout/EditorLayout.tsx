@@ -366,7 +366,7 @@ export default function EditorLayout() {
       >
         {/* Left Sidebar - History (hidden on mobile) */}
         {showSidebar && !isMobile && (
-          <div style={{ width: '250px', flexShrink: 0, overflow: 'hidden' }}>
+          <div style={{ width: '250px', flexShrink: 0, overflow: 'hidden', minHeight: 0 }}>
             <HistoryPane />
           </div>
         )}

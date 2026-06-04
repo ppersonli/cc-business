@@ -46,6 +46,7 @@ export default function HistoryPane() {
         backgroundColor: bg,
         borderRight: `1px solid ${border}`,
         overflow: 'hidden',
+        minHeight: 0,
       }}
     >
       {/* Header */}

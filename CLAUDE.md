@@ -111,7 +111,7 @@ pnpm test:e2e         # E2E测试（Playwright）
 ```bash
 pnpm test:unit        # 单元测试
 pnpm test:integration # 集成测试
-pnpm test:e2e         # E2E测试（Playwright + CDP 9223）
+pnpm test:e2e         # E2E测试（Playwright原生，直接launch带插件的Chrome）
 ```
 
 ### 测试覆盖要求
@@ -119,6 +119,32 @@ pnpm test:e2e         # E2E测试（Playwright + CDP 9223）
 - API端点：100%
 - UI组件：90%+
 - 边界条件：必须测试
+
+### Chrome插件E2E测试（Playwright原生，不用CDP 9223）
+
+```typescript
+import { chromium } from 'playwright';
+
+// 启动带插件的Chrome
+const browser = await chromium.launch({
+  headless: false,
+  args: [
+    `--disable-extensions-except=${extensionPath}`,
+    `--load-extension=${extensionPath}`,
+  ],
+});
+
+// 获取插件页面
+const [background] = await browser.contexts[0].waitForEvent('page');
+
+// 截图
+await page.screenshot({ path: 'screenshot.png' });
+
+// 测试插件功能
+await page.click('button');
+```
+
+**不要用CDP 9223测试插件**，Playwright原生更快更稳定。
 
 ## ⚠️ 提交前检查清单
 

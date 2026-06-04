@@ -1,0 +1,14 @@
+{
+  "name": "extension-shield",
+  "private": true,
+  "scripts": {
+    "dev:ext": "pnpm --filter extension-shield-extension dev",
+    "dev:web": "pnpm --filter extension-shield-web dev",
+    "build": "pnpm --filter extension-shield-scanner build && pnpm --filter extension-shield-extension build && pnpm --filter extension-shield-web build",
+    "build:scanner": "pnpm --filter extension-shield-scanner build",
+    "build:ext": "pnpm --filter extension-shield-extension build",
+    "build:web": "pnpm --filter extension-shield-web build",
+    "test": "pnpm -r test",
+    "test:coverage": "pnpm -r test:coverage"
+  }
+}

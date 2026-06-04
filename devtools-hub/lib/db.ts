@@ -67,6 +67,34 @@ export async function initSchema() {
       try { await db.execute(`ALTER TABLE users ADD COLUMN ${col} ${type}`); } catch {}
     }
   }
+  // ExtensionShield tables
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS extension_shield_scans (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      extension_name TEXT NOT NULL,
+      extension_id TEXT,
+      risk_score INTEGER NOT NULL,
+      risk_level TEXT NOT NULL,
+      manifest_version INTEGER,
+      report_json TEXT NOT NULL,
+      report_html TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id)
+    )
+  `);
+
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS extension_shield_usage (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      scan_type TEXT NOT NULL,
+      scan_id INTEGER,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id),
+      FOREIGN KEY (scan_id) REFERENCES extension_shield_scans(id)
+    )
+  `);
 }
 
 export interface User {
@@ -227,4 +255,95 @@ export async function findOrCreateGoogleUser(
     avatar_url: avatarUrl,
     created_at: new Date().toISOString(),
   };
+}
+
+// ===== ExtensionShield Functions =====
+
+export interface ShieldScan {
+  id: number;
+  user_id: number;
+  extension_name: string;
+  extension_id: string | null;
+  risk_score: number;
+  risk_level: string;
+  manifest_version: number | null;
+  report_json: string;
+  report_html: string | null;
+  created_at: string;
+}
+
+export async function createShieldScan(params: {
+  userId: number;
+  extensionName: string;
+  extensionId?: string;
+  riskScore: number;
+  riskLevel: string;
+  manifestVersion?: number;
+  reportJson: string;
+  reportHtml?: string;
+}): Promise<ShieldScan> {
+  const db = getClient();
+  const result = await db.execute({
+    sql: `INSERT INTO extension_shield_scans
+      (user_id, extension_name, extension_id, risk_score, risk_level, manifest_version, report_json, report_html)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    args: [
+      params.userId,
+      params.extensionName,
+      params.extensionId || null,
+      params.riskScore,
+      params.riskLevel,
+      params.manifestVersion || null,
+      params.reportJson,
+      params.reportHtml || null,
+    ],
+  });
+
+  return {
+    id: Number(result.lastInsertRowid),
+    user_id: params.userId,
+    extension_name: params.extensionName,
+    extension_id: params.extensionId || null,
+    risk_score: params.riskScore,
+    risk_level: params.riskLevel,
+    manifest_version: params.manifestVersion || null,
+    report_json: params.reportJson,
+    report_html: params.reportHtml || null,
+    created_at: new Date().toISOString(),
+  };
+}
+
+export async function getShieldScansByUserId(
+  userId: number,
+  limit = 20,
+  offset = 0
+): Promise<ShieldScan[]> {
+  const db = getClient();
+  const result = await db.execute({
+    sql: 'SELECT * FROM extension_shield_scans WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?',
+    args: [userId, limit, offset],
+  });
+  return result.rows as unknown as ShieldScan[];
+}
+
+export async function getShieldScanById(
+  scanId: number
+): Promise<ShieldScan | undefined> {
+  const db = getClient();
+  const result = await db.execute({
+    sql: 'SELECT * FROM extension_shield_scans WHERE id = ?',
+    args: [scanId],
+  });
+  return result.rows[0] as unknown as ShieldScan | undefined;
+}
+
+export async function getShieldScanCountByUserId(
+  userId: number
+): Promise<number> {
+  const db = getClient();
+  const result = await db.execute({
+    sql: 'SELECT COUNT(*) as count FROM extension_shield_scans WHERE user_id = ?',
+    args: [userId],
+  });
+  return (result.rows[0] as any).count;
 }

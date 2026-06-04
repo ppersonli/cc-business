@@ -5,7 +5,7 @@ export default defineConfig({
   manifest: {
     name: 'SnapGen - AI Screenshot to Code',
     description: 'Screenshot → AI analysis: get descriptions, code, and UI feedback instantly',
-    permissions: ['activeTab', 'storage', 'contextMenus', 'scripting', 'notifications', 'sidePanel', 'commands', 'cookies'],
+    permissions: ['<all_urls>', 'storage', 'contextMenus', 'scripting', 'notifications', 'sidePanel', 'commands', 'cookies'],
     host_permissions: ['https://*/*', 'https://api.openai.com/*', 'https://api.anthropic.com/*'],
     icons: {
       16: 'icon/icon-16.png',

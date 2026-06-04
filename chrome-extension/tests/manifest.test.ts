@@ -40,10 +40,13 @@ describe('Manifest V3 configuration', () => {
   });
 
   it('has all required permissions', () => {
-    const required = ['activeTab', 'storage', 'contextMenus', 'scripting', 'notifications', 'sidePanel', 'commands'];
+    const required = ['storage', 'contextMenus', 'scripting', 'notifications', 'sidePanel', 'commands'];
     for (const perm of required) {
       expect(manifest.permissions).toContain(perm);
     }
+    // activeTab replaced by <all_urls> for Side Panel reliability
+    const hasTabPermission = manifest.permissions.includes('activeTab') || manifest.permissions.includes('<all_urls>');
+    expect(hasTabPermission).toBe(true);
   });
 
   it('includes sidepanel.html in output', () => {

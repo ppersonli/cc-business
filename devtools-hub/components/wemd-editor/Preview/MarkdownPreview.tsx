@@ -59,51 +59,55 @@ const MarkdownPreview = forwardRef<HTMLDivElement, MarkdownPreviewProps>(
 
     // Initialize mermaid diagrams after render
     useEffect(() => {
-      const renderMermaid = () => {
-        const el = document.querySelector('.wemd-preview')
-        if (!el) return false
-        const mermaidEls = el.querySelectorAll('.mermaid')
-        if (mermaidEls.length === 0) return false
+      // Use rAF to ensure DOM is committed after dangerouslySetInnerHTML
+      const raf = requestAnimationFrame(() => {
+        const renderMermaid = () => {
+          const el = document.querySelector('.wemd-preview')
+          if (!el) return false
+          const mermaidEls = el.querySelectorAll('.mermaid')
+          if (mermaidEls.length === 0) return false
 
-        loadMermaid().then((mermaid) => {
-          mermaid.initialize({
-            startOnLoad: false,
-            theme: isDarkUI ? 'dark' : 'default',
-            securityLevel: 'loose',
-          })
+          loadMermaid().then((mermaid) => {
+            mermaid.initialize({
+              startOnLoad: false,
+              theme: isDarkUI ? 'dark' : 'default',
+              securityLevel: 'loose',
+            })
 
-          mermaidEls.forEach(async (mEl: Element, i: number) => {
-            const code = mEl.textContent || ''
-            if (!code.trim()) return
-            // Skip if already rendered
-            if (mEl.querySelector('svg') || mEl.querySelector('[style*="border"]')) return
-            try {
-              const { svg } = await mermaid.render(`mermaid-${Date.now()}-${i}`, code)
-              mEl.innerHTML = svg
-            } catch (err) {
-              const errMsg = err instanceof Error ? err.message : String(err)
-              mEl.innerHTML = `<div style="padding:12px 16px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;color:#991b1b;font-size:13px;text-align:left;max-width:100%;overflow:auto;">
-                <div style="font-weight:600;margin-bottom:4px;">⚠️ Mermaid 渲染失败</div>
-                <div style="font-size:12px;color:#666;word-break:break-all;">${errMsg.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
-                <details style="margin-top:8px;"><summary style="cursor:pointer;font-size:12px;color:#991b1b;">查看原始代码</summary><pre style="margin-top:4px;padding:8px;background:#fff;border-radius:4px;font-size:11px;overflow-x:auto;white-space:pre-wrap;">${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre></details>
-              </div>`
-            }
+            mermaidEls.forEach(async (mEl: Element, i: number) => {
+              const code = mEl.textContent || ''
+              if (!code.trim()) return
+              // Skip if already rendered
+              if (mEl.querySelector('svg') || mEl.querySelector('[style*="border"]')) return
+              try {
+                const { svg } = await mermaid.render(`mermaid-${Date.now()}-${i}`, code)
+                mEl.innerHTML = svg
+              } catch (err) {
+                const errMsg = err instanceof Error ? err.message : String(err)
+                mEl.innerHTML = `<div style="padding:12px 16px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;color:#991b1b;font-size:13px;text-align:left;max-width:100%;overflow:auto;">
+                  <div style="font-weight:600;margin-bottom:4px;">⚠️ Mermaid 渲染失败</div>
+                  <div style="font-size:12px;color:#666;word-break:break-all;">${errMsg.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+                  <details style="margin-top:8px;"><summary style="cursor:pointer;font-size:12px;color:#991b1b;">查看原始代码</summary><pre style="margin-top:4px;padding:8px;background:#fff;border-radius:4px;font-size:11px;overflow-x:auto;white-space:pre-wrap;">${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre></details>
+                </div>`
+              }
+            })
+          }).catch(() => {
+            mermaidEls.forEach((mEl: Element) => {
+              const code = mEl.textContent || ''
+              if (!code.trim()) return
+              mEl.innerHTML = `<div style="padding:8px 12px;background:#f1f5f9;border-radius:6px;color:#64748b;font-size:12px;text-align:center;">📊 Mermaid 图表 (需要客户端渲染)</div>`
+            })
           })
-        }).catch(() => {
-          mermaidEls.forEach((mEl: Element) => {
-            const code = mEl.textContent || ''
-            if (!code.trim()) return
-            mEl.innerHTML = `<div style="padding:8px 12px;background:#f1f5f9;border-radius:6px;color:#64748b;font-size:12px;text-align:center;">📊 Mermaid 图表 (需要客户端渲染)</div>`
-          })
-        })
-        return true
-      }
+          return true
+        }
 
-      // Try immediately, then retry after delay
-      if (!renderMermaid()) {
-        const timer = setTimeout(renderMermaid, 500)
-        return () => clearTimeout(timer)
-      }
+        // Try immediately, then retry after delay
+        if (!renderMermaid()) {
+          const timer = setTimeout(renderMermaid, 500)
+          return () => clearTimeout(timer)
+        }
+      })
+      return () => cancelAnimationFrame(raf)
     }, [html, isDarkUI])
 
     return (

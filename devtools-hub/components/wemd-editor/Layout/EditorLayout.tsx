@@ -50,6 +50,13 @@ export default function EditorLayout() {
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isMobile = useIsMobile()
 
+  // Prevent body from scrolling — editor manages its own scroll
+  useEffect(() => {
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = prev }
+  }, [])
+
   // Auto-save to IndexedDB
   useEffect(() => {
     if (!activeId) return

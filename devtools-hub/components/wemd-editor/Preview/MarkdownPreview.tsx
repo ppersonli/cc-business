@@ -52,12 +52,23 @@ const MarkdownPreview = forwardRef<HTMLDivElement, MarkdownPreviewProps>(
           try {
             const { svg } = await mermaid.render(`mermaid-${Date.now()}-${i}`, code)
             mEl.innerHTML = svg
-          } catch {
-            // mermaid parse error — leave as-is
+          } catch (err) {
+            // Show friendly error fallback instead of raw mermaid error
+            const errMsg = err instanceof Error ? err.message : String(err)
+            mEl.innerHTML = `<div style="padding:12px 16px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;color:#991b1b;font-size:13px;text-align:left;max-width:100%;overflow:auto;">
+              <div style="font-weight:600;margin-bottom:4px;">⚠️ Mermaid 渲染失败</div>
+              <div style="font-size:12px;color:#666;word-break:break-all;">${errMsg.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+              <details style="margin-top:8px;"><summary style="cursor:pointer;font-size:12px;color:#991b1b;">查看原始代码</summary><pre style="margin-top:4px;padding:8px;background:#fff;border-radius:4px;font-size:11px;overflow-x:auto;white-space:pre-wrap;">${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre></details>
+            </div>`
           }
         })
       }).catch(() => {
-        // mermaid not available
+        // mermaid not available — show placeholder
+        mermaidEls.forEach((mEl) => {
+          const code = mEl.textContent || ''
+          if (!code.trim()) return
+          mEl.innerHTML = `<div style="padding:8px 12px;background:#f1f5f9;border-radius:6px;color:#64748b;font-size:12px;text-align:center;">📊 Mermaid 图表 (需要客户端渲染)</div>`
+        })
       })
     }, [html, isDarkUI])
 
@@ -77,8 +88,9 @@ const MarkdownPreview = forwardRef<HTMLDivElement, MarkdownPreviewProps>(
           .wemd-preview .footnotes li { margin-bottom: 4px; color: #64748b; }
           .wemd-preview .katex-display { margin: 16px 0; overflow-x: auto; }
           .wemd-preview .katex { font-size: 1.1em; }
-          .wemd-preview .mermaid { margin: 16px 0; text-align: center; }
-          .wemd-preview .mermaid svg { max-width: 100%; }
+          .wemd-preview .mermaid { margin: 16px 0; text-align: center; overflow: hidden; max-width: 100%; }
+          .wemd-preview .mermaid svg { max-width: 100%; height: auto; }
+          .wemd-preview .mermaid > div { max-width: 100%; overflow: auto; }
           ${isDarkUI ? `
             .wemd-preview .footnotes { border-top-color: #334155; }
             .wemd-preview .footnotes li { color: #94a3b8; }

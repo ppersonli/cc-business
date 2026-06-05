@@ -8,6 +8,24 @@ export default function Footer() {
       padding: '24px 16px',
       marginTop: 'auto',
     }}>
+      <div style={{
+        maxWidth: 1200,
+        margin: '0 auto',
+        marginBottom: 16,
+        paddingBottom: 16,
+        borderBottom: '1px solid var(--border)',
+        textAlign: 'center',
+      }}>
+        <a
+          href="https://pixiaoli.cn"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'var(--text-muted)', fontSize: 13, textDecoration: 'none' }}
+        >
+          {'  Check out our ACGN content platform: '}
+          <span style={{ fontWeight: 600 }}>pixiaoli.cn</span>
+        </a>
+      </div>
       <div className="footer-inner" style={{
         maxWidth: 1200,
         margin: '0 auto',

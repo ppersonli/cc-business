@@ -44,29 +44,32 @@ describe('SECRET_RULES', () => {
 
 describe('scanForSecrets', () => {
   it('detects AWS access keys', () => {
-    const files = { 'config.js': 'const key = "AKIA_FAKE_EXAMPLE";' };
+    // Pattern: /(?:AKIA|ABIA|ACCA|ASIA)[A-Z0-9]{16}/g — AKIA + 16 uppercase alphanumeric
+    const files = { 'config.js': 'const key = "AKIA1234567890ABCDEF";' };
     const findings = scanForSecrets(files);
     expect(findings.some((f) => f.id === 'SECRET_AWS_KEY')).toBe(true);
   });
 
   it('detects GitHub tokens', () => {
-    const files = {
-      'config.js': 'const token = "ghp_FAKE_TOKEN_EXAMPLE";',
-    };
+    // Pattern: /gh[pousr]_[A-Za-z0-9_]{36,}/g — ghp_ + 36 alphanumeric
+    const token = 'ghp_' + 'a'.repeat(36);
+    const files = { 'config.js': `const token = "${token}";` };
     const findings = scanForSecrets(files);
     expect(findings.some((f) => f.id === 'SECRET_GITHUB_TOKEN')).toBe(true);
   });
 
   it('detects Google API keys', () => {
-    const files = {
-      'config.js': 'const apiKey = "AIza_FAKE_KEY_EXAMPLE";',
-    };
+    // Pattern: /AIza[A-Za-z0-9_-]{35}/g — AIza + 35 alphanumeric
+    const key = 'AIza' + 'S'.repeat(35);
+    const files = { 'config.js': `const apiKey = "${key}";` };
     const findings = scanForSecrets(files);
     expect(findings.some((f) => f.id === 'SECRET_GOOGLE_API')).toBe(true);
   });
 
   it('detects Stripe keys', () => {
-    const files = { 'config.js': 'const sk = "sk_FAKE_EXAMPLE";' };
+    // Pattern: /(sk|pk)_(test|live)_[A-Za-z0-9]{20,}/g — sk_test_ + 20 alphanumeric
+    const key = 'sk_test_' + 'a'.repeat(24);
+    const files = { 'config.js': `const sk = "${key}";` };
     const findings = scanForSecrets(files);
     expect(findings.some((f) => f.id === 'SECRET_STRIPE_KEY')).toBe(true);
   });
@@ -92,7 +95,7 @@ describe('scanForSecrets', () => {
 
   it('includes file path in findings', () => {
     const files = {
-      'src/config.js': 'const key = "AKIA_FAKE_EXAMPLE";',
+      'src/config.js': 'const key = "AKIA1234567890ABCDEF";',
     };
     const findings = scanForSecrets(files);
     expect(findings[0].file).toBe('src/config.js');
@@ -100,7 +103,7 @@ describe('scanForSecrets', () => {
 
   it('includes line number in findings', () => {
     const files = {
-      'test.js': 'const a = 1;\nconst b = 2;\nconst key = "AKIA_FAKE_EXAMPLE";',
+      'test.js': 'const a = 1;\nconst b = 2;\nconst key = "AKIA1234567890ABCDEF";',
     };
     const findings = scanForSecrets(files);
     expect(findings[0].line).toBe(3);

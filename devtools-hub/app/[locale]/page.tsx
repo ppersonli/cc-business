@@ -37,6 +37,37 @@ export default function Home() {
         </p>
       </div>
 
+      {/* pixiaoli.cn Promo Banner */}
+      <a
+        href="https://pixiaoli.cn"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="promo-banner"
+        style={{
+          display: 'block',
+          textDecoration: 'none',
+          marginBottom: 32,
+          borderRadius: 'var(--radius-lg, 16px)',
+          background: 'linear-gradient(135deg, #e0e7ff 0%, #fce7f3 50%, #fdf2f8 100%)',
+          border: '1px solid #c4b5fd40',
+          padding: '20px 24px',
+          transition: 'all 0.25s ease',
+          boxShadow: 'var(--shadow-sm)',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.boxShadow = '0 6px 24px rgba(139,92,246,0.12)'
+          e.currentTarget.style.transform = 'translateY(-3px)'
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.boxShadow = 'var(--shadow-sm)'
+          e.currentTarget.style.transform = 'translateY(0)'
+        }}
+      >
+        <span style={{ fontSize: 15, color: '#4c1d95', fontWeight: 500 }}>
+          {'  Also try pixiaoli.cn — AI-powered manga & webtoon creation platform'}
+        </span>
+      </a>
+
       {/* Featured: WeChat Markdown Editor */}
       <Link
         href={`/${locale}/tools/wechat-markdown-editor/`}

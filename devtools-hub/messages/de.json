@@ -80,7 +80,8 @@
     "Utility": "Werkzeuge",
     "Design": "Design",
     "Text": "Text",
-    "Network": "Netzwerk"
+    "Network": "Netzwerk",
+    "Security": "Sicherheit"
   },
   "tools": {
     "json-formatter": {
@@ -292,6 +293,12 @@
       "description": "Markdown schreiben mit Live-Vorschau und schön gestalteten Inhalt mit einem Klick in WeChat kopieren",
       "about": "Ein vollständiger Markdown-Editor für WeChat-Öffentliche-Konten. Markdown mit Live-Vorschau schreiben, aus über 10 schönen Themes wählen und gestylten HTML-Code direkt in WeChat kopieren.",
       "features": "10+ integrierte Themes, Ein-Klick-Kopie nach WeChat, CodeMirror-Editor, Live-Vorschau, Syntax-Hervorhebung, Dunkelmodus, lokaler Speicher."
+    },
+    "extension-shield": {
+      "name": "Extension Shield",
+      "description": "Chrome-Erweiterungen auf riskante Berechtigungen, Datenschutzprobleme und Sicherheitsbedrohungen scannen",
+      "about": "Laden Sie eine Chrome-Erweiterung (.zip oder .crx) hoch und erhalten Sie einen umfassenden Sicherheitsbericht. Analysiert Berechtigungen, CSP, Remote-Code-Risiken, Content-Skripte und Datenschutzprobleme.",
+      "features": "Berechtigungsanalyse, CSP-Pruefung, Remote-Code-Erkennung, Datenschutz-Audit, Risikobewertung, teilbare Berichte."
     }
   }
 }

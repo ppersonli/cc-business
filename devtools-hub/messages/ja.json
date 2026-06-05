@@ -80,7 +80,8 @@
     "Utility": "ユーティリティ",
     "Design": "デザイン",
     "Text": "テキスト",
-    "Network": "ネットワーク"
+    "Network": "ネットワーク",
+    "Security": "セキュリティ"
   },
   "tools": {
     "json-formatter": {
@@ -292,6 +293,12 @@
       "description": "ライブプレビュー付きでMarkdownを書き、スタイリッシュなコンテンツをワンクリックでWeChatにコピー",
       "about": "WeChat公式アカウント向けのフル機能Markdownエディタ。ライブプレビュー付きでMarkdownを書き、10以上の美しいテーマから選択し、スタイリッシュなHTMLをワンクリックでWeChatにコピーできます。",
       "features": "10以上のテーマ、WeChatへのワンクリックコピー、CodeMirrorエディタ、ライブプレビュー、シンタックスハイライト、ダークモード、ローカルストレージ。"
+    },
+    "extension-shield": {
+      "name": "Extension Shield",
+      "description": "Chrome拡張機能の危険な権限、プライバシー問題、セキュリティ脅威をスキャン",
+      "about": "Chrome拡張機能（.zipまたは.crx）をアップロードし、包括的なセキュリティレポートを取得。権限、CSP、リモートコードリスク、コンテンツスクリプト、プライバシー問題を分析。",
+      "features": "権限分析、CSPチェック、リモートコード検出、プライバシーオーディット、リスクスコアリング、共有可能なレポート。"
     }
   }
 }

@@ -80,7 +80,8 @@
     "Utility": "유틸리티",
     "Design": "디자인",
     "Text": "텍스트",
-    "Network": "네트워크"
+    "Network": "네트워크",
+    "Security": "보안"
   },
   "tools": {
     "json-formatter": {
@@ -292,6 +293,12 @@
       "description": "실시간 미리보기로 마크다운을 작성하고 스타일 콘텐츠를 원클릭으로 WeChat에 복사",
       "about": "WeChat 공식 계정을 위한 풀기능 마크다운 에디터. 실시간 미리보기로 마크다운을 작성하고, 10개 이상의 아름다운 테마를 선택하며, 스타일 HTML을 원클릭으로 WeChat에 복사할 수 있습니다.",
       "features": "10개 이상의 테마, WeChat 원클릭 복사, CodeMirror 에디터, 실시간 미리보기, 구문 강조, 다크 모드, 로컬 저장소."
+    },
+    "extension-shield": {
+      "name": "Extension Shield",
+      "description": "Chrome 확장 프로그램의 위험한 권한, 개인정보 문제 및 보안 위협 스캔",
+      "about": "Chrome 확장 프로그램(.zip 또는 .crx)을 업로드하고 종합적인 보안 보고서를 받으세요. 권한, CSP, 원격 코드 위험, 컴텐츠 스크립트, 개인정보 문제를 분석합니다.",
+      "features": "권한 분석, CSP 검사, 원격 코드 감지, 개인정보 감사, 위험 점수, 공유 가능한 보고서."
     }
   }
 }

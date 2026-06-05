@@ -80,7 +80,8 @@
     "Utility": "实用工具",
     "Design": "设计",
     "Text": "文本",
-    "Network": "网络"
+    "Network": "网络",
+    "Security": "安全"
   },
   "tools": {
     "json-formatter": {
@@ -292,6 +293,12 @@
       "description": "编写 Markdown 实时预览，一键复制精美样式内容到微信",
       "about": "专为微信公众号设计的全功能 Markdown 编辑器。编写 Markdown 实时预览，选择 10+ 精美主题，一键复制带样式的 HTML 到微信。",
       "features": "10+ 内置主题、一键复制到微信、CodeMirror 编辑器、实时预览、语法高亮、暗色模式、本地存储。"
+    },
+    "extension-shield": {
+      "name": "扩展盾牌",
+      "description": "扫描Chrome扩展的危险权限、隐私问题和安全威胁",
+      "about": "上传Chrome扩展（.zip或.crx）文件，获得全面的安全报告。分析权限、CSP、远程代码风险、内容脚本和隐私问题。",
+      "features": "权限分析、CSP检查、远程代码检测、隐私审计、风险评分、可分享报告。"
     }
   }
 }

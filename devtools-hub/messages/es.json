@@ -80,7 +80,8 @@
     "Utility": "Utilidad",
     "Design": "Diseño",
     "Text": "Texto",
-    "Network": "Red"
+    "Network": "Red",
+    "Security": "Seguridad"
   },
   "tools": {
     "json-formatter": {
@@ -292,6 +293,12 @@
       "description": "Escribe Markdown con vista previa en vivo y copia contenido con estilo a WeChat con un clic",
       "about": "Un editor Markdown completo para cuentas públicas de WeChat. Escribe Markdown con vista previa, elige entre más de 10 temas y copia HTML con estilo directamente a WeChat.",
       "features": "Más de 10 temas, copia a WeChat con un clic, editor CodeMirror, vista previa en vivo, resaltado de sintaxis, modo oscuro, almacenamiento local."
+    },
+    "extension-shield": {
+      "name": "Extension Shield",
+      "description": "Analiza extensiones de Chrome en busca de permisos riesgosos, problemas de privacidad y amenazas de seguridad",
+      "about": "Sube una extensión de Chrome (.zip o .crx) y obtén un informe de seguridad completo. Analiza permisos, CSP, riesgos de código remoto, scripts de contenido y problemas de privacidad.",
+      "features": "Análisis de permisos, verificación de CSP, detección de código remoto, auditoría de privacidad, puntuación de riesgo, informes compartibles."
     }
   }
 }

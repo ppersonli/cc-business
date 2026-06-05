@@ -2,8 +2,8 @@
 import { useState, useCallback, useEffect, type DragEvent, type ChangeEvent } from 'react'
 import { getToolBySlug } from '@/lib/tools'
 import ToolLayout from '@/components/ToolLayout'
-import { extractExtension, generateScanReport } from 'extension-shield-scanner'
-import type { ScanReport, RiskLevel, RiskCategory } from 'extension-shield-scanner'
+import { extractExtension, generateScanReport } from '@/lib/extension-shield-scanner'
+import type { ScanReport, RiskLevel, RiskCategory } from '@/lib/extension-shield-scanner'
 
 const tool = getToolBySlug('extension-shield')!
 

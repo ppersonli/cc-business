@@ -42,6 +42,7 @@ export const tools: Tool[] = [
   { name: 'Cron Expression Generator', slug: 'cron-generator', description: 'Generate and understand cron schedule expressions with human-readable descriptions and next run times', category: 'Utility', color: '#10b981' },
   { name: 'CSV ⇄ JSON Converter', slug: 'csv-json', description: 'Convert between CSV and JSON formats with proper escaping, headers, and multiple delimiter support', category: 'Data', color: '#f59e0b' },
   { name: 'WeChat Markdown Editor', slug: 'wechat-markdown-editor', description: 'Write Markdown with live preview and copy beautifully styled content to WeChat with one click', category: 'Text', color: '#07C160' },
+  { name: 'Extension Shield', slug: 'extension-shield', description: 'Scan Chrome extensions for risky permissions, privacy issues, and security threats', category: 'Security', color: '#ef4444' },
 ]
 
 export const categories = [...new Set(tools.map(t => t.category))]

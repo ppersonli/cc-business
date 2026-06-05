@@ -40,13 +40,16 @@ describe('Manifest V3 configuration', () => {
   });
 
   it('has all required permissions', () => {
-    const required = ['storage', 'contextMenus', 'scripting', 'notifications', 'sidePanel', 'commands'];
+    // Only declare permissions actually used in code (CWS pitfall #14)
+    const required = ['storage', 'sidePanel', 'commands', 'tabs', 'cookies'];
     for (const perm of required) {
       expect(manifest.permissions).toContain(perm);
     }
-    // activeTab replaced by <all_urls> for Side Panel reliability
-    const hasTabPermission = manifest.permissions.includes('activeTab') || manifest.permissions.includes('<all_urls>');
-    expect(hasTabPermission).toBe(true);
+    // Verify no unused permissions are declared
+    const allowedPerms = ['storage', 'sidePanel', 'commands', 'tabs', 'cookies'];
+    for (const perm of manifest.permissions) {
+      expect(allowedPerms).toContain(perm);
+    }
   });
 
   it('includes sidepanel.html in output', () => {

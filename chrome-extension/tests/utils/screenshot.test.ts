@@ -1,5 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import {
+  captureVisibleTab,
+  cropScreenshot,
+  compressForApi,
   saveToHistory,
   getHistory,
   clearHistory,
@@ -11,6 +14,36 @@ describe('utils/screenshot', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     (globalThis as any).browser.storage.local.data = {};
+
+    // Mock Image constructor so onload fires synchronously
+    (globalThis as any).Image = class MockImage {
+      width = 100;
+      height = 80;
+      onload: (() => void) | null = null;
+      onerror: (() => void) | null = null;
+      _srcVal = '';
+      set src(val: string) {
+        this._srcVal = val;
+        // Fire onload synchronously for testing
+        queueMicrotask(() => this.onload?.());
+      }
+      get src() { return this._srcVal; }
+    };
+
+    // Mock canvas for cropScreenshot/compressForApi
+    const mockCtx = {
+      drawImage: vi.fn(),
+    };
+    const mockCanvas = {
+      width: 0,
+      height: 0,
+      getContext: vi.fn().mockReturnValue(mockCtx),
+      toDataURL: vi.fn().mockReturnValue('data:image/jpeg;base64,mocked'),
+    };
+    vi.spyOn(document, 'createElement').mockImplementation((tag: string) => {
+      if (tag === 'canvas') return mockCanvas as any;
+      return {} as any;
+    });
   });
 
   describe('saveToHistory', () => {
@@ -146,6 +179,92 @@ describe('utils/screenshot', () => {
       expect(mockAppend).toHaveBeenCalled();
       expect(mockClick).toHaveBeenCalled();
       expect(mockRemove).toHaveBeenCalled();
+    });
+  });
+
+  describe('captureVisibleTab', () => {
+    it('returns screenshot data with tab info', async () => {
+      (browser.tabs.query as any).mockResolvedValue([{
+        id: 1,
+        url: 'https://example.com',
+        title: 'Example Page',
+      }]);
+
+      (chrome as any).tabs = {
+        captureVisibleTab: vi.fn().mockResolvedValue('data:image/png;base64,iVBOR'),
+      };
+
+      const result = await captureVisibleTab();
+
+      expect(result.dataUrl).toBe('data:image/png;base64,iVBOR');
+      expect(result.url).toBe('https://example.com');
+      expect(result.title).toBe('Example Page');
+      expect(result.timestamp).toBeGreaterThan(0);
+      expect(typeof result.width).toBe('number');
+      expect(typeof result.height).toBe('number');
+    });
+
+    it('throws when no active tab found', async () => {
+      (browser.tabs.query as any).mockResolvedValue([]);
+
+      await expect(captureVisibleTab()).rejects.toThrow('No active tab found');
+    });
+
+    it('uses Untitled when tab has no title', async () => {
+      (browser.tabs.query as any).mockResolvedValue([{
+        id: 1,
+        url: 'https://example.com',
+        title: undefined,
+      }]);
+
+      (chrome as any).tabs = {
+        captureVisibleTab: vi.fn().mockResolvedValue('data:image/png;base64,abc'),
+      };
+
+      const result = await captureVisibleTab();
+      expect(result.title).toBe('Untitled');
+    });
+
+    it('uses empty string when tab has no url', async () => {
+      (browser.tabs.query as any).mockResolvedValue([{
+        id: 1,
+        url: undefined,
+        title: 'Page',
+      }]);
+
+      (chrome as any).tabs = {
+        captureVisibleTab: vi.fn().mockResolvedValue('data:image/png;base64,abc'),
+      };
+
+      const result = await captureVisibleTab();
+      expect(result.url).toBe('');
+    });
+  });
+
+  describe('cropScreenshot', () => {
+    it('returns cropped image data URL', async () => {
+      const result = await cropScreenshot('data:image/png;base64,abc', {
+        x: 10, y: 20, width: 100, height: 50,
+      });
+
+      expect(typeof result).toBe('string');
+      expect(result).toContain('data:');
+    });
+  });
+
+  describe('compressForApi', () => {
+    it('returns JPEG data URL', async () => {
+      const result = await compressForApi('data:image/png;base64,abc');
+
+      expect(typeof result).toBe('string');
+      expect(result).toContain('data:');
+    });
+
+    it('accepts custom maxWidth parameter', async () => {
+      const result = await compressForApi('data:image/png;base64,abc', 800, 0.5);
+
+      expect(typeof result).toBe('string');
+      expect(result).toContain('data:');
     });
   });
 });

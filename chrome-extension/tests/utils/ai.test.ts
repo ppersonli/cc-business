@@ -5,6 +5,8 @@ import {
   summarizePage,
   summarizeYoutube,
   summarizeSelection,
+  chatWithPageContent,
+  summarizeViaHosted,
   buildPagePrompt,
   buildYoutubePrompt,
   parseJsonResponse,
@@ -12,7 +14,7 @@ import {
   toAiError,
   AVAILABLE_MODELS,
 } from '~/utils/ai';
-import type { AiSettings, SummaryOptions, YoutubeSummaryOptions } from '~/utils/ai';
+import type { AiSettings, SummaryOptions, YoutubeSummaryOptions, ChatMessage } from '~/utils/ai';
 
 describe('utils/ai', () => {
   beforeEach(() => {
@@ -778,6 +780,323 @@ describe('utils/ai', () => {
         title: 'Example',
         text: 'Content',
       }, settings)).rejects.toMatchObject({ code: 'unknown' });
+    });
+  });
+
+  describe('chatWithPageContent', () => {
+    let fetchSpy: ReturnType<typeof vi.fn>;
+    const settings: AiSettings = { provider: 'openai', apiKey: 'sk-test', model: 'gpt-4o-mini' };
+
+    beforeEach(() => {
+      fetchSpy = vi.fn();
+      vi.stubGlobal('fetch', fetchSpy);
+    });
+
+    it('returns assistant response on OpenAI success', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          choices: [{ message: { content: 'The answer is 42.' } }],
+        }),
+      });
+
+      const history: ChatMessage[] = [
+        { role: 'user', content: 'What is the meaning of life?' },
+        { role: 'assistant', content: '42.' },
+      ];
+
+      const result = await chatWithPageContent(
+        'Page content about life',
+        history,
+        'Can you explain?',
+        settings,
+        'Life Page',
+      );
+
+      expect(result).toBe('The answer is 42.');
+      expect(fetchSpy).toHaveBeenCalledWith(
+        'https://api.openai.com/v1/chat/completions',
+        expect.objectContaining({ method: 'POST' }),
+      );
+    });
+
+    it('uses default page title when not provided', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          choices: [{ message: { content: 'OK' } }],
+        }),
+      });
+
+      const result = await chatWithPageContent(
+        'content',
+        [],
+        'question',
+        settings,
+      );
+
+      expect(result).toBe('OK');
+      const body = JSON.parse(fetchSpy.mock.calls[0][1].body);
+      // Should contain "Unknown" as default title
+      expect(body.messages[1].content).toContain('Unknown');
+    });
+
+    it('truncates page content to 8000 chars', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          choices: [{ message: { content: 'OK' } }],
+        }),
+      });
+
+      const longContent = 'x'.repeat(10000);
+      await chatWithPageContent(longContent, [], 'q', settings);
+
+      const body = JSON.parse(fetchSpy.mock.calls[0][1].body);
+      expect(body.messages[1].content).toContain('x'.repeat(8000));
+      expect(body.messages[1].content).not.toContain('x'.repeat(8001));
+    });
+
+    it('throws network error on fetch failure', async () => {
+      fetchSpy.mockRejectedValue(new Error('fetch failed'));
+
+      await expect(
+        chatWithPageContent('content', [], 'q', settings),
+      ).rejects.toThrow('Network error');
+    });
+
+    it('throws on non-ok response', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: false,
+        status: 401,
+        json: async () => ({ error: { message: 'Unauthorized' } }),
+      });
+
+      await expect(
+        chatWithPageContent('content', [], 'q', settings),
+      ).rejects.toMatchObject({ code: 'invalid_key' });
+    });
+
+    it('throws on empty response content', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          choices: [{ message: { content: null } }],
+        }),
+      });
+
+      await expect(
+        chatWithPageContent('content', [], 'q', settings),
+      ).rejects.toThrow('Empty response');
+    });
+
+    it('throws on empty choices array', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          choices: [],
+        }),
+      });
+
+      await expect(
+        chatWithPageContent('content', [], 'q', settings),
+      ).rejects.toThrow('Empty response');
+    });
+  });
+
+  describe('chatWithPageContent with Claude', () => {
+    let fetchSpy: ReturnType<typeof vi.fn>;
+    const settings: AiSettings = { provider: 'claude', apiKey: 'sk-ant-test', model: 'claude-haiku-4-5-20251001' };
+
+    beforeEach(() => {
+      fetchSpy = vi.fn();
+      vi.stubGlobal('fetch', fetchSpy);
+    });
+
+    it('returns assistant response on Claude success', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          content: [{ text: 'Claude says hello.' }],
+        }),
+      });
+
+      const result = await chatWithPageContent(
+        'Page content',
+        [],
+        'Hi Claude',
+        settings,
+      );
+
+      expect(result).toBe('Claude says hello.');
+      expect(fetchSpy).toHaveBeenCalledWith(
+        'https://api.anthropic.com/v1/messages',
+        expect.objectContaining({ method: 'POST' }),
+      );
+    });
+
+    it('throws network error on Claude fetch failure', async () => {
+      fetchSpy.mockRejectedValue(new Error('fetch failed'));
+
+      await expect(
+        chatWithPageContent('content', [], 'q', settings),
+      ).rejects.toThrow('Network error');
+    });
+
+    it('throws on Claude non-ok response', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: false,
+        status: 429,
+        json: async () => ({ error: { message: 'Rate limited' } }),
+      });
+
+      await expect(
+        chatWithPageContent('content', [], 'q', settings),
+      ).rejects.toMatchObject({ code: 'rate_limit' });
+    });
+
+    it('throws on Claude empty content', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          content: [],
+        }),
+      });
+
+      await expect(
+        chatWithPageContent('content', [], 'q', settings),
+      ).rejects.toThrow('Empty response');
+    });
+
+    it('includes chat history in messages', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          content: [{ text: 'Response' }],
+        }),
+      });
+
+      const history: ChatMessage[] = [
+        { role: 'user', content: 'Previous question' },
+        { role: 'assistant', content: 'Previous answer' },
+      ];
+
+      await chatWithPageContent('content', history, 'New question', settings);
+
+      const body = JSON.parse(fetchSpy.mock.calls[0][1].body);
+      expect(body.messages).toHaveLength(4); // context + 2 history + new question
+      expect(body.messages[1]).toEqual({ role: 'user', content: 'Previous question' });
+      expect(body.messages[2]).toEqual({ role: 'assistant', content: 'Previous answer' });
+      expect(body.messages[3]).toEqual({ role: 'user', content: 'New question' });
+    });
+  });
+
+  describe('summarizeViaHosted', () => {
+    let fetchSpy: ReturnType<typeof vi.fn>;
+
+    beforeEach(() => {
+      fetchSpy = vi.fn();
+      vi.stubGlobal('fetch', fetchSpy);
+    });
+
+    it('returns summary on success', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          summary: 'Hosted summary',
+          keyPoints: ['Point 1', 'Point 2'],
+        }),
+      });
+
+      const result = await summarizeViaHosted('Page text', 'https://example.com');
+
+      expect(result.summary).toBe('Hosted summary');
+      expect(result.keyPoints).toEqual(['Point 1', 'Point 2']);
+      expect(fetchSpy).toHaveBeenCalledWith(
+        expect.stringContaining('tools.pixiaoli.cn/api/summarize'),
+        expect.objectContaining({ method: 'POST' }),
+      );
+    });
+
+    it('includes userId from storage', async () => {
+      await browser.storage.local.set({ userId: 'user-123' });
+      fetchSpy.mockResolvedValue({
+        ok: true,
+        json: async () => ({ summary: 'OK', keyPoints: [] }),
+      });
+
+      await summarizeViaHosted('text', 'https://example.com');
+
+      const body = JSON.parse(fetchSpy.mock.calls[0][1].body);
+      expect(body.userId).toBe('user-123');
+    });
+
+    it('uses anonymous when no userId stored', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: true,
+        json: async () => ({ summary: 'OK', keyPoints: [] }),
+      });
+
+      await summarizeViaHosted('text', 'https://example.com');
+
+      const body = JSON.parse(fetchSpy.mock.calls[0][1].body);
+      expect(body.userId).toBe('anonymous');
+    });
+
+    it('truncates text to 8000 chars', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: true,
+        json: async () => ({ summary: 'OK', keyPoints: [] }),
+      });
+
+      const longText = 'x'.repeat(10000);
+      await summarizeViaHosted(longText, 'https://example.com');
+
+      const body = JSON.parse(fetchSpy.mock.calls[0][1].body);
+      expect(body.text).toHaveLength(8000);
+    });
+
+    it('throws network error on fetch failure', async () => {
+      fetchSpy.mockRejectedValue(new Error('fetch failed'));
+
+      await expect(
+        summarizeViaHosted('text', 'https://example.com'),
+      ).rejects.toThrow('Network error');
+    });
+
+    it('throws rate_limit on 429', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: false,
+        status: 429,
+        json: async () => ({}),
+      });
+
+      await expect(
+        summarizeViaHosted('text', 'https://example.com'),
+      ).rejects.toMatchObject({ code: 'rate_limit' });
+    });
+
+    it('throws unknown on other error status', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: false,
+        status: 500,
+        json: async () => ({}),
+      });
+
+      await expect(
+        summarizeViaHosted('text', 'https://example.com'),
+      ).rejects.toMatchObject({ code: 'unknown' });
+    });
+
+    it('handles missing summary/keyPoints gracefully', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: true,
+        json: async () => ({}),
+      });
+
+      const result = await summarizeViaHosted('text', 'https://example.com');
+      expect(result.summary).toBe('No summary generated');
+      expect(result.keyPoints).toEqual([]);
     });
   });
 });

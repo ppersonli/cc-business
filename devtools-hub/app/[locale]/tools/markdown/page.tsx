@@ -1,8 +1,15 @@
-import { generateToolMetadata } from '@/lib/metadata'
+import { generateToolMetadata, generateToolJsonLd } from '@/lib/metadata'
 import ToolClient from './client'
+import JsonLd from '@/components/JsonLd'
 
 export const metadata = generateToolMetadata('markdown')
 
 export default function ToolPage() {
-  return <ToolClient />
+  const jsonLd = generateToolJsonLd('markdown')
+  return (
+    <>
+      <JsonLd data={jsonLd} />
+      <ToolClient />
+    </>
+  )
 }

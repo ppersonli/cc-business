@@ -299,6 +299,24 @@
       "description": "Chrome拡張機能の危険な権限、プライバシー問題、セキュリティ脅威をスキャン",
       "about": "Chrome拡張機能（.zipまたは.crx）をアップロードし、包括的なセキュリティレポートを取得。権限、CSP、リモートコードリスク、コンテンツスクリプト、プライバシー問題を分析。",
       "features": "権限分析、CSPチェック、リモートコード検出、プライバシーオーディット、リスクスコアリング、共有可能なレポート。"
+    },
+    "json-diff": {
+      "name": "JSON Diff",
+      "description": "2つのJSONオブジェクトを並べて比較し、追加・削除・変更されたフィールドをハイライト",
+      "about": "2つのJSONオブジェクトを並べて比較し、色分けされた差分を表示。追加・削除・変更されたフィールドとパス情報を表示します。",
+      "features": "並列比較、色分け差分、パス表示、差分結果のコピー。"
+    },
+    "html-to-jsx": {
+      "name": "HTML to JSX",
+      "description": "HTMLマークアップを適切な属性変換と自己閉じタグでJSXに変換",
+      "about": "HTMLをJSXに変換。属性の自動リネーム（class→className、for→htmlFor）、styleオブジェクト変換、自己閉じタグ処理。",
+      "features": "属性変換、styleオブジェクト変換、コメント変換、自己閉じタグ。"
+    },
+    "yaml-formatter": {
+      "name": "YAMLフォーマッター",
+      "description": "シンタックスハイライトとJSON変換でYAMLをフォーマット、検証、変換",
+      "about": "適切なインデントでYAMLデータをフォーマットおよび検証。YAMLとJSON形式を簡単に変換。",
+      "features": "YAMLフォーマット、YAML→JSON、JSON→YAML、検証、カスタムインデント。"
     }
   }
 }

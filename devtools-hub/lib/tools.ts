@@ -43,6 +43,9 @@ export const tools: Tool[] = [
   { name: 'CSV ⇄ JSON Converter', slug: 'csv-json', description: 'Convert between CSV and JSON formats with proper escaping, headers, and multiple delimiter support', category: 'Data', color: '#f59e0b' },
   { name: 'WeChat Markdown Editor', slug: 'wechat-markdown-editor', description: 'Write Markdown with live preview and copy beautifully styled content to WeChat with one click', category: 'Text', color: '#07C160' },
   { name: 'Extension Shield', slug: 'extension-shield', description: 'Scan Chrome extensions for risky permissions, privacy issues, and security threats', category: 'Security', color: '#ef4444' },
+  { name: 'JSON Diff', slug: 'json-diff', description: 'Compare two JSON objects side by side and highlight added, removed, and changed fields', category: 'Data', color: '#14b8a6' },
+  { name: 'HTML to JSX', slug: 'html-to-jsx', description: 'Convert HTML markup to JSX with proper attribute conversions and self-closing tags', category: 'Code', color: '#61dafb' },
+  { name: 'YAML Formatter', slug: 'yaml-formatter', description: 'Format, validate, and convert YAML with syntax highlighting and JSON conversion', category: 'Code', color: '#cb171e' },
 ]
 
 export const categories = [...new Set(tools.map(t => t.category))]

@@ -299,6 +299,24 @@
       "description": "Chrome 확장 프로그램의 위험한 권한, 개인정보 문제 및 보안 위협 스캔",
       "about": "Chrome 확장 프로그램(.zip 또는 .crx)을 업로드하고 종합적인 보안 보고서를 받으세요. 권한, CSP, 원격 코드 위험, 컴텐츠 스크립트, 개인정보 문제를 분석합니다.",
       "features": "권한 분석, CSP 검사, 원격 코드 감지, 개인정보 감사, 위험 점수, 공유 가능한 보고서."
+    },
+    "json-diff": {
+      "name": "JSON Diff",
+      "description": "두 JSON 객체를 나란히 비교하고 추가, 삭제, 변경된 필드를 강조 표시",
+      "about": "두 JSON 객체를 나란히 비교하고 색상으로 구분된 차이점을 표시합니다. 추가, 삭제, 변경된 필드와 경로 정보를 보여줍니다.",
+      "features": "나란히 비교, 색상 구분 차이, 경로 표시, 차이 결과 복사."
+    },
+    "html-to-jsx": {
+      "name": "HTML to JSX",
+      "description": "HTML 마크업을 적절한 속성 변환과 자체 닫기 태그로 JSX로 변환",
+      "about": "HTML을 JSX로 변환. 속성 자동 이름 변경(class→className, for→htmlFor), style 객체 변환, 자체 닫기 태그 처리.",
+      "features": "속성 변환, style 객체 변환, 주석 변환, 자체 닫기 태그."
+    },
+    "yaml-formatter": {
+      "name": "YAML 포맷터",
+      "description": "구문 강조와 JSON 변환으로 YAML을 포맷, 검증 및 변환",
+      "about": "적절한 들여쓰기로 YAML 데이터를 포맷하고 검증합니다. YAML과 JSON 형식 간 쉽게 변환합니다.",
+      "features": "YAML 포맷, YAML→JSON, JSON→YAML, 검증, 사용자 정의 들여쓰기."
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "common": {
     "appName": "DevTools Hub",
-    "tagline": "31+ free, client-side developer tools",
+    "tagline": "39+ free, client-side developer tools",
     "subtitle": "Free online developer tools. 100% client-side, no data sent to servers.",
     "tools": "Tools",
     "github": "GitHub",
@@ -299,6 +299,24 @@
       "description": "Scan Chrome extensions for risky permissions, privacy issues, and security threats",
       "about": "Upload a Chrome extension (.zip or .crx) and get a comprehensive security report. Analyzes permissions, CSP, remote code risks, content scripts, and privacy issues.",
       "features": "Permission analysis, CSP checking, remote code detection, privacy audit, risk scoring, shareable reports."
+    },
+    "json-diff": {
+      "name": "JSON Diff",
+      "description": "Compare two JSON objects side by side and highlight added, removed, and changed fields",
+      "about": "Compare two JSON objects side by side with color-coded differences. Shows added, removed, and changed fields with path information.",
+      "features": "Side-by-side comparison, color-coded diff, path display, copy diff result."
+    },
+    "html-to-jsx": {
+      "name": "HTML to JSX",
+      "description": "Convert HTML markup to JSX with proper attribute conversions and self-closing tags",
+      "about": "Convert HTML to JSX with automatic attribute renaming (class to className, for to htmlFor), style object conversion, and self-closing tag handling.",
+      "features": "Attribute conversion, style object conversion, comment conversion, self-closing tags."
+    },
+    "yaml-formatter": {
+      "name": "YAML Formatter",
+      "description": "Format, validate, and convert YAML with syntax highlighting and JSON conversion",
+      "about": "Format and validate YAML data with proper indentation. Convert between YAML and JSON formats easily.",
+      "features": "YAML formatting, YAML to JSON, JSON to YAML, validation, custom indentation."
     }
   }
 }

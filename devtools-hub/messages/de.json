@@ -299,6 +299,24 @@
       "description": "Chrome-Erweiterungen auf riskante Berechtigungen, Datenschutzprobleme und Sicherheitsbedrohungen scannen",
       "about": "Laden Sie eine Chrome-Erweiterung (.zip oder .crx) hoch und erhalten Sie einen umfassenden Sicherheitsbericht. Analysiert Berechtigungen, CSP, Remote-Code-Risiken, Content-Skripte und Datenschutzprobleme.",
       "features": "Berechtigungsanalyse, CSP-Pruefung, Remote-Code-Erkennung, Datenschutz-Audit, Risikobewertung, teilbare Berichte."
+    },
+    "json-diff": {
+      "name": "JSON Diff",
+      "description": "Zwei JSON-Objekte nebeneinander vergleichen und hinzugefuegte, entfernte und geaenderte Felder hervorheben",
+      "about": "Vergleichen Sie zwei JSON-Objekte nebeneinander mit farbcodierten Unterschieden. Zeigt hinzugefuegte, entfernte und geaenderte Felder mit Pfadinformationen an.",
+      "features": "Nebeneinander-Vergleich, farbcodierte Diff, Pfadanzeige, Diff-Ergebnis kopieren."
+    },
+    "html-to-jsx": {
+      "name": "HTML zu JSX",
+      "description": "HTML-Markup in JSX konvertieren mit korrekter Attributkonvertierung und selbstschliessenden Tags",
+      "about": "Konvertiert HTML zu JSX mit automatischer Attributumbenennung (class zu className, for zu htmlFor), Style-Objekt-Konvertierung und selbstschliessenden Tags.",
+      "features": "Attributkonvertierung, Style-Objekt-Konvertierung, Kommentarkonvertierung, selbstschliessende Tags."
+    },
+    "yaml-formatter": {
+      "name": "YAML-Formatierer",
+      "description": "YAML formatieren, validieren und konvertieren mit Syntax-Hervorhebung und JSON-Konvertierung",
+      "about": "Formatieren und validieren Sie YAML-Daten mit korrekter Einrueckung. Konvertieren Sie einfach zwischen YAML- und JSON-Formaten.",
+      "features": "YAML-Formatierung, YAML zu JSON, JSON zu YAML, Validierung, benutzerdefinierte Einrueckung."
     }
   }
 }

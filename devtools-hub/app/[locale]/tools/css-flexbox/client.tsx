@@ -1,14 +1,16 @@
 'use client'
 import { useState } from 'react'
-import Link from 'next/link'
+import { getToolBySlug } from '@/lib/tools'
+import ToolLayout from '@/components/ToolLayout'
 import { CopyIcon, CheckIcon } from '@/components/Icons'
+
+const tool = getToolBySlug('css-flexbox')!
 
 const displayOptions = ['flex', 'inline-flex']
 const flexDirectionOptions = ['row', 'row-reverse', 'column', 'column-reverse']
 const justifyContentOptions = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly']
 const alignItemsOptions = ['flex-start', 'flex-end', 'center', 'stretch', 'baseline']
 const flexWrapOptions = ['nowrap', 'wrap', 'wrap-reverse']
-const alignSelfOptions = ['auto', 'flex-start', 'flex-end', 'center', 'stretch', 'baseline']
 
 export default function CSSFlexbox() {
   const [display, setDisplay] = useState('flex')
@@ -51,20 +53,8 @@ export default function CSSFlexbox() {
   }
 
   return (
-    <div style={{ maxWidth: 1200, margin: '0 auto', padding: '48px 16px' }}>
-      <nav style={{ marginBottom: 24, fontSize: 14, color: 'var(--text-muted)' }}>
-        <Link href="/" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Tools</Link>
-        <span style={{ margin: '0 8px' }}>/</span>
-        <span>CSS Flexbox Generator</span>
-      </nav>
-
-      <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 8 }}>CSS Flexbox Generator</h1>
-      <p style={{ color: 'var(--text-secondary)', marginBottom: 32, fontSize: 16 }}>
-        Generate CSS Flexbox layouts visually with live preview. Copy the CSS code directly to your project.
-      </p>
-
+    <ToolLayout tool={tool}>
       <div className="flexbox-layout" style={{ display: 'grid', gridTemplateColumns: '340px 1fr', gap: 24 }}>
-        {/* Controls */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div>
             <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 6 }}>display</label>
@@ -144,9 +134,7 @@ export default function CSSFlexbox() {
           </div>
         </div>
 
-        {/* Preview + Code */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {/* Live Preview */}
           <div>
             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               Live Preview
@@ -177,7 +165,6 @@ export default function CSSFlexbox() {
             </div>
           </div>
 
-          {/* CSS Code */}
           <div>
             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 8, display: 'flex', justifyContent: 'space-between', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               <span>CSS Output</span>
@@ -213,26 +200,11 @@ export default function CSSFlexbox() {
         </div>
       </div>
 
-      <section style={{ marginTop: 48 }}>
-        <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 16 }}>About CSS Flexbox Generator</h2>
-        <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: 15 }}>
-          <p style={{ marginBottom: 12 }}>
-            CSS Flexbox is a powerful layout model that allows you to arrange items in rows or columns with flexible sizing. This generator lets you visually configure Flexbox properties and instantly get the CSS code.
-          </p>
-          <p style={{ marginBottom: 12 }}>
-            <strong>Key properties:</strong> flex-direction controls the axis, justify-content distributes items along the main axis, align-items positions items on the cross axis, and flex-wrap allows items to wrap to new lines.
-          </p>
-          <p>
-            <strong>Tip:</strong> Flexbox is ideal for one-dimensional layouts. For two-dimensional layouts, check out our <Link href="/tools/css-grid/" style={{ color: '#3b82f6' }}>CSS Grid Generator</Link>.
-          </p>
-        </div>
-      </section>
-
       <style jsx global>{`
         @media (max-width: 768px) {
           .flexbox-layout { grid-template-columns: 1fr !important; }
         }
       `}</style>
-    </div>
+    </ToolLayout>
   )
 }

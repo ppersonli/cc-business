@@ -1,6 +1,10 @@
 'use client'
 import { useState, useMemo, useEffect } from 'react'
-import Link from 'next/link'
+import { getToolBySlug } from '@/lib/tools'
+import ToolLayout from '@/components/ToolLayout'
+import { CopyIcon, CheckIcon } from '@/components/Icons'
+
+const tool = getToolBySlug('cron-generator')!
 
 interface CronField {
   name: string
@@ -20,14 +24,6 @@ const CRON_PRESETS = [
   { label: 'Weekdays at 9am', value: '0 9 * * 1-5' },
   { label: 'Weekends at 10am', value: '0 10 * * 0,6' },
 ]
-
-const MINUTE_DESCRIPTIONS: Record<string, string> = {
-  '*': 'every minute',
-  '*/5': 'every 5 minutes',
-  '*/10': 'every 10 minutes',
-  '*/15': 'every 15 minutes',
-  '*/30': 'every 30 minutes',
-}
 
 function describeCronField(value: string, type: 'minute' | 'hour' | 'day' | 'month' | 'weekday'): string {
   if (value === '*') {
@@ -89,20 +85,19 @@ function describeCron(expr: string): string {
   return descriptions.join(', ')
 }
 
-function getNextRuns(expr: string, count: number = 5): string[] {
+function getNextRuns(expr: string, now: Date, count: number = 5): string[] {
   const parts = expr.trim().split(/\s+/)
   if (parts.length !== 5) return []
 
   const [minuteExpr, hourExpr, dayExpr, monthExpr, weekdayExpr] = parts
   const runs: string[] = []
-  const now = new Date()
 
   let date = new Date(now)
   date.setSeconds(0)
   date.setMilliseconds(0)
   date.setMinutes(date.getMinutes() + 1)
 
-  const maxIterations = 525600 // One year of minutes
+  const maxIterations = 525600
   let iterations = 0
 
   while (runs.length < count && iterations < maxIterations) {
@@ -149,7 +144,6 @@ function matchesField(value: number, expr: string): boolean {
 }
 
 export default function CronGenerator() {
-  const [expression, setExpression] = useState('* * * * *')
   const [minute, setMinute] = useState('*')
   const [hour, setHour] = useState('*')
   const [day, setDay] = useState('*')
@@ -165,7 +159,7 @@ export default function CronGenerator() {
   const description = useMemo(() => describeCron(cronExpr), [cronExpr])
 
   useEffect(() => {
-    setNextRuns(getNextRuns(cronExpr))
+    setNextRuns(getNextRuns(cronExpr, new Date()))
   }, [cronExpr])
 
   const handlePreset = (value: string) => {
@@ -184,170 +178,183 @@ export default function CronGenerator() {
   }
 
   return (
-    <main className="min-h-screen max-w-4xl mx-auto px-4 py-12">
-      <Link href="/" className="text-blue-400 hover:underline mb-8 inline-block">
-        ← Back to DevTools Hub
-      </Link>
-      <h1 className="text-3xl font-bold mb-2">⏰ Cron Expression Generator</h1>
-      <p className="text-gray-400 mb-8">Generate and understand cron schedule expressions with human-readable descriptions</p>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Cron Builder */}
-        <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
-          <h2 className="text-lg font-bold mb-4">Build Expression</h2>
-
-          <div className="space-y-3">
-            <div>
-              <label className="block text-sm text-gray-400 mb-1">Minute (0-59)</label>
-              <input
-                type="text"
-                value={minute}
-                onChange={(e) => setMinute(e.target.value)}
-                className="w-full bg-gray-950 border border-gray-700 rounded px-3 py-2 text-white font-mono text-sm"
-                placeholder="*"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-1">Hour (0-23)</label>
-              <input
-                type="text"
-                value={hour}
-                onChange={(e) => setHour(e.target.value)}
-                className="w-full bg-gray-950 border border-gray-700 rounded px-3 py-2 text-white font-mono text-sm"
-                placeholder="*"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-1">Day of Month (1-31)</label>
-              <input
-                type="text"
-                value={day}
-                onChange={(e) => setDay(e.target.value)}
-                className="w-full bg-gray-950 border border-gray-700 rounded px-3 py-2 text-white font-mono text-sm"
-                placeholder="*"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-1">Month (1-12)</label>
-              <input
-                type="text"
-                value={month}
-                onChange={(e) => setMonth(e.target.value)}
-                className="w-full bg-gray-950 border border-gray-700 rounded px-3 py-2 text-white font-mono text-sm"
-                placeholder="*"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-1">Day of Week (0-6, Sun=0)</label>
-              <input
-                type="text"
-                value={weekday}
-                onChange={(e) => setWeekday(e.target.value)}
-                className="w-full bg-gray-950 border border-gray-700 rounded px-3 py-2 text-white font-mono text-sm"
-                placeholder="*"
-              />
-            </div>
+    <ToolLayout tool={tool}>
+      <div className="tool-grid">
+        <div className="tool-panel">
+          <div className="panel-header">
+            <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)' }}>Build Expression</span>
           </div>
+          <div className="panel-body">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div>
+                <label style={{ display: 'block', fontSize: 13, color: 'var(--text-muted)', marginBottom: 4 }}>Minute (0-59)</label>
+                <input
+                  type="text"
+                  value={minute}
+                  onChange={(e) => setMinute(e.target.value)}
+                  className="tool-input"
+                  placeholder="*"
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: 13, color: 'var(--text-muted)', marginBottom: 4 }}>Hour (0-23)</label>
+                <input
+                  type="text"
+                  value={hour}
+                  onChange={(e) => setHour(e.target.value)}
+                  className="tool-input"
+                  placeholder="*"
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: 13, color: 'var(--text-muted)', marginBottom: 4 }}>Day of Month (1-31)</label>
+                <input
+                  type="text"
+                  value={day}
+                  onChange={(e) => setDay(e.target.value)}
+                  className="tool-input"
+                  placeholder="*"
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: 13, color: 'var(--text-muted)', marginBottom: 4 }}>Month (1-12)</label>
+                <input
+                  type="text"
+                  value={month}
+                  onChange={(e) => setMonth(e.target.value)}
+                  className="tool-input"
+                  placeholder="*"
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: 13, color: 'var(--text-muted)', marginBottom: 4 }}>Day of Week (0-6, Sun=0)</label>
+                <input
+                  type="text"
+                  value={weekday}
+                  onChange={(e) => setWeekday(e.target.value)}
+                  className="tool-input"
+                  placeholder="*"
+                  style={{ width: '100%' }}
+                />
+              </div>
+            </div>
 
-          <div className="mt-4 p-3 bg-gray-950 border border-gray-700 rounded">
-            <div className="flex items-center justify-between">
-              <span className="text-gray-400 text-sm">Expression:</span>
-              <code className="text-green-400 font-mono text-lg">{cronExpr}</code>
+            <div style={{ marginTop: 16, padding: 12, borderRadius: 8, background: 'var(--bg-primary)', border: '1px solid var(--border)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>Expression:</span>
+                <code style={{ color: 'var(--success, #22c55e)', fontFamily: 'monospace', fontSize: 16 }}>{cronExpr}</code>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Results */}
-        <div className="space-y-6">
-          {/* Description */}
-          <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
-            <h2 className="text-lg font-bold mb-3">Description</h2>
-            <p className="text-white text-lg">{description}</p>
-            <button
-              onClick={handleCopy}
-              className="mt-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm"
-            >
-              {copied ? '✓ Copied!' : ' Copy Expression'}
-            </button>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="tool-panel">
+            <div className="panel-header">
+              <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)' }}>Description</span>
+            </div>
+            <div className="panel-body">
+              <p style={{ color: 'var(--text-primary)', fontSize: 16, marginBottom: 12 }}>{description}</p>
+              <button className="btn btn-primary" onClick={handleCopy}>
+                {copied ? <><CheckIcon /> Copied!</> : <><CopyIcon /> Copy Expression</>}
+              </button>
+            </div>
           </div>
 
-          {/* Next Runs */}
-          <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
-            <h2 className="text-lg font-bold mb-3">Next 5 Runs</h2>
-            {nextRuns.length > 0 ? (
-              <ul className="space-y-2">
-                {nextRuns.map((run, i) => (
-                  <li key={i} className="text-gray-300 text-sm flex items-center gap-2">
-                    <span className="text-blue-400">{i + 1}.</span>
-                    {run}
-                  </li>
+          <div className="tool-panel">
+            <div className="panel-header">
+              <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)' }}>Next 5 Runs</span>
+            </div>
+            <div className="panel-body">
+              {nextRuns.length > 0 ? (
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  {nextRuns.map((run, i) => (
+                    <li key={i} style={{ fontSize: 14, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={{ color: '#3b82f6', fontWeight: 600, minWidth: 20 }}>{i + 1}.</span>
+                      {run}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>No upcoming runs found</p>
+              )}
+            </div>
+          </div>
+
+          <div className="tool-panel">
+            <div className="panel-header">
+              <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)' }}>Common Presets</span>
+            </div>
+            <div className="panel-body">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                {CRON_PRESETS.map((preset) => (
+                  <button
+                    key={preset.value}
+                    onClick={() => handlePreset(preset.value)}
+                    style={{
+                      textAlign: 'left',
+                      padding: '8px 12px',
+                      borderRadius: 8,
+                      border: '1px solid var(--border)',
+                      background: cronExpr === preset.value ? 'var(--accent, #3b82f6)' : 'var(--bg-primary)',
+                      color: cronExpr === preset.value ? 'white' : 'var(--text-secondary)',
+                      cursor: 'pointer',
+                      fontSize: 13,
+                      transition: 'background 0.15s',
+                    }}
+                  >
+                    <div style={{ fontWeight: 600, marginBottom: 2 }}>{preset.label}</div>
+                    <div style={{ fontSize: 11, opacity: 0.7, fontFamily: 'monospace' }}>{preset.value}</div>
+                  </button>
                 ))}
-              </ul>
-            ) : (
-              <p className="text-gray-500 text-sm">No upcoming runs found</p>
-            )}
-          </div>
-
-          {/* Presets */}
-          <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
-            <h2 className="text-lg font-bold mb-3">Common Presets</h2>
-            <div className="grid grid-cols-2 gap-2">
-              {CRON_PRESETS.map((preset) => (
-                <button
-                  key={preset.value}
-                  onClick={() => handlePreset(preset.value)}
-                  className={`text-left px-3 py-2 rounded text-sm transition ${
-                    cronExpr === preset.value
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                  }`}
-                >
-                  <div className="font-medium">{preset.label}</div>
-                  <div className="text-xs opacity-60 font-mono">{preset.value}</div>
-                </button>
-              ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="mt-8 bg-gray-900 border border-gray-800 rounded-lg p-6">
-        <h2 className="text-lg font-bold mb-3">Cron Syntax Reference</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+      <div className="tool-panel" style={{ marginTop: 24 }}>
+        <div className="panel-header">
+          <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)' }}>Cron Syntax Reference</span>
+        </div>
+        <div className="panel-body">
+          <table style={{ width: '100%', fontSize: 14, borderCollapse: 'collapse' }}>
             <thead>
-              <tr className="border-b border-gray-700">
-                <th className="text-left py-2 text-gray-400">Symbol</th>
-                <th className="text-left py-2 text-gray-400">Meaning</th>
-                <th className="text-left py-2 text-gray-400">Example</th>
+              <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                <th style={{ textAlign: 'left', padding: '8px 0', color: 'var(--text-muted)' }}>Symbol</th>
+                <th style={{ textAlign: 'left', padding: '8px 0', color: 'var(--text-muted)' }}>Meaning</th>
+                <th style={{ textAlign: 'left', padding: '8px 0', color: 'var(--text-muted)' }}>Example</th>
               </tr>
             </thead>
-            <tbody className="text-gray-300">
-              <tr className="border-b border-gray-800">
-                <td className="py-2 font-mono">*</td>
-                <td>Any value</td>
-                <td className="font-mono text-xs">* = every minute</td>
+            <tbody>
+              <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                <td style={{ padding: '8px 0', fontFamily: 'monospace' }}>*</td>
+                <td style={{ padding: '8px 0', color: 'var(--text-secondary)' }}>Any value</td>
+                <td style={{ padding: '8px 0', fontFamily: 'monospace', fontSize: 12, color: 'var(--text-muted)' }}>* = every minute</td>
               </tr>
-              <tr className="border-b border-gray-800">
-                <td className="py-2 font-mono">,</td>
-                <td>List separator</td>
-                <td className="font-mono text-xs">1,3,5 = 1st, 3rd, 5th</td>
+              <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                <td style={{ padding: '8px 0', fontFamily: 'monospace' }}>,</td>
+                <td style={{ padding: '8px 0', color: 'var(--text-secondary)' }}>List separator</td>
+                <td style={{ padding: '8px 0', fontFamily: 'monospace', fontSize: 12, color: 'var(--text-muted)' }}>1,3,5 = 1st, 3rd, 5th</td>
               </tr>
-              <tr className="border-b border-gray-800">
-                <td className="py-2 font-mono">-</td>
-                <td>Range</td>
-                <td className="font-mono text-xs">1-5 = 1 through 5</td>
+              <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                <td style={{ padding: '8px 0', fontFamily: 'monospace' }}>-</td>
+                <td style={{ padding: '8px 0', color: 'var(--text-secondary)' }}>Range</td>
+                <td style={{ padding: '8px 0', fontFamily: 'monospace', fontSize: 12, color: 'var(--text-muted)' }}>1-5 = 1 through 5</td>
               </tr>
               <tr>
-                <td className="py-2 font-mono">/</td>
-                <td>Step</td>
-                <td className="font-mono text-xs">*/5 = every 5 units</td>
+                <td style={{ padding: '8px 0', fontFamily: 'monospace' }}>/</td>
+                <td style={{ padding: '8px 0', color: 'var(--text-secondary)' }}>Step</td>
+                <td style={{ padding: '8px 0', fontFamily: 'monospace', fontSize: 12, color: 'var(--text-muted)' }}>*/5 = every 5 units</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p className="mt-4 text-gray-500 text-sm">All processing happens in your browser. No data is sent to any server.</p>
       </div>
-    </main>
+    </ToolLayout>
   )
 }

@@ -299,6 +299,24 @@
       "description": "扫描Chrome扩展的危险权限、隐私问题和安全威胁",
       "about": "上传Chrome扩展（.zip或.crx）文件，获得全面的安全报告。分析权限、CSP、远程代码风险、内容脚本和隐私问题。",
       "features": "权限分析、CSP检查、远程代码检测、隐私审计、风险评分、可分享报告。"
+    },
+    "json-diff": {
+      "name": "JSON 差异对比",
+      "description": "并排比较两个 JSON 对象，高亮显示新增、删除和修改的字段",
+      "about": "并排比较两个 JSON 对象，用颜色编码显示差异。展示新增、删除和修改的字段及其路径信息。",
+      "features": "并排比较、颜色编码差异、路径显示、复制差异结果。"
+    },
+    "html-to-jsx": {
+      "name": "HTML 转 JSX",
+      "description": "将 HTML 标记转换为 JSX，自动处理属性转换和自闭合标签",
+      "about": "将 HTML 转换为 JSX，自动重命名属性（class 转 className，for 转 htmlFor）、转换 style 对象、处理自闭合标签。",
+      "features": "属性转换、style 对象转换、注释转换、自闭合标签。"
+    },
+    "yaml-formatter": {
+      "name": "YAML 格式化工具",
+      "description": "格式化、验证和转换 YAML，支持语法高亮和 JSON 转换",
+      "about": "格式化和验证 YAML 数据，支持正确的缩进。轻松在 YAML 和 JSON 格式之间转换。",
+      "features": "YAML 格式化、YAML 转 JSON、JSON 转 YAML、验证、自定义缩进。"
     }
   }
 }

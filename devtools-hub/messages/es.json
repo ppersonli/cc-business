@@ -299,6 +299,24 @@
       "description": "Analiza extensiones de Chrome en busca de permisos riesgosos, problemas de privacidad y amenazas de seguridad",
       "about": "Sube una extensión de Chrome (.zip o .crx) y obtén un informe de seguridad completo. Analiza permisos, CSP, riesgos de código remoto, scripts de contenido y problemas de privacidad.",
       "features": "Análisis de permisos, verificación de CSP, detección de código remoto, auditoría de privacidad, puntuación de riesgo, informes compartibles."
+    },
+    "json-diff": {
+      "name": "JSON Diff",
+      "description": "Compara dos objetos JSON lado a lado y resalta campos añadidos, eliminados y modificados",
+      "about": "Compara dos objetos JSON lado a lado con diferencias codificadas por color. Muestra campos añadidos, eliminados y modificados con información de ruta.",
+      "features": "Comparación lado a lado, diferencias codificadas por color, visualización de ruta, copiar resultado."
+    },
+    "html-to-jsx": {
+      "name": "HTML a JSX",
+      "description": "Convierte HTML a JSX con conversiones de atributos adecuadas y etiquetas de autocierre",
+      "about": "Convierte HTML a JSX con renombrado automático de atributos (class a className, for a htmlFor), conversión de objetos style y manejo de etiquetas de autocierre.",
+      "features": "Conversión de atributos, conversión de style, conversión de comentarios, etiquetas de autocierre."
+    },
+    "yaml-formatter": {
+      "name": "Formateador YAML",
+      "description": "Formatea, valida y convierte YAML con resaltado de sintaxis y conversión JSON",
+      "about": "Formatea y valida datos YAML con indentación correcta. Convierte fácilmente entre formatos YAML y JSON.",
+      "features": "Formateo YAML, YAML a JSON, JSON a YAML, validación, indentación personalizada."
     }
   }
 }

@@ -317,6 +317,18 @@
       "description": "Formate, valide e converta YAML com destaque de sintaxe e conversão JSON",
       "about": "Formate e valide dados YAML com indentação correta. Converta facilmente entre formatos YAML e JSON.",
       "features": "Formatação YAML, YAML para JSON, JSON para YAML, validação, indentação personalizada."
+    },
+    "css-grid": {
+      "name": "Gerador de CSS Grid",
+      "description": "Gere layouts CSS Grid visualmente com pré-visualização ao vivo e exportação de código",
+      "about": "Crie layouts CSS Grid visualmente ajustando linhas, colunas, espaçamentos e posicionamento. Obtenha código CSS limpo e responsivo.",
+      "features": "Construtor visual de grid, pré-visualização ao vivo, código responsivo, copiar para área de transferência."
+    },
+    "lorem-ipsum": {
+      "name": "Gerador de Lorem Ipsum",
+      "description": "Gere texto de espaço reservado com parágrafos, palavras ou HTML personalizados",
+      "about": "Gere texto Lorem Ipsum para seus designs. Personalize o número de parágrafos, palavras ou elementos HTML.",
+      "features": "Contagem personalizada de parágrafos, palavras, saída HTML, copiar para área de transferência."
     }
   }
 }

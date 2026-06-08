@@ -317,6 +317,18 @@
       "description": "구문 강조와 JSON 변환으로 YAML을 포맷, 검증 및 변환",
       "about": "적절한 들여쓰기로 YAML 데이터를 포맷하고 검증합니다. YAML과 JSON 형식 간 쉽게 변환합니다.",
       "features": "YAML 포맷, YAML→JSON, JSON→YAML, 검증, 사용자 정의 들여쓰기."
+    },
+    "css-grid": {
+      "name": "CSS Grid 생성기",
+      "description": "라이브 미리보기와 코드 내보내기로 CSS Grid 레이아웃을 시각적으로 생성",
+      "about": "행, 열, 간격, 배치를 조정하여 CSS Grid 레이아웃을 시각적으로 만듭니다. 깔끔하고 반응형 CSS 코드를 얻으세요.",
+      "features": "비주얼 그리드 빌더, 라이브 미리보기, 반응형 코드, 클립보드에 복사."
+    },
+    "lorem-ipsum": {
+      "name": "Lorem Ipsum 생성기",
+      "description": "사용자 정의 단락, 단어 또는 HTML 플레이스홀더 텍스트 생성",
+      "about": "디자인을 위한 Lorem Ipsum 플레이스홀더 텍스트를 생성합니다. 단락 수, 단어 수, HTML 요소를 사용자 정의할 수 있습니다.",
+      "features": "사용자 정의 단락 수, 단어 수, HTML 출력, 클립보드에 복사."
     }
   }
 }

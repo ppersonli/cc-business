@@ -317,6 +317,18 @@
       "description": "格式化、验证和转换 YAML，支持语法高亮和 JSON 转换",
       "about": "格式化和验证 YAML 数据，支持正确的缩进。轻松在 YAML 和 JSON 格式之间转换。",
       "features": "YAML 格式化、YAML 转 JSON、JSON 转 YAML、验证、自定义缩进。"
+    },
+    "css-grid": {
+      "name": "CSS Grid 生成器",
+      "description": "可视化生成 CSS Grid 布局，支持实时预览和代码导出",
+      "about": "通过调整行、列、间距和放置位置来可视化创建 CSS Grid 布局。获取干净、响应式的 CSS 代码。",
+      "features": "可视化网格构建器、实时预览、响应式代码、一键复制。"
+    },
+    "lorem-ipsum": {
+      "name": "Lorem Ipsum 生成器",
+      "description": "生成自定义段落、单词或 HTML 的占位文本",
+      "about": "为您的设计生成 Lorem Ipsum 占位文本。自定义段落数、单词数或 HTML 元素。",
+      "features": "自定义段落数、单词数、HTML 输出、一键复制。"
     }
   }
 }

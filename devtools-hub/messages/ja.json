@@ -317,6 +317,18 @@
       "description": "シンタックスハイライトとJSON変換でYAMLをフォーマット、検証、変換",
       "about": "適切なインデントでYAMLデータをフォーマットおよび検証。YAMLとJSON形式を簡単に変換。",
       "features": "YAMLフォーマット、YAML→JSON、JSON→YAML、検証、カスタムインデント。"
+    },
+    "css-grid": {
+      "name": "CSS Gridジェネレーター",
+      "description": "ライブプレビューとコードエクスポートでCSS Gridレイアウトを視覚的に生成",
+      "about": "行、列、間隔、配置を調整してCSS Gridレイアウトを視覚的に作成。クリーンでレスポンシブなCSSコードを取得。",
+      "features": "ビジュアルグリッドビルダー、ライブプレビュー、レスポンシブコード、クリップボードにコピー。"
+    },
+    "lorem-ipsum": {
+      "name": "Lorem Ipsumジェネレーター",
+      "description": "カスタム段落、単語、またはHTMLのプレースホルダーテキストを生成",
+      "about": "デザイン用のLorem Ipsumプレースホルダーテキストを生成。段落数、単語数、HTML要素をカスタマイズ。",
+      "features": "カスタム段落数、単語数、HTML出力、クリップボードにコピー。"
     }
   }
 }

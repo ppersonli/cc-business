@@ -317,6 +317,18 @@
       "description": "Format, validate, and convert YAML with syntax highlighting and JSON conversion",
       "about": "Format and validate YAML data with proper indentation. Convert between YAML and JSON formats easily.",
       "features": "YAML formatting, YAML to JSON, JSON to YAML, validation, custom indentation."
+    },
+    "css-grid": {
+      "name": "CSS Grid Generator",
+      "description": "Generate CSS Grid layouts visually with live preview and code export",
+      "about": "Create CSS Grid layouts visually by adjusting rows, columns, gaps, and placement. Get clean, responsive CSS code ready to use.",
+      "features": "Visual grid builder, live preview, responsive code, copy to clipboard."
+    },
+    "lorem-ipsum": {
+      "name": "Lorem Ipsum Generator",
+      "description": "Generate placeholder text with custom paragraphs, words, or HTML",
+      "about": "Generate Lorem Ipsum placeholder text for your designs. Customize the number of paragraphs, words, or HTML elements.",
+      "features": "Custom paragraph count, word count, HTML output, copy to clipboard."
     }
   }
 }

@@ -317,6 +317,18 @@
       "description": "YAML formatieren, validieren und konvertieren mit Syntax-Hervorhebung und JSON-Konvertierung",
       "about": "Formatieren und validieren Sie YAML-Daten mit korrekter Einrueckung. Konvertieren Sie einfach zwischen YAML- und JSON-Formaten.",
       "features": "YAML-Formatierung, YAML zu JSON, JSON zu YAML, Validierung, benutzerdefinierte Einrueckung."
+    },
+    "css-grid": {
+      "name": "CSS Grid Generator",
+      "description": "Generieren Sie CSS Grid-Layouts visuell mit Live-Vorschau und Code-Export",
+      "about": "Erstellen Sie CSS Grid-Layouts visuell durch Anpassen von Zeilen, Spalten, Abstaenden und Platzierung. Erhalten Sie sauberen, responsiven CSS-Code.",
+      "features": "Visueller Grid-Builder, Live-Vorschau, responsiver Code, in Zwischenablage kopieren."
+    },
+    "lorem-ipsum": {
+      "name": "Lorem Ipsum Generator",
+      "description": "Generieren Sie Platzhaltertext mit benutzerdefinierten Absaetzen, Woertern oder HTML",
+      "about": "Generieren Sie Lorem Ipsum Platzhaltertext fuer Ihre Designs. Passen Sie die Anzahl der Absaetze, Woerter oder HTML-Elemente an.",
+      "features": "Benutzerdefinierte Absatzanzahl, Woerteranzahl, HTML-Ausgabe, in Zwischenablage kopieren."
     }
   }
 }

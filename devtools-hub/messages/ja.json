@@ -329,6 +329,12 @@
       "description": "カスタム段落、単語、またはHTMLのプレースホルダーテキストを生成",
       "about": "デザイン用のLorem Ipsumプレースホルダーテキストを生成。段落数、単語数、HTML要素をカスタマイズ。",
       "features": "カスタム段落数、単語数、HTML出力、クリップボードにコピー。"
+    },
+    "markdown-table-generator": {
+      "name": "Markdownテーブル生成器",
+      "description": "ビジュアルにMarkdownテーブルを作成し、ライブプレビュー。Markdown、HTML、CSVとしてコピー",
+      "about": "Markdownテーブルをビジュアルに作成・編集。行や列を追加・削除し、結果をMarkdown、HTML、CSVとしてコピー。",
+      "features": "ビジュアルテーブルエディタ、行/列の追加・削除、Markdown/HTML/CSVエクスポート、クリップボードにコピー。"
     }
   }
 }

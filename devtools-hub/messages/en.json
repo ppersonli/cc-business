@@ -329,6 +329,12 @@
       "description": "Generate placeholder text with custom paragraphs, words, or HTML",
       "about": "Generate Lorem Ipsum placeholder text for your designs. Customize the number of paragraphs, words, or HTML elements.",
       "features": "Custom paragraph count, word count, HTML output, copy to clipboard."
+    },
+    "markdown-table-generator": {
+      "name": "Markdown Table Generator",
+      "description": "Create Markdown tables visually with live preview. Copy as Markdown, HTML, or CSV",
+      "about": "Create and edit Markdown tables visually. Add or remove rows and columns, then copy the result as Markdown, HTML, or CSV.",
+      "features": "Visual table editor, add/remove rows & columns, Markdown/HTML/CSV export, copy to clipboard."
     }
   }
 }

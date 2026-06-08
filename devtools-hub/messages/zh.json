@@ -329,6 +329,12 @@
       "description": "生成自定义段落、单词或 HTML 的占位文本",
       "about": "为您的设计生成 Lorem Ipsum 占位文本。自定义段落数、单词数或 HTML 元素。",
       "features": "自定义段落数、单词数、HTML 输出、一键复制。"
+    },
+    "markdown-table-generator": {
+      "name": "Markdown 表格生成器",
+      "description": "可视化创建 Markdown 表格，实时预览。可复制为 Markdown、HTML 或 CSV",
+      "about": "可视化创建和编辑 Markdown 表格。添加或删除行列，然后将结果复制为 Markdown、HTML 或 CSV。",
+      "features": "可视化表格编辑器、添加/删除行列、Markdown/HTML/CSV 导出、一键复制。"
     }
   }
 }

@@ -329,6 +329,12 @@
       "description": "Generieren Sie Platzhaltertext mit benutzerdefinierten Absaetzen, Woertern oder HTML",
       "about": "Generieren Sie Lorem Ipsum Platzhaltertext fuer Ihre Designs. Passen Sie die Anzahl der Absaetze, Woerter oder HTML-Elemente an.",
       "features": "Benutzerdefinierte Absatzanzahl, Woerteranzahl, HTML-Ausgabe, in Zwischenablage kopieren."
+    },
+    "markdown-table-generator": {
+      "name": "Markdown-Tabellengenerator",
+      "description": "Erstellen Sie Markdown-Tabellen visuell mit Live-Vorschau. Als Markdown, HTML oder CSV kopieren",
+      "about": "Erstellen und bearbeiten Sie Markdown-Tabellen visuell. Zeilen und Spalten hinzufuegen oder entfernen, dann als Markdown, HTML oder CSV kopieren.",
+      "features": "Visueller Tabelleneditor, Zeilen/Spalten hinzufuegen/entfernen, Markdown/HTML/CSV-Export, in Zwischenablage kopieren."
     }
   }
 }

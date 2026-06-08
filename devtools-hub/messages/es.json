@@ -329,6 +329,12 @@
       "description": "Genera texto de marcador con párrafos, palabras o HTML personalizados",
       "about": "Genera texto Lorem Ipsum para tus diseños. Personaliza el número de párrafos, palabras o elementos HTML.",
       "features": "Conteo personalizado de párrafos, palabras, salida HTML, copiar al portapapeles."
+    },
+    "markdown-table-generator": {
+      "name": "Generador de Tablas Markdown",
+      "description": "Crea tablas Markdown visualmente con vista previa en vivo. Copia como Markdown, HTML o CSV",
+      "about": "Crea y edita tablas Markdown visualmente. Añade o elimina filas y columnas, luego copia el resultado como Markdown, HTML o CSV.",
+      "features": "Editor visual de tablas, agregar/eliminar filas y columnas, exportación Markdown/HTML/CSV, copiar al portapapeles."
     }
   }
 }

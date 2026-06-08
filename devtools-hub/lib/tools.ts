@@ -48,6 +48,7 @@ export const tools: Tool[] = [
   { name: 'YAML Formatter', slug: 'yaml-formatter', description: 'Format, validate, and convert YAML with syntax highlighting and JSON conversion', category: 'Code', color: '#cb171e' },
   { name: 'CSS Grid Generator', slug: 'css-grid', description: 'Generate CSS Grid layouts visually with live preview and copyable code. Create grid containers, define areas, and export production-ready CSS', category: 'Design', color: '#10b981' },
   { name: 'Lorem Ipsum Generator', slug: 'lorem-ipsum', description: 'Generate placeholder text for your designs. Customize paragraph count, word count, and format. Copy or download as plain text or HTML', category: 'Text', color: '#8b5cf6' },
+  { name: 'Markdown Table Generator', slug: 'markdown-table-generator', description: 'Create Markdown tables visually with live preview. Copy as Markdown, HTML, or CSV', category: 'Text', color: '#22c55e' },
 ]
 
 export const categories = [...new Set(tools.map(t => t.category))]

@@ -329,6 +329,12 @@
       "description": "Gere texto de espaço reservado com parágrafos, palavras ou HTML personalizados",
       "about": "Gere texto Lorem Ipsum para seus designs. Personalize o número de parágrafos, palavras ou elementos HTML.",
       "features": "Contagem personalizada de parágrafos, palavras, saída HTML, copiar para área de transferência."
+    },
+    "markdown-table-generator": {
+      "name": "Gerador de Tabelas Markdown",
+      "description": "Crie tabelas Markdown visualmente com visualização ao vivo. Copie como Markdown, HTML ou CSV",
+      "about": "Crie e edite tabelas Markdown visualmente. Adicione ou remova linhas e colunas, depois copie o resultado como Markdown, HTML ou CSV.",
+      "features": "Editor visual de tabelas, adicionar/remover linhas e colunas, exportação Markdown/HTML/CSV, copiar para área de transferência."
     }
   }
 }

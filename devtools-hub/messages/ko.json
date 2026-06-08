@@ -329,6 +329,12 @@
       "description": "사용자 정의 단락, 단어 또는 HTML 플레이스홀더 텍스트 생성",
       "about": "디자인을 위한 Lorem Ipsum 플레이스홀더 텍스트를 생성합니다. 단락 수, 단어 수, HTML 요소를 사용자 정의할 수 있습니다.",
       "features": "사용자 정의 단락 수, 단어 수, HTML 출력, 클립보드에 복사."
+    },
+    "markdown-table-generator": {
+      "name": "Markdown 테이블 생성기",
+      "description": "Markdown 테이블을 시각적으로 만들고 실시간 미리보기. Markdown, HTML 또는 CSV로 복사",
+      "about": "Markdown 테이블을 시각적으로 만들고 편집합니다. 행과 열을 추가하거나 삭제한 후 결과를 Markdown, HTML 또는 CSV로 복사합니다.",
+      "features": "시각적 테이블 편집기, 행/열 추가/삭제, Markdown/HTML/CSV 내보내기, 클립보드에 복사."
     }
   }
 }

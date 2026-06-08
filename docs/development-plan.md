@@ -1,149 +1,180 @@
-# 开发策划文档
+# 开发策划文档（更新版）
 
-> 基于 tool-research-report.md 和 extension-research-report.md
-> 创建日期：2026-06-08
-> 状态：**等待用户确认后执行**
+> **基于 tool-research-report.md 和 extension-research-report.md**
+> **创建日期**：2026-06-08
+> **更新日期**：2026-06-09
+> **状态**：✅ 调研完成，策划完成，Phase 1-2 已完成，Phase 3 待启动
 
 ---
 
 ## 一、当前状态
 
-### 工具站 (tools.pixiaoli.cn)
-- **工具数量**: 35个
+### 工具站 (tools.pixiaoli.cn) ✅
+- **工具数量**: 41个（含CSS Grid Generator、Lorem Ipsum Generator）
 - **语言**: 7种 (en/zh/de/pt/es/ja/ko)
 - **技术栈**: Next.js 15 + Tailwind CSS (静态导出)
-- **SEO**: 需优化（大部分工具页面缺少结构化数据）
+- **构建状态**: ✅ 通过
+- **SEO**: ✅ JSON-LD结构化数据 + hreflang多语言标签已添加到所有41个工具页面
 - **变现**: Google AdSense（待审核通过）+ Pancake订阅
+- **部署**: Vercel自动部署
 
-### Chrome插件 (SnapGen)
+### Chrome插件 (SnapGen) ⚠️
 - **状态**: 基础框架已搭建 (WXT + Vue 3)
 - **功能**: 截图→AI分析→代码生成
-- **问题**: 需要后端支持，API调用成本
+- **问题**: 需要后端支持，API调用成本高
+- **调研建议**: ❌ 不推荐继续投入，转做TabMaster AI
 
 ---
 
-## 二、工具站：推荐开发方向
+## 二、工具站：下一步行动
 
-### 方向A：高搜索量开发者工具（客户端，零成本）
+### 优先级P0：SEO优化（1-2天）✅ 已完成
+当前41个工具缺少JSON-LD结构化数据，影响搜索引擎理解页面内容。
 
-基于开发者日常高频需求，选择有搜索量但现有35个工具未覆盖的方向：
+**任务清单**：
+1. ✅ `lib/metadata.ts` — 添加JSON-LD生成函数
+2. ✅ 每个工具页面 — 注入`application/ld+json`脚本
+3. ✅ `lib/metadata.ts` — 添加hreflang多语言标签
+4. ✅ 验证：`pnpm build` + Google Rich Results Test
 
-| 工具 | 月搜索量(估) | 竞争 | 开发复杂度 | 优先级 |
-|------|-------------|------|-----------|--------|
-| JSON Diff Tool | 12K | 中 | 低 | P0 |
-| HTML to JSX | 8K | 低 | 低 | P0 |
-| CSS Grid Generator | 15K | 中 | 中 | P1 |
-| Lorem Ipsum Generator | 18K | 高 | 低 | P1 |
-| JSON to CSV | 10K | 中 | 低 | P1 |
-| YAML Formatter | 9K | 中 | 低 | P2 |
-| Markdown Table Generator | 7K | 低 | 低 | P2 |
-| Regex Cheat Sheet | 11K | 中 | 低 | P2 |
+**完成记录**：
+- Commit: `7ee2794` — feat: add JSON-LD structured data and hreflang tags for SEO
+- 41个工具页面全部更新
+- 构建通过，sitemap包含42个URL
 
-**推荐P0**: JSON Diff Tool — 开发者高频需求，现有Diff Checker只做文本对比，JSON Diff能解析结构差异。
+**预期效果**：
+- 搜索结果展示富媒体片段（星级、价格、工具类型）
+- 多语言SEO权重提升
+- 3-6个月后流量增长20-30%
 
-### 方向B：隐私分析平台（需要后端）
+### 优先级P1：新增高搜索量工具（2-3周）✅ 已完成（Phase 1-2）
+基于调研报告的搜索量数据，补充开发者高频需求工具：
 
-调研报告推荐的Top 1方向，但需要：
-- 后端API（用户注册、数据存储）
-- 数据库（Turso/PostgreSQL）
-- 计费系统（Pancake订阅）
+| 工具 | 月搜索量(估) | 竞争 | 开发复杂度 | 状态 |
+|------|-------------|------|-----------|------|
+| JSON Diff Tool | 12K | 中 | 低 | ✅ 已有 |
+| HTML to JSX | 8K | 低 | 低 | ✅ 已有 |
+| YAML Formatter | 9K | 中 | 低 | ✅ 已有 |
+| CSS Grid Generator | 15K | 中 | 中 | ✅ 已完成 |
+| Lorem Ipsum Generator | 18K | 高 | 低 | ✅ 已完成 |
+| Markdown Table Generator | 7K | 低 | 低 | 🔲 待开发 |
 
-**MVP周期**: 4-6周
-**预期MRR**: $500-2000（6个月后）
+**推荐P0新增**：
+1. **CSS Grid Generator** — 15K搜索量，可视化网格布局生成器
+2. **Lorem Ipsum Generator** — 18K搜索量，自定义段落/单词/HTML
 
-**⚠️ 注意**: 当前静态导出架构不支持后端。需要：
-1. 改为混合架构（部分页面静态，API路由动态）
-2. 或单独部署后端服务（Cloudflare Workers）
-
-### 方向C：内容创作者工具
-
-调研推荐的Top 2方向，但需要AI API集成：
-- AI文案生成器（调用OpenAI/Gemini API）
-- 跨平台内容管理（需要OAuth集成）
-
-**MVP周期**: 3-4周
-**风险**: API成本高，需要用户量覆盖
+### 优先级P2：功能增强（可选）
+- WeChat Markdown编辑器：Mermaid图表、KaTeX公式（P1 feature spec已有）
+- 工具收藏/历史记录（需localStorage）
+- 暗黑模式切换（已有CSS变量基础）
 
 ---
 
-## 三、Chrome插件：推荐开发方向
+## 三、Chrome插件：TabMaster AI（推荐方向）
 
-### 推荐：邮件写作AI助手
+### 调研结论
+extension-research-report.md 推荐 **AI智能标签管理 + 工作流自动化插件（TabMaster AI）**，评分4.6/5。
 
-基于调研报告的🥈推荐，原因：
-1. **市场验证**: Grammarly证明付费意愿
-2. **技术可行**: 纯前端 + AI API调用
-3. **差异化**: 专注邮件场景（Grammarly太通用）
-4. **MVP周期**: 5-6周
-5. **预期MRR**: $500-2000
+### 为什么不做SnapGen？
+1. **API成本高**：每次截图分析调用AI API，成本$0.01-0.05/次
+2. **竞争激烈**：截图→代码工具已有多个竞品
+3. **变现困难**：用户对截图工具付费意愿低
+4. **Chrome审核风险**：截图+AI分析需要较多权限
 
-**MVP功能**:
-- 一键生成邮件（基于场景/语气选择）
-- 邮件模板库（商务/销售/客服/感谢/道歉）
-- 多语言支持（至少中/英/日）
-- 免费层：3封/天，Pro无限制
+### 为什么做TabMaster AI？
+1. **市场验证**：Session Buddy、OneTab等产品有数百万用户
+2. **痛点明确**：Chrome重度用户每天打开20+标签，管理困难
+3. **差异化清晰**：AI自动分类、自然语言搜索、工作流自动化（竞品没有）
+4. **变现可行**：$4/月Pro订阅，生产力工具付费意愿高
+5. **开发周期短**：2-4周MVP
 
-**技术栈**:
-- WXT + Vue 3
-- AI API（OpenAI GPT-4o-mini，成本低）
+### TabMaster AI 核心功能
+1. AI智能标签分类（基于页面标题和URL自动分类）
+2. AI标签搜索（自然语言搜索所有打开的标签）
+3. 标签快照（保存和恢复标签组）
+4. AI工作流自动化（根据用户习惯自动执行重复任务）
+5. AI专注模式（自动隐藏不相关标签，减少干扰）
+
+### 变现模式
+- Free：基础分类、标签快照、搜索
+- Pro $4/月：AI分类、AI搜索、工作流自动化
+- Team $8/月/人：团队协作、跨设备同步
+
+### 技术栈
+- Chrome Extension (Manifest V3)
+- WXT + Vue 3 + TypeScript
+- OpenAI API（GPT-4o-mini，成本低）
+- Chrome Storage API
 - Waffo Pancake订阅集成
 
-**⚠️ 依赖**:
-- 需要OpenAI API Key
-- 需要后端API（邮件历史、订阅验证）
-- 需要Chrome Web Store开发者账号
+### 收入预估
+- 3个月：$800 MRR（10K用户，2%付费率）
+- 6个月：$6,000 MRR（50K用户，3%付费率）
+- 12个月：$40,000 MRR（200K用户，5%付费率）
 
 ---
 
-## 四、执行建议
+## 四、执行计划
 
-### 短期（1-2周）— 推荐先做
+### 第一阶段（本周）：工具站SEO优化 ✅ 已完成
+1. ✅ 添加JSON-LD结构化数据到所有工具页面
+2. ✅ 添加hreflang多语言标签
+3. ✅ 构建验证 + 部署
+4. **负责**: CC在tmux cc-web中开发
+5. **完成时间**: 2026-06-09
+6. **Commit**: `7ee2794`
 
-**工具站P0工具**:
-1. JSON Diff Tool — 结构化JSON对比，显示路径级差异
-2. HTML to JSX — HTML代码转JSX语法
-3. YAML Formatter — YAML格式化/压缩
+### 第二阶段（下周）：新增2个高搜索量工具 ✅ 已完成
+1. ✅ CSS Grid Generator（可视化网格布局）
+2. ✅ Lorem Ipsum Generator（自定义文本生成）
+3. ✅ 每个工具：实现→测试→部署
+4. **负责**: CC在tmux cc-web中开发
+5. **完成时间**: 2026-06-09
+6. **Commit**: `a6403e0`
 
-每个工具开发流程：
-1. CC在tmux中开发
-2. 实现功能 → 写测试 → 测试通过
-3. 构建验证
-4. 提交部署
-
-### 中期（3-6周）
-
-**邮件AI助手Chrome插件**:
+### 第三阶段（第3-4周）：TabMaster AI MVP
 1. WXT项目搭建
-2. 核心功能开发（邮件生成/模板）
-3. 订阅集成（Waffo Pancake）
-4. Chrome Web Store提交
+2. 核心功能开发（标签分类、搜索、快照）
+3. AI集成（GPT-4o-mini）
+4. 订阅集成（Waffo Pancake）
+5. Chrome Web Store提交
+6. **负责**: CC在tmux cc-web中开发
+7. **预计时间**: 2周
 
-### 长期（1-2月）
-
-**隐私分析平台**:
-1. 后端架构设计
-2. 数据库设计
-3. 核心功能开发
-4. 变现系统集成
+### 第四阶段（第5-6周）：TabMaster AI完善
+1. AI工作流自动化
+2. AI专注模式
+3. 用户反馈迭代
+4. Product Hunt发布
 
 ---
 
 ## 五、风险评估
 
-| 风险 | 影响 | 缓解措施 |
-|------|------|----------|
-| 工具站SEO优化效果慢 | 低 | 持续优化，3-6个月见效 |
-| AI插件API成本高 | 中 | 用GPT-4o-mini控制成本 |
-| Chrome审核拒绝 | 中 | 严格遵守权限最小化 |
-| 隐私分析平台开发周期长 | 高 | 先做MVP验证市场 |
+| 风险 | 概率 | 影响 | 缓解措施 |
+|------|------|------|----------|
+| SEO优化效果慢 | 高 | 低 | 持续优化，3-6个月见效 |
+| CSS Grid Generator竞争 | 中 | 低 | 做得比竞品好用 |
+| TabMaster AI用户获取 | 中 | 高 | Chrome Web Store SEO + Product Hunt |
+| AI API成本超支 | 中 | 中 | 用GPT-4o-mini，设置用量限制 |
+| Chrome审核拒绝 | 低 | 高 | 严格遵守权限最小化 |
 
 ---
 
 ## 六、下一步行动
 
-**用户需要决定**:
-1. 优先开发哪个方向？（P0工具 / 邮件AI插件 / 隐私分析）
-2. 是否需要我开始CC开发P0工具？
-3. 邮件AI插件是否需要先申请OpenAI API Key？
+**已完成**：
+1. ✅ Phase 1: 工具站SEO优化（JSON-LD + hreflang）
+2. ✅ Phase 2: 新增CSS Grid Generator + Lorem Ipsum Generator
 
-**⚠️ 铁律**: 等待用户确认后才能开始CC开发。
+**下一步**：
+1. 🔲 Phase 3: TabMaster AI MVP开发（第3-4周）
+2. 🔲 申请OpenAI API Key（TabMaster AI需要）
+3. 🔲 Vercel部署验证（Phase 1-2已push，等待自动部署）
+
+**⚠️ 铁律**: 等待用户确认后才能开始Phase 3。
+
+---
+
+**文档状态：** Phase 1-2 已完成，等待用户确认Phase 3
+**最后更新：** 2026-06-09

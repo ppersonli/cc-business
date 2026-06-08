@@ -10,7 +10,7 @@
 ## 一、当前状态
 
 ### 工具站 (tools.pixiaoli.cn) ✅
-- **工具数量**: 41个（含CSS Grid Generator、Lorem Ipsum Generator）
+- **工具数量**: 46个（含CSS Grid Generator、Lorem Ipsum Generator、Markdown Table Generator）
 - **语言**: 7种 (en/zh/de/pt/es/ja/ko)
 - **技术栈**: Next.js 15 + Tailwind CSS (静态导出)
 - **构建状态**: ✅ 通过
@@ -57,7 +57,7 @@
 | YAML Formatter | 9K | 中 | 低 | ✅ 已有 |
 | CSS Grid Generator | 15K | 中 | 中 | ✅ 已完成 |
 | Lorem Ipsum Generator | 18K | 高 | 低 | ✅ 已完成 |
-| Markdown Table Generator | 7K | 低 | 低 | 🔲 待开发 |
+| Markdown Table Generator | 7K | 低 | 低 | ✅ 已完成 |
 
 **推荐P0新增**：
 1. **CSS Grid Generator** — 15K搜索量，可视化网格布局生成器

@@ -46,6 +46,8 @@ export const tools: Tool[] = [
   { name: 'JSON Diff', slug: 'json-diff', description: 'Compare two JSON objects side by side and highlight added, removed, and changed fields', category: 'Data', color: '#14b8a6' },
   { name: 'HTML to JSX', slug: 'html-to-jsx', description: 'Convert HTML markup to JSX with proper attribute conversions and self-closing tags', category: 'Code', color: '#61dafb' },
   { name: 'YAML Formatter', slug: 'yaml-formatter', description: 'Format, validate, and convert YAML with syntax highlighting and JSON conversion', category: 'Code', color: '#cb171e' },
+  { name: 'CSS Grid Generator', slug: 'css-grid', description: 'Generate CSS Grid layouts visually with live preview and copyable code. Create grid containers, define areas, and export production-ready CSS', category: 'Design', color: '#10b981' },
+  { name: 'Lorem Ipsum Generator', slug: 'lorem-ipsum', description: 'Generate placeholder text for your designs. Customize paragraph count, word count, and format. Copy or download as plain text or HTML', category: 'Text', color: '#8b5cf6' },
 ]
 
 export const categories = [...new Set(tools.map(t => t.category))]

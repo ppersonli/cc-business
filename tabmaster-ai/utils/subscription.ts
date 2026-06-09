@@ -107,3 +107,79 @@ export async function getSubscriptionState(): Promise<SubscriptionState> {
     userId,
   };
 }
+
+// ─── AI Usage Tracking ───────────────────────────────────────────────────────
+
+export const FREE_AI_CLASSIFY_LIMIT = 5;
+export const FREE_AI_SEARCH_LIMIT = 10;
+
+interface AIUsageData {
+  date: string;
+  classifications: number;
+  searches: number;
+}
+
+const AI_USAGE_KEY = 'tabmaster-ai-usage';
+
+function todayString(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+async function getAIUsage(): Promise<AIUsageData> {
+  const data = await browser.storage.local.get(AI_USAGE_KEY);
+  const usage = data[AI_USAGE_KEY] as AIUsageData | undefined;
+  const today = todayString();
+
+  if (!usage || usage.date !== today) {
+    const fresh: AIUsageData = { date: today, classifications: 0, searches: 0 };
+    await browser.storage.local.set({ [AI_USAGE_KEY]: fresh });
+    return fresh;
+  }
+  return usage;
+}
+
+export async function canClassify(): Promise<{ allowed: boolean; remaining: number; isPro: boolean }> {
+  const state = await getSubscriptionState();
+  if (state.isPro) return { allowed: true, remaining: Infinity, isPro: true };
+
+  const usage = await getAIUsage();
+  const remaining = FREE_AI_CLASSIFY_LIMIT - usage.classifications;
+  return { allowed: remaining > 0, remaining: Math.max(0, remaining), isPro: false };
+}
+
+export async function canSearch(): Promise<{ allowed: boolean; remaining: number; isPro: boolean }> {
+  const state = await getSubscriptionState();
+  if (state.isPro) return { allowed: true, remaining: Infinity, isPro: true };
+
+  const usage = await getAIUsage();
+  const remaining = FREE_AI_SEARCH_LIMIT - usage.searches;
+  return { allowed: remaining > 0, remaining: Math.max(0, remaining), isPro: false };
+}
+
+export async function incrementClassifyUsage(): Promise<void> {
+  const usage = await getAIUsage();
+  usage.classifications++;
+  await browser.storage.local.set({ [AI_USAGE_KEY]: usage });
+}
+
+export async function incrementSearchUsage(): Promise<void> {
+  const usage = await getAIUsage();
+  usage.searches++;
+  await browser.storage.local.set({ [AI_USAGE_KEY]: usage });
+}
+
+export async function getAIUsageSummary(): Promise<{ classifications: number; searches: number; classifyLimit: number; searchLimit: number; isPro: boolean }> {
+  const state = await getSubscriptionState();
+  if (state.isPro) {
+    return { classifications: 0, searches: 0, classifyLimit: Infinity, searchLimit: Infinity, isPro: true };
+  }
+
+  const usage = await getAIUsage();
+  return {
+    classifications: usage.classifications,
+    searches: usage.searches,
+    classifyLimit: FREE_AI_CLASSIFY_LIMIT,
+    searchLimit: FREE_AI_SEARCH_LIMIT,
+    isPro: false,
+  };
+}

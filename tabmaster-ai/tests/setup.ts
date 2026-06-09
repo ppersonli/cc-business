@@ -3,14 +3,23 @@
 const mockStorage = {
   local: {
     data: {} as Record<string, any>,
-    async get(keys: string | string[]) {
+    async get(keys: string | string[] | Record<string, any>) {
+      // Support both string/array and object forms
       if (typeof keys === 'string') {
         if (keys in this.data) return { [keys]: this.data[keys] };
         return {};
       }
+      if (Array.isArray(keys)) {
+        const result: Record<string, any> = {};
+        for (const key of keys) {
+          if (key in this.data) result[key] = this.data[key];
+        }
+        return result;
+      }
+      // Object form with defaults
       const result: Record<string, any> = {};
-      for (const key of keys) {
-        if (key in this.data) result[key] = this.data[key];
+      for (const [key, defaultVal] of Object.entries(keys)) {
+        result[key] = key in this.data ? this.data[key] : defaultVal;
       }
       return result;
     },

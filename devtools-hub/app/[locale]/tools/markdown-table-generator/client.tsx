@@ -1,237 +1,343 @@
 'use client'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { getToolBySlug } from '@/lib/tools'
 import ToolLayout from '@/components/ToolLayout'
 import { CopyIcon, CheckIcon } from '@/components/Icons'
 
 const tool = getToolBySlug('markdown-table-generator')!
 
-const SAMPLE_ROWS = [
-  ['Name', 'Age', 'City'],
-  ['Alice', '30', 'New York'],
-  ['Bob', '25', 'San Francisco'],
-  ['Charlie', '35', 'Seattle'],
-]
-
-function rowsToMarkdown(rows: string[][]): string {
-  if (rows.length === 0) return ''
-  const header = rows[0]
-  const separator = header.map(() => '---')
-  const body = rows.slice(1)
-  const lines = [
-    '| ' + header.join(' | ') + ' |',
-    '| ' + separator.join(' | ') + ' |',
-    ...body.map(row => '| ' + row.join(' | ') + ' |'),
-  ]
-  return lines.join('\n')
+interface TableCell {
+  value: string
 }
 
-function rowsToHtml(rows: string[][]): string {
-  if (rows.length === 0) return ''
-  const header = rows[0]
-  const body = rows.slice(1)
-  const ths = header.map(h => `<th>${escapeHtml(h)}</th>`).join('')
-  const trs = body.map(row => {
-    const tds = row.map(cell => `<td>${escapeHtml(cell)}</td>`).join('')
-    return `<tr>${tds}</tr>`
-  }).join('\n')
-  return `<table>\n<thead>\n<tr>${ths}</tr>\n</thead>\n<tbody>\n${trs}\n</tbody>\n</table>`
+interface TableData {
+  headers: string[]
+  rows: string[][]
 }
 
-function rowsToCsv(rows: string[][]): string {
-  return rows.map(row =>
-    row.map(cell => {
-      if (cell.includes(',') || cell.includes('"') || cell.includes('\n')) {
-        return '"' + cell.replace(/"/g, '""') + '"'
-      }
-      return cell
-    }).join(',')
-  ).join('\n')
+const SAMPLE_TABLE = `| Name | Age | City |
+| --- | --- | --- |
+| Alice | 30 | NYC |
+| Bob | 25 | LA |
+| Charlie | 35 | Chicago |`
+
+function parseMarkdownTable(md: string): TableData | null {
+  const lines = md.trim().split('\n').filter(l => l.trim())
+  if (lines.length < 2) return null
+
+  const parseRow = (line: string): string[] =>
+    line
+      .replace(/^\|/, '')
+      .replace(/\|$/, '')
+      .split('|')
+      .map(cell => cell.trim())
+
+  const headers = parseRow(lines[0])
+
+  const separatorIdx = lines.findIndex(l => /^\|?\s*[-:]+[-|:\s]*$/.test(l.trim()))
+  if (separatorIdx < 0) return null
+
+  const rows = lines.slice(separatorIdx + 1).map(parseRow)
+
+  return { headers, rows }
 }
 
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
+function tableDataToMarkdown(data: TableData): string {
+  const colWidths = data.headers.map((h, i) => {
+    const rowWidths = data.rows.map(r => (r[i] || '').length)
+    return Math.max(h.length, ...rowWidths, 3)
+  })
+
+  const pad = (s: string, w: number) => s + ' '.repeat(Math.max(0, w - s.length))
+
+  const headerLine = '| ' + data.headers.map((h, i) => pad(h, colWidths[i])).join(' | ') + ' |'
+  const sepLine = '| ' + colWidths.map(w => '-'.repeat(w)).join(' | ') + ' |'
+  const rowLines = data.rows.map(
+    row => '| ' + row.map((c, i) => pad(c || '', colWidths[i])).join(' | ') + ' |'
+  )
+
+  return [headerLine, sepLine, ...rowLines].join('\n')
+}
+
+function tableDataToHTML(data: TableData): string {
+  const ths = data.headers.map(h => `  <th>${escapeHtml(h)}</th>`).join('\n')
+  const trs = data.rows
+    .map(row => `  <tr>\n${row.map(c => `    <td>${escapeHtml(c)}</td>`).join('\n')}\n  </tr>`)
+    .join('\n')
+  return `<table>\n  <thead>\n  <tr>\n${ths}\n  </tr>\n  </thead>\n  <tbody>\n${trs}\n  </tbody>\n</table>`
+}
+
+function tableDataToCSV(data: TableData): string {
+  const escape = (s: string) => (s.includes(',') || s.includes('"') || s.includes('\n') ? `"${s.replace(/"/g, '""')}"` : s)
+  const headerLine = data.headers.map(escape).join(',')
+  const rowLines = data.rows.map(row => row.map(escape).join(','))
+  return [headerLine, ...rowLines].join('\n')
+}
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
+function createEmptyTable(cols: number, rows: number): TableData {
+  return {
+    headers: Array.from({ length: cols }, (_, i) => `Col ${i + 1}`),
+    rows: Array.from({ length: rows }, () => Array.from({ length: cols }, () => '')),
+  }
 }
 
 export default function MarkdownTableGenerator() {
-  const [rows, setRows] = useState<string[][]>(SAMPLE_ROWS)
-  const [copiedTarget, setCopiedTarget] = useState<string | null>(null)
-  const [alignments, setAlignments] = useState<('left' | 'center' | 'right')[]>([])
+  const [input, setInput] = useState(SAMPLE_TABLE)
+  const [copied, setCopied] = useState<string | null>(null)
 
-  const markdown = rowsToMarkdown(rows)
-  const html = rowsToHtml(rows)
-  const csv = rowsToCsv(rows)
+  const parsed = useMemo(() => parseMarkdownTable(input), [input])
 
-  const copy = useCallback((text: string, target: string) => {
-    navigator.clipboard.writeText(text)
-    setCopiedTarget(target)
-    setTimeout(() => setCopiedTarget(null), 1500)
-  }, [])
+  const handleCopy = useCallback(
+    async (format: 'markdown' | 'html' | 'csv') => {
+      if (!parsed) return
+      const text =
+        format === 'markdown' ? tableDataToMarkdown(parsed) :
+        format === 'html' ? tableDataToHTML(parsed) :
+        tableDataToCSV(parsed)
+      await navigator.clipboard.writeText(text)
+      setCopied(format)
+      setTimeout(() => setCopied(null), 2000)
+    },
+    [parsed]
+  )
 
-  const updateCell = (rowIdx: number, colIdx: number, value: string) => {
-    const newRows = rows.map((row, ri) =>
-      ri === rowIdx ? row.map((cell, ci) => (ci === colIdx ? value : cell)) : [...row]
+  const addRow = useCallback(() => {
+    if (!parsed) return
+    const newRow = Array.from({ length: parsed.headers.length }, () => '')
+    setInput(tableDataToMarkdown({ ...parsed, rows: [...parsed.rows, newRow] }))
+  }, [parsed])
+
+  const addColumn = useCallback(() => {
+    if (!parsed) return
+    setInput(
+      tableDataToMarkdown({
+        headers: [...parsed.headers, `Col ${parsed.headers.length + 1}`],
+        rows: parsed.rows.map(row => [...row, '']),
+      })
     )
-    setRows(newRows)
-  }
+  }, [parsed])
 
-  const addRow = () => {
-    const colCount = rows[0]?.length || 3
-    setRows([...rows, Array(colCount).fill('')])
-  }
+  const removeLastRow = useCallback(() => {
+    if (!parsed || parsed.rows.length <= 1) return
+    setInput(tableDataToMarkdown({ ...parsed, rows: parsed.rows.slice(0, -1) }))
+  }, [parsed])
 
-  const removeRow = (idx: number) => {
-    if (rows.length <= 1) return
-    setRows(rows.filter((_, i) => i !== idx))
-  }
+  const removeLastColumn = useCallback(() => {
+    if (!parsed || parsed.headers.length <= 1) return
+    setInput(
+      tableDataToMarkdown({
+        headers: parsed.headers.slice(0, -1),
+        rows: parsed.rows.map(row => row.slice(0, -1)),
+      })
+    )
+  }, [parsed])
 
-  const addColumn = () => {
-    setRows(rows.map(row => [...row, '']))
-  }
+  const updateCell = useCallback(
+    (type: 'header' | 'cell', rowIdx: number, colIdx: number, value: string) => {
+      if (!parsed) return
+      const next = { headers: [...parsed.headers], rows: parsed.rows.map(r => [...r]) }
+      if (type === 'header') next.headers[colIdx] = value
+      else next.rows[rowIdx][colIdx] = value
+      setInput(tableDataToMarkdown(next))
+    },
+    [parsed]
+  )
 
-  const removeColumn = (colIdx: number) => {
-    if (rows[0]?.length <= 1) return
-    setRows(rows.map(row => row.filter((_, i) => i !== colIdx)))
-  }
-
-  const setAlignment = (colIdx: number, align: 'left' | 'center' | 'right') => {
-    const newAlignments = [...alignments]
-    newAlignments[colIdx] = align
-    setAlignments(newAlignments)
-  }
+  const loadSample = useCallback(() => setInput(SAMPLE_TABLE), [])
+  const clearInput = useCallback(() => setInput(''), [])
 
   return (
     <ToolLayout tool={tool}>
-      <div style={{ marginBottom: 20 }}>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
-          <button className="btn btn-sm" onClick={addRow}>+ Row</button>
-          <button className="btn btn-sm" onClick={addColumn}>+ Column</button>
-          <div style={{ flex: 1 }} />
-          <button className="btn btn-sm" onClick={() => copy(markdown, 'md')}>
-            {copiedTarget === 'md' ? <><CheckIcon /> Copied!</> : <><CopyIcon /> Copy Markdown</>}
-          </button>
-          <button className="btn btn-sm" onClick={() => copy(html, 'html')}>
-            {copiedTarget === 'html' ? <><CheckIcon /> Copied!</> : <><CopyIcon /> Copy HTML</>}
-          </button>
-          <button className="btn btn-sm" onClick={() => copy(csv, 'csv')}>
-            {copiedTarget === 'csv' ? <><CheckIcon /> Copied!</> : <><CopyIcon /> Copy CSV</>}
-          </button>
+      <div style={{ display: 'grid', gap: 24, maxWidth: 960 }}>
+        {/* Input area */}
+        <div className="tool-panel">
+          <div className="panel-header">
+            <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-secondary)' }}>
+              Markdown Input
+            </span>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button className="btn btn-sm" onClick={loadSample}>Sample</button>
+              <button className="btn btn-sm" onClick={clearInput}>Clear</button>
+            </div>
+          </div>
+          <div className="panel-body">
+            <textarea
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              placeholder={'| Header 1 | Header 2 |\n| --- | --- |\n| Cell 1   | Cell 2   |'}
+              style={{
+                width: '100%',
+                minHeight: 140,
+                padding: 14,
+                background: 'var(--bg-primary)',
+                border: '1px solid var(--border)',
+                borderRadius: 8,
+                color: 'var(--text-primary)',
+                fontSize: 14,
+                fontFamily: 'Menlo, Monaco, "Courier New", monospace',
+                lineHeight: 1.6,
+                resize: 'vertical',
+              }}
+            />
+          </div>
         </div>
 
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            fontSize: 14,
-          }}>
-            <thead>
-              <tr>
-                {rows[0]?.map((_, colIdx) => (
-                  <th key={colIdx} style={{
-                    padding: '8px 12px',
-                    borderBottom: '2px solid var(--border)',
-                    textAlign: 'left',
-                    background: 'var(--bg-secondary)',
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                      <input
-                        value={rows[0][colIdx]}
-                        onChange={(e) => updateCell(0, colIdx, e.target.value)}
-                        style={{
-                          flex: 1,
-                          background: 'transparent',
-                          border: 'none',
-                          fontWeight: 700,
-                          fontSize: 14,
-                          color: 'var(--text-primary)',
-                          outline: 'none',
-                          padding: 0,
-                        }}
-                      />
-                      <button
-                        onClick={() => removeColumn(colIdx)}
-                        style={{
-                          background: 'none',
-                          border: 'none',
-                          color: 'var(--text-muted)',
-                          cursor: 'pointer',
-                          fontSize: 16,
-                          padding: '0 2px',
-                          lineHeight: 1,
-                        }}
-                        title="Remove column"
-                      >×</button>
-                    </div>
-                  </th>
-                ))}
-                <th style={{ width: 40 }} />
-              </tr>
-            </thead>
-            <tbody>
-              {rows.slice(1).map((row, rowIdx) => (
-                <tr key={rowIdx + 1}>
-                  {row.map((cell, colIdx) => (
-                    <td key={colIdx} style={{
-                      padding: '6px 12px',
-                      borderBottom: '1px solid var(--border)',
-                    }}>
-                      <input
-                        value={cell}
-                        onChange={(e) => updateCell(rowIdx + 1, colIdx, e.target.value)}
-                        style={{
-                          width: '100%',
-                          background: 'transparent',
-                          border: 'none',
-                          fontSize: 14,
-                          color: 'var(--text-primary)',
-                          outline: 'none',
-                          padding: 0,
-                        }}
-                      />
-                    </td>
+        {/* Row/Column controls */}
+        {parsed && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            <button className="btn btn-sm" onClick={addRow}>+ Row</button>
+            <button className="btn btn-sm" onClick={removeLastRow}>- Row</button>
+            <button className="btn btn-sm" onClick={addColumn}>+ Column</button>
+            <button className="btn btn-sm" onClick={removeLastColumn}>- Column</button>
+          </div>
+        )}
+
+        {/* Visual editor */}
+        {parsed && (
+          <div className="tool-panel">
+            <div className="panel-header">
+              <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-secondary)' }}>
+                Visual Editor
+              </span>
+            </div>
+            <div className="panel-body" style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
+                <thead>
+                  <tr>
+                    {parsed.headers.map((h, ci) => (
+                      <th key={ci} style={{ padding: 0, border: '1px solid var(--border)' }}>
+                        <input
+                          type="text"
+                          value={h}
+                          onChange={e => updateCell('header', 0, ci, e.target.value)}
+                          style={{
+                            width: '100%',
+                            padding: '8px 10px',
+                            border: 'none',
+                            background: 'var(--bg-secondary)',
+                            color: 'var(--text-primary)',
+                            fontWeight: 600,
+                            fontSize: 13,
+                          }}
+                        />
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {parsed.rows.map((row, ri) => (
+                    <tr key={ri}>
+                      {row.map((cell, ci) => (
+                        <td key={ci} style={{ padding: 0, border: '1px solid var(--border)' }}>
+                          <input
+                            type="text"
+                            value={cell}
+                            onChange={e => updateCell('cell', ri, ci, e.target.value)}
+                            style={{
+                              width: '100%',
+                              padding: '8px 10px',
+                              border: 'none',
+                              background: 'var(--bg-primary)',
+                              color: 'var(--text-primary)',
+                              fontSize: 13,
+                            }}
+                          />
+                        </td>
+                      ))}
+                    </tr>
                   ))}
-                  <td style={{ width: 40, textAlign: 'center' }}>
-                    <button
-                      onClick={() => removeRow(rowIdx + 1)}
-                      style={{
-                        background: 'none',
-                        border: 'none',
-                        color: 'var(--text-muted)',
-                        cursor: 'pointer',
-                        fontSize: 16,
-                      }}
-                      title="Remove row"
-                    >×</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
 
-      <div style={{
-        background: 'var(--bg-secondary)',
-        border: '1px solid var(--border)',
-        borderRadius: 8,
-        padding: 16,
-      }}>
-        <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 8 }}>
-          Markdown Preview
-        </div>
-        <pre style={{
-          margin: 0,
-          fontFamily: 'var(--font-mono, monospace)',
-          fontSize: 13,
-          lineHeight: 1.6,
-          color: 'var(--text-primary)',
-          whiteSpace: 'pre-wrap',
-          wordBreak: 'break-word',
-        }}>{markdown}</pre>
+        {/* Live preview */}
+        {parsed && (
+          <div className="tool-panel">
+            <div className="panel-header">
+              <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-secondary)' }}>
+                Live Preview
+              </span>
+            </div>
+            <div className="panel-body" style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
+                <thead>
+                  <tr>
+                    {parsed.headers.map((h, i) => (
+                      <th
+                        key={i}
+                        style={{
+                          padding: '10px 14px',
+                          textAlign: 'left',
+                          borderBottom: '2px solid var(--accent)',
+                          fontWeight: 600,
+                          color: 'var(--text-primary)',
+                          background: 'var(--bg-secondary)',
+                        }}
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {parsed.rows.map((row, ri) => (
+                    <tr key={ri}>
+                      {row.map((cell, ci) => (
+                        <td
+                          key={ci}
+                          style={{
+                            padding: '10px 14px',
+                            borderBottom: '1px solid var(--border)',
+                            color: 'var(--text-primary)',
+                          }}
+                        >
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* Copy buttons */}
+        {parsed && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+            {(['markdown', 'html', 'csv'] as const).map(fmt => (
+              <button
+                key={fmt}
+                className={`btn ${copied === fmt ? 'btn-primary' : ''}`}
+                onClick={() => handleCopy(fmt)}
+                style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+              >
+                {copied === fmt ? <CheckIcon /> : <CopyIcon />}
+                Copy as {fmt.toUpperCase()}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Empty state */}
+        {!parsed && input.trim() === '' && (
+          <div style={{
+            padding: 40,
+            textAlign: 'center',
+            color: 'var(--text-muted)',
+            border: '2px dashed var(--border)',
+            borderRadius: 12,
+          }}>
+            <p style={{ fontSize: 15, marginBottom: 8 }}>Paste a Markdown table or CSV above to get started</p>
+            <p style={{ fontSize: 13 }}>Or click <strong>Sample</strong> to load an example</p>
+          </div>
+        )}
       </div>
     </ToolLayout>
   )

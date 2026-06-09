@@ -1,0 +1,296 @@
+{
+  "extName": {
+    "message": "TabMaster AI — Smart Tab Manager",
+    "description": "Extension name shown in Chrome Web Store and extensions page"
+  },
+  "extDescription": {
+    "message": "AI-powered tab management, search, and workflow automation for Chrome power users",
+    "description": "Extension description shown in Chrome Web Store"
+  },
+  "cmdOpenSidePanel": {
+    "message": "Open TabMaster AI",
+    "description": "Keyboard shortcut description"
+  },
+  "tabCount": {
+    "message": "$COUNT$ tabs",
+    "description": "Number of open tabs in header",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "titleAIClassify": {
+    "message": "AI Classify tabs",
+    "description": "Tooltip for AI classify button"
+  },
+  "titleRefresh": {
+    "message": "Refresh",
+    "description": "Tooltip for refresh button"
+  },
+  "titleSettings": {
+    "message": "Settings",
+    "description": "Tooltip for settings button"
+  },
+  "titleToggleTheme": {
+    "message": "Toggle theme",
+    "description": "Tooltip for dark mode toggle"
+  },
+  "titleDelete": {
+    "message": "Delete",
+    "description": "Tooltip for delete button"
+  },
+  "titleCloseDupes": {
+    "message": "Close duplicate tabs",
+    "description": "Tooltip for close duplicates button"
+  },
+  "titleCloseOld": {
+    "message": "Close tabs inactive for 24h+",
+    "description": "Tooltip for close old tabs button"
+  },
+  "titleSwitchToText": {
+    "message": "Switch to text search",
+    "description": "Tooltip for AI search toggle when AI is active"
+  },
+  "titleSwitchToAI": {
+    "message": "Switch to AI search",
+    "description": "Tooltip for AI search toggle when text search is active"
+  },
+  "usageClassify": {
+    "message": "$USED$/$LIMIT$ classify",
+    "description": "AI classification usage counter",
+    "placeholders": {
+      "used": { "content": "$1" },
+      "limit": { "content": "$2" }
+    }
+  },
+  "usageSearch": {
+    "message": "$USED$/$LIMIT$ search",
+    "description": "AI search usage counter",
+    "placeholders": {
+      "used": { "content": "$1" },
+      "limit": { "content": "$2" }
+    }
+  },
+  "searchPlaceholder": {
+    "message": "🔍 Search tabs...",
+    "description": "Search input placeholder for text search mode"
+  },
+  "searchPlaceholderAI": {
+    "message": "🤖 AI search (e.g. find my music tabs)...",
+    "description": "Search input placeholder for AI search mode"
+  },
+  "searchingWithAI": {
+    "message": "Searching with AI...",
+    "description": "Loading indicator during AI search"
+  },
+  "sectionPinned": {
+    "message": "📌 Pinned ($COUNT$)",
+    "description": "Pinned tabs section header",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "sectionUncategorized": {
+    "message": "📁 Uncategorized ($COUNT$)",
+    "description": "Uncategorized tabs section header",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "emptyNoMatch": {
+    "message": "No tabs match \"$QUERY$\"",
+    "description": "Empty state when search has no results",
+    "placeholders": {
+      "query": { "content": "$1" }
+    }
+  },
+  "emptyNoCategory": {
+    "message": "No tabs in this category",
+    "description": "Empty state when category is empty"
+  },
+  "btnCloseDupes": {
+    "message": "🔄 Close Dupes",
+    "description": "Close duplicates action button"
+  },
+  "btnCloseOld": {
+    "message": "⏰ Close Old",
+    "description": "Close old tabs action button"
+  },
+  "btnNewSnapshot": {
+    "message": "📸 New Snapshot",
+    "description": "New snapshot action button"
+  },
+  "sectionSnapshots": {
+    "message": "📸 Snapshots ($COUNT$/$MAX$)",
+    "description": "Snapshots section header",
+    "placeholders": {
+      "count": { "content": "$1" },
+      "max": { "content": "$2" }
+    }
+  },
+  "snapshotTabsMeta": {
+    "message": "$COUNT$ tabs · $TIME$",
+    "description": "Snapshot metadata line",
+    "placeholders": {
+      "count": { "content": "$1" },
+      "time": { "content": "$2" }
+    }
+  },
+  "dialogSaveSnapshot": {
+    "message": "Save Snapshot",
+    "description": "Snapshot dialog title"
+  },
+  "snapshotNamePlaceholder": {
+    "message": "Snapshot name...",
+    "description": "Snapshot name input placeholder"
+  },
+  "btnCancel": {
+    "message": "Cancel",
+    "description": "Cancel button in dialogs"
+  },
+  "btnSave": {
+    "message": "Save",
+    "description": "Save button in snapshot dialog"
+  },
+  "dialogSettings": {
+    "message": "⚙️ Settings",
+    "description": "Settings dialog title"
+  },
+  "labelApiKey": {
+    "message": "OpenAI API Key",
+    "description": "API key label in settings"
+  },
+  "apiKeyPlaceholder": {
+    "message": "sk-...",
+    "description": "API key input placeholder"
+  },
+  "apiKeyHint": {
+    "message": "Required for AI classification and AI search features.",
+    "description": "API key hint text in settings"
+  },
+  "labelSubscription": {
+    "message": "Subscription",
+    "description": "Subscription label in settings"
+  },
+  "btnSaveKey": {
+    "message": "Save Key",
+    "description": "Save API key button in settings"
+  },
+  "toastAIClassifyLimit": {
+    "message": "Daily AI classification limit reached",
+    "description": "Toast: free user hit classification limit"
+  },
+  "toastAIClassified": {
+    "message": "AI classified $COUNT$ tabs",
+    "description": "Toast: AI classification succeeded",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "toastAIClassifyFailed": {
+    "message": "AI classification failed: $ERROR$",
+    "description": "Toast: AI classification error",
+    "placeholders": {
+      "error": { "content": "$1" }
+    }
+  },
+  "toastAISearchLimit": {
+    "message": "Daily AI search limit reached. Using text search.",
+    "description": "Toast: free user hit search limit"
+  },
+  "toastAISearchFailed": {
+    "message": "AI search failed, using text search",
+    "description": "Toast: AI search error"
+  },
+  "toastClosedDupes": {
+    "message": "Closed $COUNT$ duplicate tabs",
+    "description": "Toast: closed duplicate tabs",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "toastClosedOld": {
+    "message": "Closed $COUNT$ old tabs",
+    "description": "Toast: closed old tabs",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "toastSnapshotSaved": {
+    "message": "Snapshot saved!",
+    "description": "Toast: snapshot saved successfully"
+  },
+  "toastSnapshotLimit": {
+    "message": "Free tier limited to $MAX$ snapshots",
+    "description": "Toast: free user hit snapshot limit",
+    "placeholders": {
+      "max": { "content": "$1" }
+    }
+  },
+  "toastSnapshotDeleted": {
+    "message": "Snapshot deleted",
+    "description": "Toast: snapshot deleted"
+  },
+  "toastSnapshotRestored": {
+    "message": "Restored \"$NAME$\"",
+    "description": "Toast: snapshot restored",
+    "placeholders": {
+      "name": { "content": "$1" }
+    }
+  },
+  "toastKeySaved": {
+    "message": "API key saved",
+    "description": "Toast: API key saved successfully"
+  },
+  "toastSubRefreshed": {
+    "message": "Subscription refreshed",
+    "description": "Toast: subscription status refreshed"
+  },
+  "timeJustNow": {
+    "message": "just now",
+    "description": "Time: less than 1 minute ago"
+  },
+  "timeMinutesAgo": {
+    "message": "$MIN$m ago",
+    "description": "Time: N minutes ago",
+    "placeholders": {
+      "min": { "content": "$1" }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$HOURS$h ago",
+    "description": "Time: N hours ago",
+    "placeholders": {
+      "hours": { "content": "$1" }
+    }
+  },
+  "catWork": {
+    "message": "Work",
+    "description": "Category label: work"
+  },
+  "catResearch": {
+    "message": "Research",
+    "description": "Category label: research"
+  },
+  "catSocial": {
+    "message": "Social",
+    "description": "Category label: social"
+  },
+  "catShopping": {
+    "message": "Shopping",
+    "description": "Category label: shopping"
+  },
+  "catEntertainment": {
+    "message": "Entertainment",
+    "description": "Category label: entertainment"
+  },
+  "catNews": {
+    "message": "News",
+    "description": "Category label: news"
+  },
+  "catOther": {
+    "message": "Other",
+    "description": "Category label: other"
+  }
+}

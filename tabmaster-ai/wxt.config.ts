@@ -3,8 +3,9 @@ import { defineConfig } from 'wxt';
 export default defineConfig({
   modules: ['@wxt-dev/module-vue'],
   manifest: {
-    name: 'TabMaster AI — Smart Tab Manager',
-    description: 'AI-powered tab management, search, and workflow automation for Chrome power users',
+    name: '__MSG_extName__',
+    description: '__MSG_extDescription__',
+    default_locale: 'en',
     permissions: ['storage', 'sidePanel', 'tabs', 'cookies', 'commands'],
     host_permissions: ['https://tools.pixiaoli.cn/*', 'https://api.openai.com/*'],
     side_panel: {
@@ -19,7 +20,7 @@ export default defineConfig({
           default: 'Ctrl+Shift+T',
           mac: 'Command+Shift+T',
         },
-        description: 'Open TabMaster AI',
+        description: '__MSG_cmdOpenSidePanel__',
       },
     },
   },

@@ -1,0 +1,196 @@
+{
+  "extName": {
+    "message": "TabMaster AI — Gerenciador Inteligente de Abas"
+  },
+  "extDescription": {
+    "message": "Gerenciamento de abas com IA, busca e automação de fluxo para usuários avançados do Chrome"
+  },
+  "cmdOpenSidePanel": {
+    "message": "Abrir TabMaster AI"
+  },
+  "tabCount": {
+    "message": "$COUNT$ abas",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "titleAIClassify": {
+    "message": "Classificar abas com IA"
+  },
+  "titleRefresh": {
+    "message": "Atualizar"
+  },
+  "titleSettings": {
+    "message": "Configurações"
+  },
+  "titleToggleTheme": {
+    "message": "Alternar tema"
+  },
+  "titleDelete": {
+    "message": "Excluir"
+  },
+  "titleCloseDupes": {
+    "message": "Fechar abas duplicadas"
+  },
+  "titleCloseOld": {
+    "message": "Fechar abas inativas por 24h+"
+  },
+  "titleSwitchToText": {
+    "message": "Mudar para busca por texto"
+  },
+  "titleSwitchToAI": {
+    "message": "Mudar para busca com IA"
+  },
+  "usageClassify": {
+    "message": "$USED$/$LIMIT$ classificar",
+    "placeholders": {
+      "used": { "content": "$1" },
+      "limit": { "content": "$2" }
+    }
+  },
+  "usageSearch": {
+    "message": "$USED$/$LIMIT$ buscar",
+    "placeholders": {
+      "used": { "content": "$1" },
+      "limit": { "content": "$2" }
+    }
+  },
+  "searchPlaceholder": {
+    "message": "🔍 Buscar abas..."
+  },
+  "searchPlaceholderAI": {
+    "message": "🤖 Busca com IA (ex: encontrar minhas abas de música)..."
+  },
+  "searchingWithAI": {
+    "message": "Buscando com IA..."
+  },
+  "sectionPinned": {
+    "message": "📌 Fixadas ($COUNT$)",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "sectionUncategorized": {
+    "message": "📁 Sem categoria ($COUNT$)",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "emptyNoMatch": {
+    "message": "Nenhuma aba corresponde a \"$QUERY$\"",
+    "placeholders": { "query": { "content": "$1" } }
+  },
+  "emptyNoCategory": {
+    "message": "Nenhuma aba nesta categoria"
+  },
+  "btnCloseDupes": {
+    "message": "🔄 Fechar Duplicadas"
+  },
+  "btnCloseOld": {
+    "message": "⏰ Fechar Antigas"
+  },
+  "btnNewSnapshot": {
+    "message": "📸 Nova Captura"
+  },
+  "sectionSnapshots": {
+    "message": "📸 Capturas ($COUNT$/$MAX$)",
+    "placeholders": {
+      "count": { "content": "$1" },
+      "max": { "content": "$2" }
+    }
+  },
+  "snapshotTabsMeta": {
+    "message": "$COUNT$ abas · $TIME$",
+    "placeholders": {
+      "count": { "content": "$1" },
+      "time": { "content": "$2" }
+    }
+  },
+  "dialogSaveSnapshot": {
+    "message": "Salvar Captura"
+  },
+  "snapshotNamePlaceholder": {
+    "message": "Nome da captura..."
+  },
+  "btnCancel": {
+    "message": "Cancelar"
+  },
+  "btnSave": {
+    "message": "Salvar"
+  },
+  "dialogSettings": {
+    "message": "⚙️ Configurações"
+  },
+  "labelApiKey": {
+    "message": "Chave da API OpenAI"
+  },
+  "apiKeyPlaceholder": {
+    "message": "sk-..."
+  },
+  "apiKeyHint": {
+    "message": "Necessária para classificação e busca com IA."
+  },
+  "labelSubscription": {
+    "message": "Assinatura"
+  },
+  "btnSaveKey": {
+    "message": "Salvar Chave"
+  },
+  "toastAIClassifyLimit": {
+    "message": "Limite diário de classificação por IA atingido"
+  },
+  "toastAIClassified": {
+    "message": "IA classificou $COUNT$ abas",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "toastAIClassifyFailed": {
+    "message": "Falha na classificação por IA: $ERROR$",
+    "placeholders": { "error": { "content": "$1" } }
+  },
+  "toastAISearchLimit": {
+    "message": "Limite diário de busca por IA atingido. Usando busca por texto."
+  },
+  "toastAISearchFailed": {
+    "message": "Falha na busca por IA, usando busca por texto"
+  },
+  "toastClosedDupes": {
+    "message": "$COUNT$ abas duplicadas fechadas",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "toastClosedOld": {
+    "message": "$COUNT$ abas antigas fechadas",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "toastSnapshotSaved": {
+    "message": "Captura salva!"
+  },
+  "toastSnapshotLimit": {
+    "message": "Plano gratuito limitado a $MAX$ capturas",
+    "placeholders": { "max": { "content": "$1" } }
+  },
+  "toastSnapshotDeleted": {
+    "message": "Captura excluída"
+  },
+  "toastSnapshotRestored": {
+    "message": "Restaurada \"$NAME$\"",
+    "placeholders": { "name": { "content": "$1" } }
+  },
+  "toastKeySaved": {
+    "message": "Chave da API salva"
+  },
+  "toastSubRefreshed": {
+    "message": "Assinatura atualizada"
+  },
+  "timeJustNow": {
+    "message": "agora"
+  },
+  "timeMinutesAgo": {
+    "message": "$MIN$min atrás",
+    "placeholders": { "min": { "content": "$1" } }
+  },
+  "timeHoursAgo": {
+    "message": "$HOURS$h atrás",
+    "placeholders": { "hours": { "content": "$1" } }
+  },
+  "catWork": { "message": "Trabalho" },
+  "catResearch": { "message": "Pesquisa" },
+  "catSocial": { "message": "Social" },
+  "catShopping": { "message": "Compras" },
+  "catEntertainment": { "message": "Entretenimento" },
+  "catNews": { "message": "Notícias" },
+  "catOther": { "message": "Outros" }
+}

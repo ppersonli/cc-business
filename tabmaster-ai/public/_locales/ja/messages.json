@@ -1,0 +1,196 @@
+{
+  "extName": {
+    "message": "TabMaster AI — スマートタブマネージャー"
+  },
+  "extDescription": {
+    "message": "AI搭載タブ管理・検索・ワークフロー自動化（パワーユーザー向け）"
+  },
+  "cmdOpenSidePanel": {
+    "message": "TabMaster AIを開く"
+  },
+  "tabCount": {
+    "message": "$COUNT$ タブ",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "titleAIClassify": {
+    "message": "AIでタブを分類"
+  },
+  "titleRefresh": {
+    "message": "更新"
+  },
+  "titleSettings": {
+    "message": "設定"
+  },
+  "titleToggleTheme": {
+    "message": "テーマ切替"
+  },
+  "titleDelete": {
+    "message": "削除"
+  },
+  "titleCloseDupes": {
+    "message": "重複タブを閉じる"
+  },
+  "titleCloseOld": {
+    "message": "24時間以上使用していないタブを閉じる"
+  },
+  "titleSwitchToText": {
+    "message": "テキスト検索に切替"
+  },
+  "titleSwitchToAI": {
+    "message": "AI検索に切替"
+  },
+  "usageClassify": {
+    "message": "$USED$/$LIMIT$ 分類",
+    "placeholders": {
+      "used": { "content": "$1" },
+      "limit": { "content": "$2" }
+    }
+  },
+  "usageSearch": {
+    "message": "$USED$/$LIMIT$ 検索",
+    "placeholders": {
+      "used": { "content": "$1" },
+      "limit": { "content": "$2" }
+    }
+  },
+  "searchPlaceholder": {
+    "message": "🔍 タブを検索..."
+  },
+  "searchPlaceholderAI": {
+    "message": "🤖 AI検索（例：音楽のタブを探す）..."
+  },
+  "searchingWithAI": {
+    "message": "AIで検索中..."
+  },
+  "sectionPinned": {
+    "message": "📌 固定 ($COUNT$)",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "sectionUncategorized": {
+    "message": "📁 未分類 ($COUNT$)",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "emptyNoMatch": {
+    "message": "\"$QUERY$\" に一致するタブはありません",
+    "placeholders": { "query": { "content": "$1" } }
+  },
+  "emptyNoCategory": {
+    "message": "このカテゴリにタブはありません"
+  },
+  "btnCloseDupes": {
+    "message": "🔄 重複を閉じる"
+  },
+  "btnCloseOld": {
+    "message": "⏰ 古いタブを閉じる"
+  },
+  "btnNewSnapshot": {
+    "message": "📸 スナップショット"
+  },
+  "sectionSnapshots": {
+    "message": "📸 スナップショット ($COUNT$/$MAX$)",
+    "placeholders": {
+      "count": { "content": "$1" },
+      "max": { "content": "$2" }
+    }
+  },
+  "snapshotTabsMeta": {
+    "message": "$COUNT$ タブ · $TIME$",
+    "placeholders": {
+      "count": { "content": "$1" },
+      "time": { "content": "$2" }
+    }
+  },
+  "dialogSaveSnapshot": {
+    "message": "スナップショットを保存"
+  },
+  "snapshotNamePlaceholder": {
+    "message": "スナップショット名..."
+  },
+  "btnCancel": {
+    "message": "キャンセル"
+  },
+  "btnSave": {
+    "message": "保存"
+  },
+  "dialogSettings": {
+    "message": "⚙️ 設定"
+  },
+  "labelApiKey": {
+    "message": "OpenAI APIキー"
+  },
+  "apiKeyPlaceholder": {
+    "message": "sk-..."
+  },
+  "apiKeyHint": {
+    "message": "AI分類・AI検索機能に必要です。"
+  },
+  "labelSubscription": {
+    "message": "サブスクリプション"
+  },
+  "btnSaveKey": {
+    "message": "キーを保存"
+  },
+  "toastAIClassifyLimit": {
+    "message": "本日のAI分類回数の上限に達しました"
+  },
+  "toastAIClassified": {
+    "message": "AIが$COUNT$個のタブを分類しました",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "toastAIClassifyFailed": {
+    "message": "AI分類に失敗しました: $ERROR$",
+    "placeholders": { "error": { "content": "$1" } }
+  },
+  "toastAISearchLimit": {
+    "message": "本日のAI検索回数の上限に達しました。テキスト検索を使用します。"
+  },
+  "toastAISearchFailed": {
+    "message": "AI検索に失敗しました。テキスト検索を使用します。"
+  },
+  "toastClosedDupes": {
+    "message": "重複タブ$COUNT$個を閉じました",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "toastClosedOld": {
+    "message": "古いタブ$COUNT$個を閉じました",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "toastSnapshotSaved": {
+    "message": "スナップショットを保存しました！"
+  },
+  "toastSnapshotLimit": {
+    "message": "無料プランは$MAX$個のスナップショットまでです",
+    "placeholders": { "max": { "content": "$1" } }
+  },
+  "toastSnapshotDeleted": {
+    "message": "スナップショットを削除しました"
+  },
+  "toastSnapshotRestored": {
+    "message": "\"$NAME$\" を復元しました",
+    "placeholders": { "name": { "content": "$1" } }
+  },
+  "toastKeySaved": {
+    "message": "APIキーを保存しました"
+  },
+  "toastSubRefreshed": {
+    "message": "サブスクリプションを更新しました"
+  },
+  "timeJustNow": {
+    "message": "たった今"
+  },
+  "timeMinutesAgo": {
+    "message": "$MIN$分前",
+    "placeholders": { "min": { "content": "$1" } }
+  },
+  "timeHoursAgo": {
+    "message": "$HOURS$時間前",
+    "placeholders": { "hours": { "content": "$1" } }
+  },
+  "catWork": { "message": "仕事" },
+  "catResearch": { "message": "リサーチ" },
+  "catSocial": { "message": "ソーシャル" },
+  "catShopping": { "message": "ショッピング" },
+  "catEntertainment": { "message": "エンタメ" },
+  "catNews": { "message": "ニュース" },
+  "catOther": { "message": "その他" }
+}

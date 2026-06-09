@@ -7,22 +7,22 @@
         <span v-if="isPro" class="pro-badge">PRO</span>
       </div>
       <div class="header-right">
-        <span class="tab-count">{{ tabs.length }} tabs</span>
+        <span class="tab-count">{{ t('tabCount', String(tabs.length)) }}</span>
         <button
           class="icon-btn ai-classify-btn"
           :class="{ loading: aiClassifying }"
           :disabled="aiClassifying || tabs.length === 0"
           @click="runAIClassification"
-          title="AI Classify tabs"
+          :title="t('titleAIClassify')"
         >
           <span v-if="aiClassifying" class="spinning">⟳</span>
           <span v-else>✨</span>
         </button>
-        <button class="icon-btn" @click="refreshTabs" :disabled="loading" title="Refresh">
+        <button class="icon-btn" @click="refreshTabs" :disabled="loading" :title="t('titleRefresh')">
           <span :class="{ spinning: loading }">↻</span>
         </button>
-        <button class="icon-btn" @click="showSettings = true" title="Settings">⚙️</button>
-        <button class="icon-btn" @click="toggleDark" title="Toggle theme">
+        <button class="icon-btn" @click="showSettings = true" :title="t('titleSettings')">⚙️</button>
+        <button class="icon-btn" @click="toggleDark" :title="t('titleToggleTheme')">
           {{ isDark ? '☀️' : '🌙' }}
         </button>
       </div>
@@ -31,10 +31,10 @@
     <!-- Usage Counter -->
     <div v-if="!isPro && usageInfo" class="usage-bar">
       <span class="usage-item">
-        ✨ {{ usageInfo.classification.used }}/{{ usageInfo.classification.limit }} classify
+        ✨ {{ t('usageClassify', String(usageInfo.classification.used), String(usageInfo.classification.limit)) }}
       </span>
       <span class="usage-item">
-        🔍 {{ usageInfo.search.used }}/{{ usageInfo.search.limit }} search
+        🔍 {{ t('usageSearch', String(usageInfo.search.used), String(usageInfo.search.limit)) }}
       </span>
     </div>
 
@@ -43,7 +43,7 @@
       <input
         v-model="searchQuery"
         type="text"
-        :placeholder="aiSearchEnabled ? '🤖 AI search (e.g. find my music tabs)...' : '🔍 Search tabs...'"
+        :placeholder="aiSearchEnabled ? t('searchPlaceholderAI') : t('searchPlaceholder')"
         class="search-input"
         :class="{ 'ai-active': aiSearchEnabled }"
         @input="aiSearchEnabled ? onAIInput() : onSearch()"
@@ -53,13 +53,13 @@
           class="ai-search-toggle"
           :class="{ active: aiSearchEnabled }"
           @click="toggleAISearch"
-          :title="aiSearchEnabled ? 'Switch to text search' : 'Switch to AI search'"
+          :title="aiSearchEnabled ? t('titleSwitchToText') : t('titleSwitchToAI')"
         >
           🤖
         </button>
         <button v-if="searchQuery" class="clear-btn" @click="clearSearch">✕</button>
       </div>
-      <div v-if="aiSearching" class="search-spinner">Searching with AI...</div>
+      <div v-if="aiSearching" class="search-spinner">{{ t('searchingWithAI') }}</div>
     </div>
 
     <!-- Category Filter -->
@@ -81,7 +81,7 @@
       <!-- Pinned Section -->
       <div v-if="pinnedTabs.length > 0" class="section">
         <div class="section-header">
-          <span>📌 Pinned ({{ pinnedTabs.length }})</span>
+          <span>{{ t('sectionPinned', String(pinnedTabs.length)) }}</span>
         </div>
         <TabCard
           v-for="tab in pinnedTabs"
@@ -119,7 +119,7 @@
       <!-- Uncategorized -->
       <div v-if="uncategorizedTabs.length > 0 && !activeCategory" class="section">
         <div class="section-header">
-          <span>📁 Uncategorized ({{ uncategorizedTabs.length }})</span>
+          <span>{{ t('sectionUncategorized', String(uncategorizedTabs.length)) }}</span>
         </div>
         <TabCard
           v-for="tab in uncategorizedTabs"
@@ -135,28 +135,28 @@
 
       <!-- Empty State -->
       <div v-if="filteredTabs.length === 0" class="empty-state">
-        <p v-if="searchQuery">No tabs match "{{ searchQuery }}"</p>
-        <p v-else>No tabs in this category</p>
+        <p v-if="searchQuery">{{ t('emptyNoMatch', searchQuery) }}</p>
+        <p v-else>{{ t('emptyNoCategory') }}</p>
       </div>
     </div>
 
     <!-- Quick Actions -->
     <div class="quick-actions">
-      <button class="action-btn" @click="closeDuplicates" title="Close duplicate tabs">
-        🔄 Close Dupes
+      <button class="action-btn" @click="closeDuplicates" :title="t('titleCloseDupes')">
+        {{ t('btnCloseDupes') }}
       </button>
-      <button class="action-btn" @click="closeInactive" title="Close tabs inactive for 24h+">
-        ⏰ Close Old
+      <button class="action-btn" @click="closeInactive" :title="t('titleCloseOld')">
+        {{ t('btnCloseOld') }}
       </button>
       <button class="action-btn primary" @click="showSnapshotDialog = true" :disabled="tabs.length === 0">
-        📸 New Snapshot
+        {{ t('btnNewSnapshot') }}
       </button>
     </div>
 
     <!-- Snapshots Section -->
     <div v-if="snapshots.length > 0" class="snapshots-section">
       <div class="section-header">
-        <span>📸 Snapshots ({{ snapshots.length }}/{{ isPro ? '∞' : MAX_FREE_SNAPSHOTS }})</span>
+        <span>{{ t('sectionSnapshots', String(snapshots.length), isPro ? '∞' : String(MAX_FREE_SNAPSHOTS)) }}</span>
       </div>
       <div
         v-for="snapshot in snapshots"
@@ -165,27 +165,27 @@
       >
         <div class="snapshot-info" @click="restoreSnapshot(snapshot)">
           <span class="snapshot-name">{{ snapshot.name }}</span>
-          <span class="snapshot-meta">{{ snapshot.tabs.length }} tabs · {{ formatTime(snapshot.createdAt) }}</span>
+          <span class="snapshot-meta">{{ t('snapshotTabsMeta', String(snapshot.tabs.length), formatTime(snapshot.createdAt)) }}</span>
         </div>
-        <button class="icon-btn small" @click="deleteSnapshot(snapshot.id)" title="Delete">🗑️</button>
+        <button class="icon-btn small" @click="deleteSnapshot(snapshot.id)" :title="t('titleDelete')">🗑️</button>
       </div>
     </div>
 
     <!-- Snapshot Dialog -->
     <div v-if="showSnapshotDialog" class="dialog-overlay" @click.self="showSnapshotDialog = false">
       <div class="dialog">
-        <h3>Save Snapshot</h3>
+        <h3>{{ t('dialogSaveSnapshot') }}</h3>
         <input
           v-model="snapshotName"
           type="text"
-          placeholder="Snapshot name..."
+          :placeholder="t('snapshotNamePlaceholder')"
           class="dialog-input"
           @keyup.enter="saveSnapshot"
           ref="snapshotInput"
         />
         <div class="dialog-actions">
-          <button class="dialog-btn" @click="showSnapshotDialog = false">Cancel</button>
-          <button class="dialog-btn primary" @click="saveSnapshot" :disabled="!snapshotName.trim()">Save</button>
+          <button class="dialog-btn" @click="showSnapshotDialog = false">{{ t('btnCancel') }}</button>
+          <button class="dialog-btn primary" @click="saveSnapshot" :disabled="!snapshotName.trim()">{{ t('btnSave') }}</button>
         </div>
       </div>
     </div>
@@ -193,20 +193,20 @@
     <!-- Settings Dialog -->
     <div v-if="showSettings" class="dialog-overlay" @click.self="showSettings = false">
       <div class="dialog settings-dialog">
-        <h3>⚙️ Settings</h3>
+        <h3>{{ t('dialogSettings') }}</h3>
         <div class="settings-section">
-          <label class="settings-label">OpenAI API Key</label>
+          <label class="settings-label">{{ t('labelApiKey') }}</label>
           <input
             v-model="apiKeyValue"
             type="password"
-            placeholder="sk-..."
+            :placeholder="t('apiKeyPlaceholder')"
             class="dialog-input"
             @keyup.enter="saveSettings"
           />
-          <p class="settings-hint">Required for AI classification and AI search features.</p>
+          <p class="settings-hint">{{ t('apiKeyHint') }}</p>
         </div>
         <div v-if="subscription" class="settings-section">
-          <label class="settings-label">Subscription</label>
+          <label class="settings-label">{{ t('labelSubscription') }}</label>
           <div class="settings-plan">
             <span class="plan-name">{{ subscription.plan }}</span>
             <span v-if="isPro" class="pro-badge inline">PRO</span>
@@ -214,8 +214,8 @@
           </div>
         </div>
         <div class="dialog-actions">
-          <button class="dialog-btn" @click="showSettings = false">Cancel</button>
-          <button class="dialog-btn primary" @click="saveSettings" :disabled="!apiKeyValue.trim()">Save Key</button>
+          <button class="dialog-btn" @click="showSettings = false">{{ t('btnCancel') }}</button>
+          <button class="dialog-btn primary" @click="saveSettings" :disabled="!apiKeyValue.trim()">{{ t('btnSaveKey') }}</button>
         </div>
       </div>
     </div>
@@ -251,6 +251,7 @@ import { classifyTabs, searchTabsAI, getApiKey, setApiKey as saveApiKey } from '
 import type { SearchResult } from '~/utils/openai-client';
 import { getSubscriptionState, refreshSubscription, type SubscriptionState } from '~/utils/subscription';
 import { canUseFeature, incrementUsage, getUsageSummary } from '~/utils/usage-tracker';
+import { t, CATEGORY_I18N_KEYS } from '~/utils/i18n';
 import TabCard from './TabCard.vue';
 
 const { tabs, activeTabId, loading, refreshTabs, activateTab, closeTab, closeTabs, pinTab } = useTabs();
@@ -287,7 +288,13 @@ const usageInfo = ref<{ classification: { used: number; limit: number | string }
 
 // Computed
 const categories = CATEGORIES;
-const categoryLabels = CATEGORY_LABELS;
+const categoryLabels = computed(() => {
+  const labels: Record<string, string> = {};
+  for (const cat of CATEGORIES) {
+    labels[cat] = t(CATEGORY_I18N_KEYS[cat] || 'catOther');
+  }
+  return labels;
+});
 const categoryIcons = CATEGORY_ICONS;
 
 const pinnedTabs = computed(() => tabs.value.filter(t => t.pinned));
@@ -389,7 +396,7 @@ async function runAIClassification() {
 
   const { allowed } = await canUseFeature('classification', isPro.value);
   if (!allowed) {
-    showToast('Daily AI classification limit reached', 'error');
+    showToast(t('toastAIClassifyLimit'), 'error');
     return;
   }
 
@@ -407,10 +414,10 @@ async function runAIClassification() {
       aiClassifiedResults.value = map;
       await incrementUsage('classification');
       await loadUsageInfo();
-      showToast(`AI classified ${results.length} tabs`, 'success');
+      showToast(t('toastAIClassified', String(results.length)), 'success');
     }
   } catch (err: any) {
-    showToast(`AI classification failed: ${err.message || 'Unknown error'}`, 'error');
+    showToast(t('toastAIClassifyFailed', err.message || 'Unknown error'), 'error');
   } finally {
     aiClassifying.value = false;
   }
@@ -437,7 +444,7 @@ async function runAISearch() {
 
   const { allowed } = await canUseFeature('search', isPro.value);
   if (!allowed) {
-    showToast('Daily AI search limit reached. Using text search.', 'error');
+    showToast(t('toastAISearchLimit'), 'error');
     aiSearchMode.value = false;
     onSearch();
     return;
@@ -457,7 +464,7 @@ async function runAISearch() {
       onSearch();
     }
   } catch (err: any) {
-    showToast(`AI search failed, using text search`, 'error');
+    showToast(t('toastAISearchFailed'), 'error');
     aiSearchMode.value = false;
     onSearch();
   } finally {
@@ -515,14 +522,14 @@ async function closeDuplicates() {
       closedCount += toClose.length;
     }
   }
-  showToast(`Closed ${closedCount} duplicate tabs`, 'success');
+  showToast(t('toastClosedDupes', String(closedCount)), 'success');
 }
 
 async function closeInactive() {
   const closeable = tabs.value.filter(t => !t.pinned && !t.active).slice(0, 10);
   if (closeable.length > 0) {
     await closeTabs(closeable.map(t => t.id));
-    showToast(`Closed ${closeable.length} old tabs`, 'success');
+    showToast(t('toastClosedOld', String(closeable.length)), 'success');
   }
 }
 
@@ -533,22 +540,22 @@ async function saveSnapshot() {
   const result = await saveSnapshotFn(snapshotName.value.trim(), tabs.value, windowId, isPro.value);
 
   if (result) {
-    showToast('Snapshot saved!', 'success');
+    showToast(t('toastSnapshotSaved'), 'success');
     showSnapshotDialog.value = false;
     snapshotName.value = '';
   } else {
-    showToast(`Free tier limited to ${MAX_FREE_SNAPSHOTS} snapshots`, 'error');
+    showToast(t('toastSnapshotLimit', String(MAX_FREE_SNAPSHOTS)), 'error');
   }
 }
 
 async function deleteSnapshot(id: string) {
   await deleteSnapshotFn(id);
-  showToast('Snapshot deleted', 'success');
+  showToast(t('toastSnapshotDeleted'), 'success');
 }
 
 async function restoreSnapshot(snapshot: Snapshot) {
   await restoreSnapshotFn(snapshot);
-  showToast(`Restored "${snapshot.name}"`, 'success');
+  showToast(t('toastSnapshotRestored', snapshot.name), 'success');
 }
 
 function toggleDark() {
@@ -558,9 +565,9 @@ function toggleDark() {
 
 function formatTime(timestamp: number): string {
   const diff = Date.now() - timestamp;
-  if (diff < 60000) return 'just now';
-  if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
-  if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
+  if (diff < 60000) return t('timeJustNow');
+  if (diff < 3600000) return t('timeMinutesAgo', String(Math.floor(diff / 60000)));
+  if (diff < 86400000) return t('timeHoursAgo', String(Math.floor(diff / 3600000)));
   return new Date(timestamp).toLocaleDateString();
 }
 
@@ -576,7 +583,7 @@ async function loadUsageInfo() {
 async function saveSettings() {
   if (apiKeyValue.value.trim()) {
     await saveApiKey(apiKeyValue.value.trim());
-    showToast('API key saved', 'success');
+    showToast(t('toastKeySaved'), 'success');
     showSettings.value = false;
     // Trigger classification after setting key
     await runAIClassification();
@@ -585,7 +592,7 @@ async function saveSettings() {
 
 async function logout() {
   await refreshSubscription();
-  showToast('Subscription refreshed', 'success');
+  showToast(t('toastSubRefreshed'), 'success');
 }
 
 // Init

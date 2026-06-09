@@ -1,0 +1,196 @@
+{
+  "extName": {
+    "message": "TabMaster AI — Gestor Inteligente de Pestañas"
+  },
+  "extDescription": {
+    "message": "Gestión de pestañas con IA, búsqueda y automatización para usuarios avanzados de Chrome"
+  },
+  "cmdOpenSidePanel": {
+    "message": "Abrir TabMaster AI"
+  },
+  "tabCount": {
+    "message": "$COUNT$ pestañas",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "titleAIClassify": {
+    "message": "Clasificar pestañas con IA"
+  },
+  "titleRefresh": {
+    "message": "Actualizar"
+  },
+  "titleSettings": {
+    "message": "Configuración"
+  },
+  "titleToggleTheme": {
+    "message": "Cambiar tema"
+  },
+  "titleDelete": {
+    "message": "Eliminar"
+  },
+  "titleCloseDupes": {
+    "message": "Cerrar pestañas duplicadas"
+  },
+  "titleCloseOld": {
+    "message": "Cerrar pestañas inactivas por más de 24h"
+  },
+  "titleSwitchToText": {
+    "message": "Cambiar a búsqueda por texto"
+  },
+  "titleSwitchToAI": {
+    "message": "Cambiar a búsqueda con IA"
+  },
+  "usageClassify": {
+    "message": "$USED$/$LIMIT$ clasificar",
+    "placeholders": {
+      "used": { "content": "$1" },
+      "limit": { "content": "$2" }
+    }
+  },
+  "usageSearch": {
+    "message": "$USED$/$LIMIT$ buscar",
+    "placeholders": {
+      "used": { "content": "$1" },
+      "limit": { "content": "$2" }
+    }
+  },
+  "searchPlaceholder": {
+    "message": "🔍 Buscar pestañas..."
+  },
+  "searchPlaceholderAI": {
+    "message": "🤖 Búsqueda con IA (ej: encontrar mis pestañas de música)..."
+  },
+  "searchingWithAI": {
+    "message": "Buscando con IA..."
+  },
+  "sectionPinned": {
+    "message": "📌 Fijadas ($COUNT$)",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "sectionUncategorized": {
+    "message": "📁 Sin categoría ($COUNT$)",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "emptyNoMatch": {
+    "message": "Ninguna pestaña coincide con \"$QUERY$\"",
+    "placeholders": { "query": { "content": "$1" } }
+  },
+  "emptyNoCategory": {
+    "message": "No hay pestañas en esta categoría"
+  },
+  "btnCloseDupes": {
+    "message": "🔄 Cerrar Duplicadas"
+  },
+  "btnCloseOld": {
+    "message": "⏰ Cerrar Antiguas"
+  },
+  "btnNewSnapshot": {
+    "message": "📸 Nueva Captura"
+  },
+  "sectionSnapshots": {
+    "message": "📸 Capturas ($COUNT$/$MAX$)",
+    "placeholders": {
+      "count": { "content": "$1" },
+      "max": { "content": "$2" }
+    }
+  },
+  "snapshotTabsMeta": {
+    "message": "$COUNT$ pestañas · $TIME$",
+    "placeholders": {
+      "count": { "content": "$1" },
+      "time": { "content": "$2" }
+    }
+  },
+  "dialogSaveSnapshot": {
+    "message": "Guardar Captura"
+  },
+  "snapshotNamePlaceholder": {
+    "message": "Nombre de la captura..."
+  },
+  "btnCancel": {
+    "message": "Cancelar"
+  },
+  "btnSave": {
+    "message": "Guardar"
+  },
+  "dialogSettings": {
+    "message": "⚙️ Configuración"
+  },
+  "labelApiKey": {
+    "message": "Clave API de OpenAI"
+  },
+  "apiKeyPlaceholder": {
+    "message": "sk-..."
+  },
+  "apiKeyHint": {
+    "message": "Necesaria para clasificación y búsqueda con IA."
+  },
+  "labelSubscription": {
+    "message": "Suscripción"
+  },
+  "btnSaveKey": {
+    "message": "Guardar Clave"
+  },
+  "toastAIClassifyLimit": {
+    "message": "Límite diario de clasificación por IA alcanzado"
+  },
+  "toastAIClassified": {
+    "message": "IA clasificó $COUNT$ pestañas",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "toastAIClassifyFailed": {
+    "message": "Error en clasificación por IA: $ERROR$",
+    "placeholders": { "error": { "content": "$1" } }
+  },
+  "toastAISearchLimit": {
+    "message": "Límite diario de búsqueda por IA alcanzado. Usando búsqueda por texto."
+  },
+  "toastAISearchFailed": {
+    "message": "Error en búsqueda por IA, usando búsqueda por texto"
+  },
+  "toastClosedDupes": {
+    "message": "$COUNT$ pestañas duplicadas cerradas",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "toastClosedOld": {
+    "message": "$COUNT$ pestañas antiguas cerradas",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "toastSnapshotSaved": {
+    "message": "¡Captura guardada!"
+  },
+  "toastSnapshotLimit": {
+    "message": "Plan gratuito limitado a $MAX$ capturas",
+    "placeholders": { "max": { "content": "$1" } }
+  },
+  "toastSnapshotDeleted": {
+    "message": "Captura eliminada"
+  },
+  "toastSnapshotRestored": {
+    "message": "Restaurada \"$NAME$\"",
+    "placeholders": { "name": { "content": "$1" } }
+  },
+  "toastKeySaved": {
+    "message": "Clave API guardada"
+  },
+  "toastSubRefreshed": {
+    "message": "Suscripción actualizada"
+  },
+  "timeJustNow": {
+    "message": "ahora"
+  },
+  "timeMinutesAgo": {
+    "message": "hace $MIN$min",
+    "placeholders": { "min": { "content": "$1" } }
+  },
+  "timeHoursAgo": {
+    "message": "hace $HOURS$h",
+    "placeholders": { "hours": { "content": "$1" } }
+  },
+  "catWork": { "message": "Trabajo" },
+  "catResearch": { "message": "Investigación" },
+  "catSocial": { "message": "Social" },
+  "catShopping": { "message": "Compras" },
+  "catEntertainment": { "message": "Entretenimiento" },
+  "catNews": { "message": "Noticias" },
+  "catOther": { "message": "Otros" }
+}

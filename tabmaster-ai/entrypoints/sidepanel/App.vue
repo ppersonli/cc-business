@@ -4,28 +4,62 @@
       <div class="header-left">
         <span class="logo">🧠</span>
         <h1>TabMaster AI</h1>
+        <span v-if="isPro" class="pro-badge">PRO</span>
       </div>
       <div class="header-right">
         <span class="tab-count">{{ tabs.length }} tabs</span>
+        <button
+          class="icon-btn ai-classify-btn"
+          :class="{ loading: aiClassifying }"
+          :disabled="aiClassifying || tabs.length === 0"
+          @click="runAIClassification"
+          title="AI Classify tabs"
+        >
+          <span v-if="aiClassifying" class="spinning">⟳</span>
+          <span v-else>✨</span>
+        </button>
         <button class="icon-btn" @click="refreshTabs" :disabled="loading" title="Refresh">
           <span :class="{ spinning: loading }">↻</span>
         </button>
+        <button class="icon-btn" @click="showSettings = true" title="Settings">⚙️</button>
         <button class="icon-btn" @click="toggleDark" title="Toggle theme">
           {{ isDark ? '☀️' : '🌙' }}
         </button>
       </div>
     </header>
 
+    <!-- Usage Counter -->
+    <div v-if="!isPro && usageInfo" class="usage-bar">
+      <span class="usage-item">
+        ✨ {{ usageInfo.classification.used }}/{{ usageInfo.classification.limit }} classify
+      </span>
+      <span class="usage-item">
+        🔍 {{ usageInfo.search.used }}/{{ usageInfo.search.limit }} search
+      </span>
+    </div>
+
     <!-- Search Bar -->
     <div class="search-bar">
       <input
         v-model="searchQuery"
         type="text"
-        placeholder="🔍 Search tabs..."
+        :placeholder="aiSearchEnabled ? '🤖 AI search (e.g. find my music tabs)...' : '🔍 Search tabs...'"
         class="search-input"
-        @input="onSearch"
+        :class="{ 'ai-active': aiSearchEnabled }"
+        @input="aiSearchEnabled ? onAIInput() : onSearch()"
       />
-      <button v-if="searchQuery" class="clear-btn" @click="clearSearch">✕</button>
+      <div class="search-controls">
+        <button
+          class="ai-search-toggle"
+          :class="{ active: aiSearchEnabled }"
+          @click="toggleAISearch"
+          :title="aiSearchEnabled ? 'Switch to text search' : 'Switch to AI search'"
+        >
+          🤖
+        </button>
+        <button v-if="searchQuery" class="clear-btn" @click="clearSearch">✕</button>
+      </div>
+      <div v-if="aiSearching" class="search-spinner">Searching with AI...</div>
     </div>
 
     <!-- Category Filter -->
@@ -156,6 +190,36 @@
       </div>
     </div>
 
+    <!-- Settings Dialog -->
+    <div v-if="showSettings" class="dialog-overlay" @click.self="showSettings = false">
+      <div class="dialog settings-dialog">
+        <h3>⚙️ Settings</h3>
+        <div class="settings-section">
+          <label class="settings-label">OpenAI API Key</label>
+          <input
+            v-model="apiKeyValue"
+            type="password"
+            placeholder="sk-..."
+            class="dialog-input"
+            @keyup.enter="saveSettings"
+          />
+          <p class="settings-hint">Required for AI classification and AI search features.</p>
+        </div>
+        <div v-if="subscription" class="settings-section">
+          <label class="settings-label">Subscription</label>
+          <div class="settings-plan">
+            <span class="plan-name">{{ subscription.plan }}</span>
+            <span v-if="isPro" class="pro-badge inline">PRO</span>
+            <span v-else class="free-badge">FREE</span>
+          </div>
+        </div>
+        <div class="dialog-actions">
+          <button class="dialog-btn" @click="showSettings = false">Cancel</button>
+          <button class="dialog-btn primary" @click="saveSettings" :disabled="!apiKeyValue.trim()">Save Key</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Toast -->
     <Transition name="toast">
       <div v-if="toast" class="toast" :class="toast.type">
@@ -175,6 +239,7 @@ import {
   filterTabs,
   type TabInfo,
   type TabCategory,
+  type ClassifiedTab,
   type Snapshot,
 } from '~/utils/tab-utils';
 import {
@@ -182,6 +247,10 @@ import {
   CATEGORY_LABELS,
   CATEGORY_ICONS,
 } from '~/utils/ai-prompts';
+import { classifyTabs, searchTabsAI, getApiKey, setApiKey as saveApiKey } from '~/utils/openai-client';
+import type { SearchResult } from '~/utils/openai-client';
+import { getSubscriptionState, refreshSubscription, type SubscriptionState } from '~/utils/subscription';
+import { canUseFeature, incrementUsage, getUsageSummary } from '~/utils/usage-tracker';
 import TabCard from './TabCard.vue';
 
 const { tabs, activeTabId, loading, refreshTabs, activateTab, closeTab, closeTabs, pinTab } = useTabs();
@@ -197,12 +266,24 @@ const {
 const searchQuery = ref('');
 const activeCategory = ref<TabCategory | null>(null);
 const isDark = ref(false);
-const isPro = ref(false);
 const searchMatchIds = ref(new Set<number>());
 const showSnapshotDialog = ref(false);
 const snapshotName = ref('');
 const snapshotInput = ref<HTMLInputElement | null>(null);
 const toast = ref<{ message: string; type: 'success' | 'error' } | null>(null);
+
+// Subscription & AI state
+const subscription = ref<SubscriptionState | null>(null);
+const isPro = computed(() => subscription.value?.isPro ?? false);
+const aiClassifying = ref(false);
+const aiClassifiedResults = ref<Map<number, ClassifiedTab>>(new Map());
+const aiSearchMode = ref(false);
+const aiSearchResults = ref<SearchResult[]>([]);
+const aiSearching = ref(false);
+const aiSearchEnabled = ref(false);
+const apiKeyValue = ref('');
+const showSettings = ref(false);
+const usageInfo = ref<{ classification: { used: number; limit: number | string }; search: { used: number; limit: number | string } } | null>(null);
 
 // Computed
 const categories = CATEGORIES;
@@ -212,13 +293,17 @@ const categoryIcons = CATEGORY_ICONS;
 const pinnedTabs = computed(() => tabs.value.filter(t => t.pinned));
 const unpinnedTabs = computed(() => tabs.value.filter(t => !t.pinned));
 
-const classifiedTabs = computed(() => {
-  // For now, use simple URL-based classification as fallback
-  return unpinnedTabs.value.map(tab => ({
-    ...tab,
-    category: classifyByPattern(tab) as TabCategory,
-    confidence: 0.7,
-  }));
+const classifiedTabs = computed<ClassifiedTab[]>(() => {
+  const aiResults = aiClassifiedResults.value;
+  return unpinnedTabs.value.map(tab => {
+    const aiResult = aiResults.get(tab.id);
+    if (aiResult) return aiResult;
+    return {
+      ...tab,
+      category: classifyByPattern(tab) as TabCategory,
+      confidence: 0.7,
+    };
+  });
 });
 
 const visibleCategories = computed(() => {
@@ -231,6 +316,18 @@ const uncategorizedTabs = computed(() => {
 });
 
 const filteredTabs = computed(() => {
+  // AI search mode: show results sorted by relevance
+  if (aiSearchMode.value && aiSearchResults.value.length > 0) {
+    const matchedIds = new Set(aiSearchResults.value.map(r => r.id));
+    return classifiedTabs.value
+      .filter(t => matchedIds.has(t.id))
+      .sort((a, b) => {
+        const aRel = aiSearchResults.value.find(r => r.id === a.id)?.relevance ?? 0;
+        const bRel = aiSearchResults.value.find(r => r.id === b.id)?.relevance ?? 0;
+        return bRel - aRel;
+      });
+  }
+
   let result = classifiedTabs.value;
   if (activeCategory.value) {
     result = result.filter(t => t.category === activeCategory.value);
@@ -279,9 +376,100 @@ function classifyByPattern(tab: TabInfo): string {
   return 'other';
 }
 
+/**
+ * Trigger AI classification for all tabs.
+ * Requires API key and available usage (free tier limit).
+ */
+async function runAIClassification() {
+  const allTabs = unpinnedTabs.value;
+  if (allTabs.length === 0) return;
+
+  const hasKey = await getApiKey();
+  if (!hasKey) return;
+
+  const { allowed } = await canUseFeature('classification', isPro.value);
+  if (!allowed) {
+    showToast('Daily AI classification limit reached', 'error');
+    return;
+  }
+
+  aiClassifying.value = true;
+  try {
+    const results = await classifyTabs(allTabs);
+    if (results && results.length > 0) {
+      const map = new Map<number, ClassifiedTab>();
+      for (const r of results) {
+        const tab = allTabs.find(t => t.id === r.id);
+        if (tab) {
+          map.set(tab.id, { ...tab, category: r.category, confidence: r.confidence });
+        }
+      }
+      aiClassifiedResults.value = map;
+      await incrementUsage('classification');
+      await loadUsageInfo();
+      showToast(`AI classified ${results.length} tabs`, 'success');
+    }
+  } catch (err: any) {
+    showToast(`AI classification failed: ${err.message || 'Unknown error'}`, 'error');
+  } finally {
+    aiClassifying.value = false;
+  }
+}
+
+/**
+ * AI-powered natural language tab search.
+ */
+async function runAISearch() {
+  const query = searchQuery.value.trim();
+  if (!query) {
+    aiSearchMode.value = false;
+    aiSearchResults.value = [];
+    return;
+  }
+
+  const hasKey = await getApiKey();
+  if (!hasKey) {
+    // Fall back to text search — no API key
+    aiSearchMode.value = false;
+    onSearch();
+    return;
+  }
+
+  const { allowed } = await canUseFeature('search', isPro.value);
+  if (!allowed) {
+    showToast('Daily AI search limit reached. Using text search.', 'error');
+    aiSearchMode.value = false;
+    onSearch();
+    return;
+  }
+
+  aiSearching.value = true;
+  aiSearchMode.value = true;
+  try {
+    const results = await searchTabsAI(query, tabs.value);
+    if (results && results.length > 0) {
+      aiSearchResults.value = results;
+      searchMatchIds.value = new Set(results.map(r => r.id));
+      await incrementUsage('search');
+      await loadUsageInfo();
+    } else {
+      aiSearchMode.value = false;
+      onSearch();
+    }
+  } catch (err: any) {
+    showToast(`AI search failed, using text search`, 'error');
+    aiSearchMode.value = false;
+    onSearch();
+  } finally {
+    aiSearching.value = false;
+  }
+}
+
 function onSearch() {
   if (!searchQuery.value) {
     searchMatchIds.value = new Set();
+    aiSearchMode.value = false;
+    aiSearchResults.value = [];
     return;
   }
   const matches = filterTabs(tabs.value, searchQuery.value);
@@ -291,13 +479,36 @@ function onSearch() {
 function clearSearch() {
   searchQuery.value = '';
   searchMatchIds.value = new Set();
+  aiSearchMode.value = false;
+  aiSearchResults.value = [];
+}
+
+let aiSearchDebounce: ReturnType<typeof setTimeout> | null = null;
+
+function toggleAISearch() {
+  aiSearchEnabled.value = !aiSearchEnabled.value;
+  if (!aiSearchEnabled.value) {
+    aiSearchMode.value = false;
+    aiSearchResults.value = [];
+    if (searchQuery.value) onSearch();
+  }
+}
+
+function onAIInput() {
+  if (aiSearchDebounce) clearTimeout(aiSearchDebounce);
+  if (!searchQuery.value.trim()) {
+    clearSearch();
+    return;
+  }
+  aiSearchDebounce = setTimeout(() => {
+    runAISearch();
+  }, 500);
 }
 
 async function closeDuplicates() {
   const dupes = findDuplicateTabs(tabs.value);
   let closedCount = 0;
   for (const group of dupes) {
-    // Keep the first (usually the active/original), close the rest
     const toClose = group.slice(1).map(t => t.id);
     if (toClose.length > 0) {
       await closeTabs(toClose);
@@ -308,8 +519,6 @@ async function closeDuplicates() {
 }
 
 async function closeInactive() {
-  // Simple heuristic: close non-pinned, non-active tabs that haven't been updated recently
-  // In a real implementation, we'd track activation times
   const closeable = tabs.value.filter(t => !t.pinned && !t.active).slice(0, 10);
   if (closeable.length > 0) {
     await closeTabs(closeable.map(t => t.id));
@@ -319,10 +528,10 @@ async function closeInactive() {
 
 async function saveSnapshot() {
   if (!snapshotName.value.trim() || tabs.value.length === 0) return;
-  
+
   const windowId = tabs.value[0]?.windowId || 1;
   const result = await saveSnapshotFn(snapshotName.value.trim(), tabs.value, windowId, isPro.value);
-  
+
   if (result) {
     showToast('Snapshot saved!', 'success');
     showSnapshotDialog.value = false;
@@ -360,13 +569,46 @@ function showToast(message: string, type: 'success' | 'error') {
   setTimeout(() => { toast.value = null; }, 3000);
 }
 
+async function loadUsageInfo() {
+  usageInfo.value = await getUsageSummary(isPro.value);
+}
+
+async function saveSettings() {
+  if (apiKeyValue.value.trim()) {
+    await saveApiKey(apiKeyValue.value.trim());
+    showToast('API key saved', 'success');
+    showSettings.value = false;
+    // Trigger classification after setting key
+    await runAIClassification();
+  }
+}
+
+async function logout() {
+  await refreshSubscription();
+  showToast('Subscription refreshed', 'success');
+}
+
 // Init
 onMounted(async () => {
-  // Check system dark mode preference
   if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
     isDark.value = true;
     document.documentElement.setAttribute('data-theme', 'dark');
   }
+
+  // Load subscription status
+  try {
+    subscription.value = await getSubscriptionState();
+  } catch {
+    subscription.value = { plan: 'free', isPro: false, userId: 'anonymous' };
+  }
+
+  // Load API key for settings display
+  const key = await getApiKey();
+  if (key) apiKeyValue.value = key;
+
+  // Load usage info
+  await loadUsageInfo();
+
   await refreshTabs();
 });
 </script>
@@ -505,7 +747,7 @@ body {
 
 .search-input {
   width: 100%;
-  padding: 8px 32px 8px 12px;
+  padding: 8px 60px 8px 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   background: var(--bg-secondary);
@@ -521,15 +763,12 @@ body {
 }
 
 .clear-btn {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
   background: none;
   border: none;
   color: var(--text-muted);
   cursor: pointer;
   font-size: 14px;
+  padding: 2px 4px;
 }
 
 .categories {
@@ -776,5 +1015,156 @@ body {
 .toast-leave-to {
   opacity: 0;
   transform: translateX(-50%) translateY(20px);
+}
+
+/* Pro Badge */
+.pro-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.pro-badge.inline {
+  margin-left: 6px;
+}
+
+.free-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-left: 6px;
+}
+
+/* AI Classify Button */
+.ai-classify-btn {
+  position: relative;
+}
+
+.ai-classify-btn:not(:disabled):hover {
+  background: rgba(245, 158, 11, 0.15);
+}
+
+.ai-classify-btn.loading {
+  opacity: 0.8;
+}
+
+/* Usage Bar */
+.usage-bar {
+  display: flex;
+  gap: 12px;
+  padding: 4px 12px;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border);
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.usage-item {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* AI Search Toggle & Search Controls */
+.search-controls {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.ai-search-toggle {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 4px;
+  opacity: 0.5;
+  transition: all 0.15s;
+}
+
+.ai-search-toggle:hover {
+  opacity: 1;
+  background: var(--bg-tertiary);
+}
+
+.ai-search-toggle.active {
+  opacity: 1;
+  border-color: var(--accent);
+  background: rgba(7, 193, 96, 0.1);
+}
+
+.search-input.ai-active {
+  border-color: var(--accent);
+}
+
+.search-input.ai-active:focus {
+  box-shadow: 0 0 0 3px rgba(7, 193, 96, 0.2);
+}
+
+.search-spinner {
+  position: absolute;
+  bottom: -18px;
+  left: 12px;
+  font-size: 10px;
+  color: var(--accent);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Settings Dialog */
+.settings-dialog {
+  width: 320px;
+}
+
+.settings-section {
+  margin-bottom: 16px;
+}
+
+.settings-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.settings-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.settings-plan {
+  display: flex;
+  align-items: center;
+}
+
+.plan-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
 }
 </style>

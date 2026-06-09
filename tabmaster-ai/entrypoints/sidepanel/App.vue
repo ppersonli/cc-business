@@ -28,6 +28,13 @@
       </div>
     </header>
 
+    <!-- Focus Mode Indicator -->
+    <div v-if="focusState?.active" class="focus-banner">
+      <span class="focus-label">🎯 Focus: {{ focusState.task }}</span>
+      <span class="focus-hidden">{{ focusHiddenIds.size }} tabs hidden</span>
+      <button class="focus-stop-btn" @click="stopFocusMode">✕ Exit</button>
+    </div>
+
     <!-- Usage Counter -->
     <div v-if="!isPro && usageInfo" class="usage-bar">
       <span class="usage-item">
@@ -151,6 +158,17 @@
       <button class="action-btn primary" @click="showSnapshotDialog = true" :disabled="tabs.length === 0">
         {{ t('btnNewSnapshot') }}
       </button>
+      <button
+        class="action-btn"
+        :class="{ active: focusState?.active }"
+        @click="focusState?.active ? stopFocusMode() : openFocusDialog()"
+        :disabled="focusLoading"
+      >
+        🎯 {{ focusState?.active ? 'Exit Focus' : 'Focus Mode' }}
+      </button>
+      <button class="action-btn" @click="openWorkflowDialog()">
+        ⚡ Workflows
+      </button>
     </div>
 
     <!-- Snapshots Section -->
@@ -168,6 +186,27 @@
           <span class="snapshot-meta">{{ t('snapshotTabsMeta', String(snapshot.tabs.length), formatTime(snapshot.createdAt)) }}</span>
         </div>
         <button class="icon-btn small" @click="deleteSnapshot(snapshot.id)" :title="t('titleDelete')">🗑️</button>
+      </div>
+    </div>
+
+    <!-- Workflows Section -->
+    <div v-if="workflows.length > 0" class="snapshots-section">
+      <div class="section-header">
+        <span>⚡ Workflows ({{ workflows.length }}/{{ isPro ? '∞' : MAX_FREE_WF }})</span>
+      </div>
+      <div
+        v-for="wf in workflows"
+        :key="wf.id"
+        class="snapshot-item"
+      >
+        <div class="snapshot-info" @click="runWorkflow(wf)">
+          <span class="snapshot-name">{{ wf.name }}</span>
+          <span class="snapshot-meta">{{ wf.tabs.length }} tabs</span>
+        </div>
+        <div class="snapshot-actions">
+          <button class="icon-btn small" @click.stop="openWorkflowDialog(wf)" title="Edit">✏️</button>
+          <button class="icon-btn small" @click.stop="removeWorkflow(wf.id)" title="Delete">🗑️</button>
+        </div>
       </div>
     </div>
 
@@ -220,6 +259,57 @@
       </div>
     </div>
 
+    <!-- Workflow Dialog -->
+    <div v-if="showWorkflowDialog" class="dialog-overlay" @click.self="showWorkflowDialog = false">
+      <div class="dialog settings-dialog">
+        <h3>{{ editingWorkflow ? 'Edit Workflow' : 'New Workflow' }}</h3>
+        <div class="settings-section">
+          <label class="settings-label">Workflow Name</label>
+          <input
+            v-model="workflowName"
+            type="text"
+            placeholder="e.g. Morning Routine"
+            class="dialog-input"
+          />
+        </div>
+        <div class="settings-section">
+          <label class="settings-label">Tab URLs (one per line)</label>
+          <textarea
+            v-model="workflowUrls"
+            class="dialog-textarea"
+            placeholder="https://gmail.com&#10;https://github.com&#10;https://calendar.google.com"
+            rows="5"
+          ></textarea>
+        </div>
+        <div class="dialog-actions">
+          <button class="dialog-btn" @click="showWorkflowDialog = false">{{ t('btnCancel') }}</button>
+          <button class="dialog-btn primary" @click="saveWorkflowFromDialog" :disabled="!workflowName.trim()">{{ t('btnSave') }}</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Focus Mode Dialog -->
+    <div v-if="showFocusDialog" class="dialog-overlay" @click.self="showFocusDialog = false">
+      <div class="dialog settings-dialog">
+        <h3>🎯 Focus Mode</h3>
+        <div class="settings-section">
+          <label class="settings-label">What are you working on?</label>
+          <input
+            v-model="focusTaskInput"
+            type="text"
+            placeholder="e.g. Working on React project"
+            class="dialog-input"
+            @keyup.enter="startFocusMode"
+          />
+          <p class="settings-hint">AI will analyze your tabs and hide irrelevant ones.</p>
+        </div>
+        <div class="dialog-actions">
+          <button class="dialog-btn" @click="showFocusDialog = false">{{ t('btnCancel') }}</button>
+          <button class="dialog-btn primary" @click="startFocusMode" :disabled="!focusTaskInput.trim()">Start Focus</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Toast -->
     <Transition name="toast">
       <div v-if="toast" class="toast" :class="toast.type">
@@ -252,6 +342,9 @@ import type { SearchResult } from '~/utils/openai-client';
 import { getSubscriptionState, refreshSubscription, type SubscriptionState } from '~/utils/subscription';
 import { canUseFeature, incrementUsage, getUsageSummary } from '~/utils/usage-tracker';
 import { t, CATEGORY_I18N_KEYS } from '~/utils/i18n';
+import { getWorkflows, saveWorkflow, deleteWorkflow, executeWorkflow, MAX_FREE_WORKFLOWS, type Workflow, type WorkflowTab } from '~/utils/workflow-automation';
+import { getFocusState, activateFocusMode, deactivateFocusMode, getHiddenTabIds, buildFocusPrompt, parseFocusResponse, type FocusState } from '~/utils/focus-mode';
+import { callOpenAI } from '~/utils/openai-client';
 import TabCard from './TabCard.vue';
 
 const { tabs, activeTabId, loading, refreshTabs, activateTab, closeTab, closeTabs, pinTab } = useTabs();
@@ -286,6 +379,21 @@ const apiKeyValue = ref('');
 const showSettings = ref(false);
 const usageInfo = ref<{ classification: { used: number; limit: number | string }; search: { used: number; limit: number | string } } | null>(null);
 
+// Workflow state
+const workflows = ref<Workflow[]>([]);
+const showWorkflowDialog = ref(false);
+const editingWorkflow = ref<Workflow | null>(null);
+const workflowName = ref('');
+const workflowUrls = ref('');
+const MAX_FREE_WF = MAX_FREE_WORKFLOWS;
+
+// Focus mode state
+const focusState = ref<FocusState | null>(null);
+const focusHiddenIds = ref(new Set<number>());
+const focusLoading = ref(false);
+const focusTaskInput = ref('');
+const showFocusDialog = ref(false);
+
 // Computed
 const categories = CATEGORIES;
 const categoryLabels = computed(() => {
@@ -297,7 +405,13 @@ const categoryLabels = computed(() => {
 });
 const categoryIcons = CATEGORY_ICONS;
 
-const pinnedTabs = computed(() => tabs.value.filter(t => t.pinned));
+const pinnedTabs = computed(() => {
+  let result = tabs.value.filter(t => t.pinned);
+  if (focusState.value?.active && focusHiddenIds.value.size > 0) {
+    result = result.filter(t => !focusHiddenIds.value.has(t.id));
+  }
+  return result;
+});
 const unpinnedTabs = computed(() => tabs.value.filter(t => !t.pinned));
 
 const classifiedTabs = computed<ClassifiedTab[]>(() => {
@@ -336,6 +450,10 @@ const filteredTabs = computed(() => {
   }
 
   let result = classifiedTabs.value;
+  // Focus mode: hide irrelevant tabs
+  if (focusState.value?.active && focusHiddenIds.value.size > 0) {
+    result = result.filter(t => !focusHiddenIds.value.has(t.id));
+  }
   if (activeCategory.value) {
     result = result.filter(t => t.category === activeCategory.value);
   }
@@ -595,6 +713,106 @@ async function logout() {
   showToast(t('toastSubRefreshed'), 'success');
 }
 
+// --- Workflow Automation ---
+async function loadWorkflows() {
+  workflows.value = await getWorkflows();
+}
+
+function openWorkflowDialog(wf?: Workflow) {
+  if (wf) {
+    editingWorkflow.value = wf;
+    workflowName.value = wf.name;
+    workflowUrls.value = wf.tabs.map(t => t.url).join('\n');
+  } else {
+    editingWorkflow.value = null;
+    workflowName.value = '';
+    workflowUrls.value = '';
+  }
+  showWorkflowDialog.value = true;
+}
+
+async function saveWorkflowFromDialog() {
+  const name = workflowName.value.trim();
+  if (!name) return;
+  const urls = workflowUrls.value.split('\n').map(u => u.trim()).filter(Boolean);
+  const tabs: WorkflowTab[] = urls.map(url => ({ url, title: url }));
+  const result = await saveWorkflow(
+    { id: editingWorkflow.value?.id, name, tabs },
+    isPro.value,
+  );
+  if (result) {
+    showToast(editingWorkflow.value ? 'Workflow updated' : 'Workflow saved', 'success');
+    showWorkflowDialog.value = false;
+    await loadWorkflows();
+  } else {
+    showToast(`Free tier limited to ${MAX_FREE_WORKFLOWS} workflows`, 'error');
+  }
+}
+
+async function removeWorkflow(id: string) {
+  await deleteWorkflow(id);
+  showToast('Workflow deleted', 'success');
+  await loadWorkflows();
+}
+
+async function runWorkflow(wf: Workflow) {
+  await executeWorkflow(wf);
+  showToast(`Opened ${wf.tabs.length} tabs`, 'success');
+}
+
+// --- Focus Mode ---
+async function loadFocusState() {
+  const state = await getFocusState();
+  if (state?.active) {
+    focusState.value = state;
+    focusHiddenIds.value = await getHiddenTabIds();
+  }
+}
+
+function openFocusDialog() {
+  focusTaskInput.value = focusState.value?.task || '';
+  showFocusDialog.value = true;
+}
+
+async function startFocusMode() {
+  const task = focusTaskInput.value.trim();
+  if (!task) return;
+
+  const hasKey = await getApiKey();
+  if (!hasKey) {
+    showToast('API key required for Focus Mode', 'error');
+    return;
+  }
+
+  focusLoading.value = true;
+  showFocusDialog.value = false;
+  try {
+    const apiKey = await getApiKey();
+    if (!apiKey) return;
+    const prompt = buildFocusPrompt(task, tabs.value);
+    const response = await callOpenAI(apiKey, prompt);
+    const results = parseFocusResponse(response);
+    if (results.length > 0) {
+      const state = await activateFocusMode(task, results, tabs.value);
+      focusState.value = state;
+      focusHiddenIds.value = new Set(state.hiddenTabIds);
+      const hiddenCount = state.hiddenTabIds.length;
+      showToast(`Focus mode: hiding ${hiddenCount} irrelevant tabs`, 'success');
+    }
+  } catch (err: any) {
+    showToast(`Focus mode failed: ${err.message || 'Unknown error'}`, 'error');
+  } finally {
+    focusLoading.value = false;
+  }
+}
+
+async function stopFocusMode() {
+  await deactivateFocusMode();
+  focusState.value = null;
+  focusHiddenIds.value = new Set();
+  showToast('Focus mode deactivated', 'success');
+}
+
 // Init
 onMounted(async () => {
   if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
@@ -615,6 +833,10 @@ onMounted(async () => {
 
   // Load usage info
   await loadUsageInfo();
+
+  // Load workflows and focus state
+  await loadWorkflows();
+  await loadFocusState();
 
   await refreshTabs();
 });
@@ -853,6 +1075,7 @@ body {
   padding: 10px 12px;
   background: var(--bg-primary);
   border-top: 1px solid var(--border);
+  flex-wrap: wrap;
 }
 
 .action-btn {
@@ -1173,5 +1396,78 @@ body {
   font-size: 13px;
   font-weight: 500;
   color: var(--text-primary);
+}
+
+/* Focus Mode Banner */
+.focus-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, rgba(7,193,96,0.15), rgba(7,193,96,0.05));
+  border-bottom: 1px solid var(--accent);
+  font-size: 11px;
+}
+
+.focus-label {
+  font-weight: 600;
+  color: var(--accent);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.focus-hidden {
+  color: var(--text-muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.focus-stop-btn {
+  background: var(--danger);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+  font-size: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.focus-stop-btn:hover {
+  opacity: 0.85;
+}
+
+/* Action button active state */
+.action-btn.active {
+  background: rgba(7,193,96,0.15);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Workflow snapshot-actions */
+.snapshot-actions {
+  display: flex;
+  gap: 4px;
+}
+
+/* Dialog textarea */
+.dialog-textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+  margin-bottom: 16px;
+}
+
+.dialog-textarea:focus {
+  border-color: var(--accent);
 }
 </style>

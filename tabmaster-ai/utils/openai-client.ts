@@ -60,7 +60,7 @@ export async function setApiKey(key: string): Promise<void> {
 /**
  * Call OpenAI chat completions API.
  */
-async function callOpenAI(
+export async function callOpenAI(
   apiKey: string,
   userPrompt: string,
 ): Promise<string> {

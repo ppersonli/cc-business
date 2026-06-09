@@ -28,6 +28,8 @@ const urls = [
     changefreq: 'monthly',
     priority: '0.8',
   })),
+  { loc: SITE_URL + '/privacy/', changefreq: 'yearly', priority: '0.3' },
+  { loc: SITE_URL + '/terms/', changefreq: 'yearly', priority: '0.3' },
 ];
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>

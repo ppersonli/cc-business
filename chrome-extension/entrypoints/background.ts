@@ -22,22 +22,6 @@ export default defineBackground(() => {
     });
   }
 
-  browser.runtime.onInstalled.addListener(({ reason }) => {
-    if (reason === 'install' || reason === 'update') {
-      browser.contextMenus?.create({
-        id: 'analyze-screenshot',
-        title: 'SnapGen: Capture & Analyze',
-        contexts: ['page'],
-      });
-    }
-  });
-
-  browser.contextMenus?.onClicked.addListener(async (_info, tab) => {
-    if (tab?.id) {
-      chrome.sidePanel.open({ tabId: tab.id }).catch(() => {});
-    }
-  });
-
   browser.runtime.onMessage.addListener((message: any, _sender: any, sendResponse: (response: any) => void) => {
     switch (message.type) {
       case 'CAPTURE_SCREENSHOT':

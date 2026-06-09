@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy — DevTools Hub',
-  description: 'Privacy Policy for DevTools Hub free online developer tools.',
+  description: 'Privacy Policy for DevTools Hub free online developer tools and SnapGen Chrome extension.',
   alternates: {
     canonical: 'https://tools.pixiaoli.cn/privacy/',
   },
@@ -12,22 +12,30 @@ export default function PrivacyPage() {
   return (
     <main className="max-w-3xl mx-auto px-6 py-16">
       <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
-      <p className="text-sm text-gray-500 mb-8">Last updated: May 31, 2026</p>
+      <p className="text-sm text-gray-500 mb-8">Last updated: June 9, 2026</p>
 
       <div className="prose prose-gray max-w-none space-y-6">
         <section>
           <h2 className="text-xl font-semibold mb-3">1. Overview</h2>
           <p>
-            DevTools Hub is committed to protecting your privacy. This Privacy Policy explains how we collect, use,
-            and safeguard information when you use our website and Chrome browser extension.
+            DevTools Hub is committed to protecting your privacy. This Privacy Policy explains how we collect,
+            use, and safeguard information when you use our website, developer tools, and the SnapGen Chrome
+            browser extension.
           </p>
         </section>
 
         <section>
           <h2 className="text-xl font-semibold mb-3">2. Data Processing — Client-Side by Design</h2>
           <p>
-            <strong>All tools process data entirely in your browser.</strong> No content you enter into our tools
-            (text, code, JSON, images, etc.) is ever transmitted to or stored on our servers. Your data stays on your device.
+            <strong>All developer tools process data entirely in your browser.</strong> No content you enter into
+            our tools (text, code, JSON, images, etc.) is ever transmitted to or stored on our servers. Your data
+            stays on your device.
+          </p>
+          <p className="mt-2">
+            <strong>SnapGen</strong> captures screenshots of your visible browser tab and sends them to AI APIs
+            (OpenAI or Anthropic) that you configure with your own API key. Screenshots are processed by the AI
+            service and are <strong>not stored on our servers</strong>. Analysis results are saved locally in your
+            browser storage.
           </p>
         </section>
 
@@ -36,6 +44,7 @@ export default function PrivacyPage() {
           <p>We collect only the minimum information necessary to provide the Service:</p>
           <ul className="list-disc pl-6 mt-2 space-y-1">
             <li><strong>Account Information</strong> — If you sign in with Google, we store your email address and display name for account identification and Pro subscription management.</li>
+            <li><strong>API Keys</strong> — If you choose to use your own API key (BYOK mode), it is stored locally in your browser using Chrome storage. We never see or transmit your API key to our servers.</li>
             <li><strong>Usage Analytics</strong> — We use Google Analytics to collect anonymous usage statistics (page views, session duration, device type). This helps us improve the Service.</li>
             <li><strong>Cookies</strong> — We use essential cookies for session management and authentication.</li>
           </ul>
@@ -52,18 +61,21 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-semibold mb-3">5. Chrome Extension</h2>
+          <h2 className="text-xl font-semibold mb-3">5. SnapGen Chrome Extension</h2>
           <p>
-            The DevTools Hub Chrome extension requires the following permissions:
+            The SnapGen Chrome extension requires the following permissions to function:
           </p>
           <ul className="list-disc pl-6 mt-2 space-y-1">
-            <li><strong>Active Tab</strong> — To capture screenshots and analyze the current page when you explicitly request it.</li>
-            <li><strong>Storage</strong> — To save your settings and preferences locally.</li>
-            <li><strong>Identity</strong> — To authenticate your account for Pro features.</li>
+            <li><strong>Side Panel</strong> — To display the capture and analysis interface in a side panel.</li>
+            <li><strong>Storage</strong> — To save your settings, API keys, and analysis history locally in your browser.</li>
+            <li><strong>Tabs</strong> — To capture screenshots of the active tab when you request it.</li>
+            <li><strong>Cookies</strong> — To read your login status from tools.pixiaoli.cn for Pro subscription verification.</li>
+            <li><strong>Commands</strong> — To support keyboard shortcuts for quick screenshot capture.</li>
           </ul>
           <p className="mt-2">
             The extension does <strong>not</strong> track your browsing activity, collect personal data,
-            or send data to third parties.
+            or send data to third parties. Screenshots are sent only to the AI API you configure
+            (OpenAI or Anthropic) and are not stored on our servers.
           </p>
         </section>
 
@@ -75,6 +87,7 @@ export default function PrivacyPage() {
             <li><strong>Google OAuth</strong> — For authentication. We receive only your email and display name.</li>
             <li><strong>Pancake</strong> — For payment processing. We do not store payment card information.</li>
             <li><strong>Vercel</strong> — For hosting. Vercel collects standard server logs.</li>
+            <li><strong>OpenAI / Anthropic</strong> — For AI-powered screenshot analysis (SnapGen). Screenshots are sent directly from your browser to these APIs when you use SnapGen with your own API key.</li>
           </ul>
         </section>
 
@@ -88,9 +101,7 @@ export default function PrivacyPage() {
 
         <section>
           <h2 className="text-xl font-semibold mb-3">8. Children&apos;s Privacy</h2>
-          <p>
-            The Service is not directed to children under 13. We do not knowingly collect personal information from children.
-          </p>
+          <p>The Service is not directed to children under 13. We do not knowingly collect personal information from children.</p>
         </section>
 
         <section>

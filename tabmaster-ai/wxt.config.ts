@@ -7,20 +7,11 @@ export default defineConfig({
     description: 'AI-powered tab management, search, and workflow automation for Chrome power users',
     permissions: ['storage', 'sidePanel', 'tabs', 'cookies', 'commands'],
     host_permissions: ['https://tools.pixiaoli.cn/*', 'https://api.openai.com/*'],
-    icons: {
-      16: 'icon-16.png',
-      48: 'icon-48.png',
-      128: 'icon-128.png',
+    side_panel: {
+      default_path: 'sidepanel/index.html',
     },
     action: {
       default_title: 'TabMaster AI',
-      default_icon: {
-        16: 'icon-16.png',
-        48: 'icon-48.png',
-      },
-    },
-    side_panel: {
-      default_path: 'sidepanel.html',
     },
     commands: {
       _execute_side_panel: {

@@ -4,94 +4,121 @@ import {
   buildSearchPrompt,
   parseClassificationResponse,
   parseSearchResponse,
-} from '~/utils/ai-prompts';
+  CATEGORIES,
+  CATEGORY_LABELS,
+  CATEGORY_ICONS,
+} from '../../utils/ai-prompts';
+import type { TabInfo } from '../../utils/tab-utils';
 
-describe('utils/ai-prompts', () => {
-  describe('buildClassificationPrompt', () => {
-    it('includes all tab IDs, titles, and URLs', () => {
-      const tabs = [
-        { id: 1, title: 'GitHub', url: 'https://github.com' },
-        { id: 2, title: 'YouTube', url: 'https://youtube.com' },
-      ];
-      const prompt = buildClassificationPrompt(tabs);
+const mockTabs: TabInfo[] = [
+  { id: 1, title: 'React Docs', url: 'https://react.dev', pinned: false, windowId: 1, active: false },
+  { id: 2, title: 'Twitter / Home', url: 'https://twitter.com', pinned: false, windowId: 1, active: false },
+];
 
-      expect(prompt).toContain('1: GitHub (https://github.com)');
-      expect(prompt).toContain('2: YouTube (https://youtube.com)');
-      expect(prompt).toContain('work, research, social, shopping, entertainment, news, other');
-    });
-
-    it('returns expected format instruction', () => {
-      const tabs = [{ id: 1, title: 'Test', url: 'https://test.com' }];
-      const prompt = buildClassificationPrompt(tabs);
-      expect(prompt).toContain('Return format: [{"id": tabId, "category": "work", "confidence": 0.95}]');
-    });
+describe('buildClassificationPrompt', () => {
+  it('includes all tab info', () => {
+    const prompt = buildClassificationPrompt(mockTabs);
+    expect(prompt).toContain('1: React Docs (https://react.dev)');
+    expect(prompt).toContain('2: Twitter / Home (https://twitter.com)');
   });
 
-  describe('buildSearchPrompt', () => {
-    it('includes the user query', () => {
-      const tabs = [{ id: 1, title: 'React Docs', url: 'https://react.dev' }];
-      const prompt = buildSearchPrompt('react hooks', tabs);
-      expect(prompt).toContain('Query: "react hooks"');
-    });
-
-    it('includes all tabs in the prompt', () => {
-      const tabs = [
-        { id: 1, title: 'React Docs', url: 'https://react.dev' },
-        { id: 2, title: 'Vue Docs', url: 'https://vuejs.org' },
-      ];
-      const prompt = buildSearchPrompt('docs', tabs);
-      expect(prompt).toContain('1: React Docs (https://react.dev)');
-      expect(prompt).toContain('2: Vue Docs (https://vuejs.org)');
-    });
+  it('includes category list', () => {
+    const prompt = buildClassificationPrompt(mockTabs);
+    expect(prompt).toContain('work');
+    expect(prompt).toContain('social');
+    expect(prompt).toContain('entertainment');
   });
 
-  describe('parseClassificationResponse', () => {
-    it('parses valid JSON array', () => {
-      const response = '[{"id":1,"category":"work","confidence":0.95}]';
-      const result = parseClassificationResponse(response);
-      expect(result).toEqual([{ id: 1, category: 'work', confidence: 0.95 }]);
-    });
+  it('requests JSON output', () => {
+    const prompt = buildClassificationPrompt(mockTabs);
+    expect(prompt).toContain('JSON array');
+  });
+});
 
-    it('parses JSON embedded in surrounding text', () => {
-      const response = 'Here are the classifications:\n[{"id":1,"category":"research","confidence":0.8}]';
-      const result = parseClassificationResponse(response);
-      expect(result).toEqual([{ id: 1, category: 'research', confidence: 0.8 }]);
-    });
-
-    it('returns empty array for invalid JSON', () => {
-      const result = parseClassificationResponse('not json at all');
-      expect(result).toEqual([]);
-    });
-
-    it('returns empty array for empty string', () => {
-      const result = parseClassificationResponse('');
-      expect(result).toEqual([]);
-    });
-
-    it('handles multiple classifications', () => {
-      const response = '[{"id":1,"category":"work","confidence":0.9},{"id":2,"category":"social","confidence":0.85},{"id":3,"category":"other","confidence":0.5}]';
-      const result = parseClassificationResponse(response);
-      expect(result).toHaveLength(3);
-    });
+describe('buildSearchPrompt', () => {
+  it('includes query and tabs', () => {
+    const prompt = buildSearchPrompt('react article', mockTabs);
+    expect(prompt).toContain('react article');
+    expect(prompt).toContain('React Docs');
   });
 
-  describe('parseSearchResponse', () => {
-    it('parses valid JSON array', () => {
-      const response = '[{"id":1,"relevance":0.95,"reason":"matches query"}]';
-      const result = parseSearchResponse(response);
-      expect(result).toEqual([{ id: 1, relevance: 0.95, reason: 'matches query' }]);
-    });
+  it('requests JSON output', () => {
+    const prompt = buildSearchPrompt('test', mockTabs);
+    expect(prompt).toContain('JSON array');
+  });
+});
 
-    it('returns empty array for invalid JSON', () => {
-      const result = parseSearchResponse('error occurred');
-      expect(result).toEqual([]);
-    });
+describe('parseClassificationResponse', () => {
+  it('parses valid JSON response', () => {
+    const response = '[{"id": 1, "category": "work", "confidence": 0.95}]';
+    const result = parseClassificationResponse(response, [1]);
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe(1);
+    expect(result[0].category).toBe('work');
+    expect(result[0].confidence).toBe(0.95);
+  });
 
-    it('handles multiple results', () => {
-      const response = '[{"id":1,"relevance":0.95,"reason":"exact"},{"id":2,"relevance":0.7,"reason":"partial"}]';
-      const result = parseSearchResponse(response);
-      expect(result).toHaveLength(2);
-      expect(result[0].relevance).toBeGreaterThan(result[1].relevance);
-    });
+  it('parses JSON in markdown code fences', () => {
+    const response = '```json\n[{"id": 1, "category": "social", "confidence": 0.8}]\n```';
+    const result = parseClassificationResponse(response, [1]);
+    expect(result).toHaveLength(1);
+    expect(result[0].category).toBe('social');
+  });
+
+  it('handles invalid JSON gracefully', () => {
+    const result = parseClassificationResponse('not json', [1]);
+    expect(result).toHaveLength(0);
+  });
+
+  it('filters invalid categories', () => {
+    const response = '[{"id": 1, "category": "invalid", "confidence": 0.9}]';
+    const result = parseClassificationResponse(response, [1]);
+    expect(result).toHaveLength(0);
+  });
+
+  it('normalizes confidence to 0-1 range', () => {
+    const response = '[{"id": 1, "category": "work", "confidence": 1.5}]';
+    const result = parseClassificationResponse(response, [1]);
+    expect(result[0].confidence).toBe(1);
+  });
+});
+
+describe('parseSearchResponse', () => {
+  it('parses valid JSON response', () => {
+    const response = '[{"id": 1, "relevance": 0.9, "reason": "matches react"}]';
+    const result = parseSearchResponse(response);
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe(1);
+    expect(result[0].reason).toBe('matches react');
+  });
+
+  it('sorts by relevance descending', () => {
+    const response = '[{"id": 2, "relevance": 0.5}, {"id": 1, "relevance": 0.9}]';
+    const result = parseSearchResponse(response);
+    expect(result[0].relevance).toBe(0.9);
+    expect(result[1].relevance).toBe(0.5);
+  });
+
+  it('handles invalid JSON gracefully', () => {
+    const result = parseSearchResponse('not json');
+    expect(result).toHaveLength(0);
+  });
+});
+
+describe('constants', () => {
+  it('has 7 categories', () => {
+    expect(CATEGORIES).toHaveLength(7);
+  });
+
+  it('has labels for all categories', () => {
+    for (const cat of CATEGORIES) {
+      expect(CATEGORY_LABELS[cat]).toBeTruthy();
+    }
+  });
+
+  it('has icons for all categories', () => {
+    for (const cat of CATEGORIES) {
+      expect(CATEGORY_ICONS[cat]).toBeTruthy();
+    }
   });
 });

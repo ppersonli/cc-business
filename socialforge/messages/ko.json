@@ -1,0 +1,49 @@
+{
+  "common": {
+    "appName": "SocialForge",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "back": "Back",
+    "loading": "Loading...",
+    "noData": "No data yet",
+    "search": "Search..."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "posts": "Posts",
+    "calendar": "Calendar",
+    "media": "Media",
+    "analytics": "Analytics",
+    "accounts": "Accounts",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "totalPosts": "Total Posts",
+    "scheduledToday": "Scheduled Today",
+    "connectedAccounts": "Connected Accounts",
+    "recentActivity": "Recent Activity"
+  },
+  "posts": {
+    "title": "Posts",
+    "create": "New Post",
+    "draft": "Draft",
+    "scheduled": "Scheduled",
+    "published": "Published",
+    "failed": "Failed",
+    "content": "Content",
+    "platforms": "Platforms",
+    "schedule": "Schedule",
+    "publish": "Publish Now"
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "notifications": "Notifications",
+    "apiKeys": "API Keys"
+  }
+}

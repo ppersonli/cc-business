@@ -48,6 +48,20 @@ export default function PostsListClient() {
     if (res.ok) setPosts(prev => prev.filter(p => p.id !== id));
   };
 
+  const handlePublish = async (id: string) => {
+    if (!confirm('Publish this post now?')) return;
+    const res = await fetch(`/api/posts/${id}/publish`, { method: 'POST' });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
+        setPosts(prev => prev.map(p => p.id === id ? { ...p, status: 'published' } : p));
+      } else {
+        alert('Publish failed: ' + JSON.stringify(data.result));
+        setPosts(prev => prev.map(p => p.id === id ? { ...p, status: 'failed' } : p));
+      }
+    }
+  };
+
   if (loading) {
     return <div style={{ color: 'var(--foreground-muted)', textAlign: 'center', padding: '48px' }}>Loading...</div>;
   }
@@ -113,6 +127,15 @@ export default function PostsListClient() {
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
+                  {(post.status === 'draft' || post.status === 'scheduled') && (
+                    <button
+                      onClick={() => handlePublish(post.id)}
+                      title="Publish Now"
+                      style={{ padding: '6px', background: 'transparent', border: '1px solid var(--success)', borderRadius: 'var(--radius)', cursor: 'pointer', color: 'var(--success)' }}
+                    >
+                      <Send size={14} />
+                    </button>
+                  )}
                   <button
                     onClick={() => router.push(`/posts/${post.id}`)}
                     title="Edit"

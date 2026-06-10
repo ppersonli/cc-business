@@ -9,7 +9,15 @@
     "back": "Back",
     "loading": "Loading...",
     "noData": "No data yet",
-    "search": "Search..."
+    "search": "Search...",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "free": "Free",
+    "pro": "Pro",
+    "business": "Business"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -45,5 +53,44 @@
     "profile": "Profile",
     "notifications": "Notifications",
     "apiKeys": "API Keys"
+  },
+  "landing": {
+    "heroTitle": "Social Media Management, Simplified",
+    "heroSubtitle": "Schedule, publish, and analyze across all platforms from one dashboard. Built for creators and small teams.",
+    "heroCta": "Start Free — No Credit Card",
+    "feature1Title": "Multi-Platform Publishing",
+    "feature1Desc": "Write once, publish to Twitter, LinkedIn, Facebook, Instagram, and Bluesky. Automatically adapts content for each platform.",
+    "feature2Title": "Smart Scheduling",
+    "feature2Desc": "Schedule posts for optimal times. Calendar view shows your content pipeline at a glance.",
+    "feature3Title": "AI Content Assistant",
+    "feature3Desc": "Generate, rewrite, and translate posts with AI. Get hashtag suggestions and engagement predictions.",
+    "feature4Title": "Analytics Dashboard",
+    "feature4Desc": "Track impressions, engagement, and follower growth across all platforms in one unified view.",
+    "feature5Title": "Media Library",
+    "feature5Desc": "Upload and manage images and videos. Drag media directly into your posts.",
+    "feature6Title": "Secure & Private",
+    "feature6Desc": "OAuth tokens encrypted with AES-256. Your data stays yours. Open source under AGPL-3.0.",
+    "pricingTitle": "Simple, Transparent Pricing",
+    "pricingSubtitle": "Start free. Upgrade when you need more.",
+    "compareTitle": "Why SocialForge?",
+    "compareSubtitle": "Compare with alternatives",
+    "learnMore": "Learn More"
+  },
+  "pricing": {
+    "title": "Pricing",
+    "free": "Free",
+    "pro": "Pro",
+    "business": "Business",
+    "perMonth": "/month",
+    "freePrice": "$0",
+    "proPrice": "$19",
+    "businessPrice": "$49",
+    "freeFeatures": "3 social accounts, 100 posts/month, 20 AI generations, 500MB storage, 30-day analytics",
+    "proFeatures": "Unlimited accounts, Unlimited posts, 200 AI generations, 10GB storage, 12-month analytics, 5 team members",
+    "businessFeatures": "Everything in Pro, Unlimited AI, Custom domain, API access, Priority support, White-label",
+    "currentPlan": "Current Plan",
+    "upgrade": "Upgrade",
+    "contactSales": "Contact Sales",
+    "getStarted": "Get Started"
   }
 }

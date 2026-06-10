@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import Providers from '@/components/providers';
+import ThemeScript from '@/components/theme-script';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -21,12 +22,23 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale} suppressHydrationWarning data-theme="dark">
       <head>
         <script
+          type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: `document.documentElement.setAttribute('data-theme', localStorage.getItem('socialforge-theme') || 'dark')`,
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebApplication',
+              name: 'SocialForge',
+              description: 'Open-source social media management tool',
+              url: 'https://socialforge.app',
+              applicationCategory: 'BusinessApplication',
+              operatingSystem: 'Any',
+              offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+            }),
           }}
         />
       </head>
       <body>
+        <ThemeScript />
         <Providers>
           <NextIntlClientProvider messages={messages}>
             {children}

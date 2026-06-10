@@ -79,6 +79,14 @@
       "Webtoon",
       "ACGN",
       "Plataforma Criativa"
+    ],
+    "socialforgeName": "SocialForge",
+    "socialforgeDesc": "Ferramenta de código aberto para gerenciamento de redes sociais. Agende publicações, gerencie múltiplas contas e acompanhe análises em todas as principais plataformas.",
+    "socialforgeTags": [
+      "Redes Sociais",
+      "Agendamento",
+      "Análises",
+      "Código Aberto"
     ]
   },
   "categories": {
@@ -90,7 +98,8 @@
     "Design": "Design",
     "Text": "Texto",
     "Network": "Rede",
-    "Security": "Segurança"
+    "Security": "Segurança",
+    "Social": "Social"
   },
   "tools": {
     "json-formatter": {
@@ -344,6 +353,10 @@
       "description": "Crie tabelas Markdown visualmente com visualização ao vivo. Copie como Markdown, HTML ou CSV",
       "about": "Crie e edite tabelas Markdown visualmente. Adicione ou remova linhas e colunas, depois copie o resultado como Markdown, HTML ou CSV.",
       "features": "Editor visual de tabelas, adicionar/remover linhas e colunas, exportação Markdown/HTML/CSV, copiar para área de transferência."
+    },
+    "socialforge": {
+      "name": "SocialForge",
+      "description": "Ferramenta de código aberto para gerenciamento de redes sociais para agendamento, publicação e análises"
     }
   }
 }

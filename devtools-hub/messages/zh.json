@@ -79,6 +79,14 @@
       "网漫",
       "ACGN",
       "创作平台"
+    ],
+    "socialforgeName": "SocialForge",
+    "socialforgeDesc": "开源社媒管理工具，支持定时发布、多账号管理和全平台数据分析。",
+    "socialforgeTags": [
+      "社媒管理",
+      "定时发布",
+      "数据分析",
+      "开源"
     ]
   },
   "categories": {
@@ -90,7 +98,8 @@
     "Design": "设计",
     "Text": "文本",
     "Network": "网络",
-    "Security": "安全"
+    "Security": "安全",
+    "Social": "社交"
   },
   "tools": {
     "json-formatter": {
@@ -344,6 +353,10 @@
       "description": "可视化创建 Markdown 表格，实时预览。可复制为 Markdown、HTML 或 CSV",
       "about": "可视化创建和编辑 Markdown 表格。添加或删除行列，然后将结果复制为 Markdown、HTML 或 CSV。",
       "features": "可视化表格编辑器、添加/删除行列、Markdown/HTML/CSV 导出、一键复制。"
+    },
+    "socialforge": {
+      "name": "SocialForge",
+      "description": "开源社媒管理工具，支持定时发布、内容管理和数据分析"
     }
   }
 }

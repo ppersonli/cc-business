@@ -79,6 +79,14 @@
       "Webtoon",
       "ACGN",
       "Creative Platform"
+    ],
+    "socialforgeName": "SocialForge",
+    "socialforgeDesc": "Open-source social media management tool for scheduling posts, managing multiple accounts, and tracking analytics across all major platforms.",
+    "socialforgeTags": [
+      "Social Media",
+      "Scheduling",
+      "Analytics",
+      "Open Source"
     ]
   },
   "categories": {
@@ -90,7 +98,8 @@
     "Design": "Design",
     "Text": "Text",
     "Network": "Network",
-    "Security": "Security"
+    "Security": "Security",
+    "Social": "Social"
   },
   "tools": {
     "json-formatter": {
@@ -344,6 +353,10 @@
       "description": "Create Markdown tables visually with live preview. Copy as Markdown, HTML, or CSV",
       "about": "Create and edit Markdown tables visually. Add or remove rows and columns, then copy the result as Markdown, HTML, or CSV.",
       "features": "Visual table editor, add/remove rows & columns, Markdown/HTML/CSV export, copy to clipboard."
+    },
+    "socialforge": {
+      "name": "SocialForge",
+      "description": "Open-source social media management tool for scheduling, publishing, and analytics"
     }
   }
 }

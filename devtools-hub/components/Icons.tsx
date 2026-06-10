@@ -372,6 +372,21 @@ export function WechatMarkdownIcon() {
   )
 }
 
+export function SocialForgeIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="6" cy="6" r="3" />
+      <circle cx="18" cy="6" r="3" />
+      <circle cx="6" cy="18" r="3" />
+      <circle cx="18" cy="18" r="3" />
+      <line x1="9" y1="6" x2="15" y2="6" />
+      <line x1="6" y1="9" x2="6" y2="15" />
+      <line x1="18" y1="9" x2="18" y2="15" />
+      <line x1="9" y1="18" x2="15" y2="18" />
+    </svg>
+  )
+}
+
 export const iconMap: Record<string, React.FC> = {
   'json-formatter': JsonIcon,
   'base64': EncodeIcon,
@@ -405,4 +420,5 @@ export const iconMap: Record<string, React.FC> = {
   'json-to-go': JsonGoIcon,
   'json-to-typescript': JsFormatterIcon,
   'wechat-markdown-editor': WechatMarkdownIcon,
+  'socialforge': SocialForgeIcon,
 }

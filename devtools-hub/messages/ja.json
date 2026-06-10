@@ -79,6 +79,14 @@
       "ウェブトゥーン",
       "ACGN",
       "クリエイティブ"
+    ],
+    "socialforgeName": "SocialForge",
+    "socialforgeDesc": "オープンソースのSNS管理ツール。投稿予約、複数アカウント管理、主要プラットフォーム全体のアナリティクスに対応。",
+    "socialforgeTags": [
+      "SNS管理",
+      "投稿予約",
+      "アナリティクス",
+      "オープンソース"
     ]
   },
   "categories": {
@@ -90,7 +98,8 @@
     "Design": "デザイン",
     "Text": "テキスト",
     "Network": "ネットワーク",
-    "Security": "セキュリティ"
+    "Security": "セキュリティ",
+    "Social": "ソーシャル"
   },
   "tools": {
     "json-formatter": {
@@ -344,6 +353,10 @@
       "description": "ビジュアルにMarkdownテーブルを作成し、ライブプレビュー。Markdown、HTML、CSVとしてコピー",
       "about": "Markdownテーブルをビジュアルに作成・編集。行や列を追加・削除し、結果をMarkdown、HTML、CSVとしてコピー。",
       "features": "ビジュアルテーブルエディタ、行/列の追加・削除、Markdown/HTML/CSVエクスポート、クリップボードにコピー。"
+    },
+    "socialforge": {
+      "name": "SocialForge",
+      "description": "投稿予約・公開・分析のためのオープンソースSNS管理ツール"
     }
   }
 }

@@ -79,6 +79,14 @@
       "웹툰",
       "ACGN",
       "창작 플랫폼"
+    ],
+    "socialforgeName": "SocialForge",
+    "socialforgeDesc": "오픈 소스 소셜 미디어 관리 도구. 게시물 예약, 다중 계정 관리, 주요 플랫폼 전반의 분석 기능을 제공합니다.",
+    "socialforgeTags": [
+      "소셜 미디어",
+      "예약",
+      "분석",
+      "오픈 소스"
     ]
   },
   "categories": {
@@ -90,7 +98,8 @@
     "Design": "디자인",
     "Text": "텍스트",
     "Network": "네트워크",
-    "Security": "보안"
+    "Security": "보안",
+    "Social": "소셜"
   },
   "tools": {
     "json-formatter": {
@@ -344,6 +353,10 @@
       "description": "Markdown 테이블을 시각적으로 만들고 실시간 미리보기. Markdown, HTML 또는 CSV로 복사",
       "about": "Markdown 테이블을 시각적으로 만들고 편집합니다. 행과 열을 추가하거나 삭제한 후 결과를 Markdown, HTML 또는 CSV로 복사합니다.",
       "features": "시각적 테이블 편집기, 행/열 추가/삭제, Markdown/HTML/CSV 내보내기, 클립보드에 복사."
+    },
+    "socialforge": {
+      "name": "SocialForge",
+      "description": "게시 예약, 발행, 분석을 위한 오픈 소스 소셜 미디어 관리 도구"
     }
   }
 }

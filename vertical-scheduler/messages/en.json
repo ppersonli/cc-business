@@ -1,0 +1,61 @@
+{
+  "common": {
+    "appName": "Vertical Scheduler",
+    "dashboard": "Dashboard",
+    "bookingPages": "Booking Pages",
+    "bookings": "Bookings",
+    "services": "Services",
+    "settings": "Settings",
+    "signOut": "Sign out",
+    "signIn": "Sign in with Google",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "back": "Back",
+    "loading": "Loading...",
+    "noData": "No data yet"
+  },
+  "landing": {
+    "hero": "Scheduling built for your industry",
+    "subtitle": "Book appointments that fit your niche — designers, coaches, consultants. Not generic scheduling.",
+    "cta": "Get started free",
+    "feature1Title": "Industry-Specific",
+    "feature1Desc": "Templates and pricing built for your profession",
+    "feature2Title": "Easy Booking",
+    "feature2Desc": "Beautiful booking pages your clients will love",
+    "feature3Title": "Get Paid",
+    "feature3Desc": "Collect deposits and payments at booking time"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "createPage": "Create Booking Page",
+    "noPages": "No booking pages yet. Create your first one!",
+    "totalPages": "Booking Pages",
+    "recentBookings": "Recent Bookings",
+    "yourPages": "Your Booking Pages"
+  },
+  "auth": {
+    "signInTitle": "Sign in to your account",
+    "signInWithGoogle": "Sign in with Google",
+    "signingIn": "Signing in..."
+  },
+  "pages": {
+    "title": "Booking Pages",
+    "create": "New Booking Page",
+    "edit": "Edit Booking Page",
+    "form": {
+      "pageTitle": "Page Title",
+      "pageTitlePlaceholder": "My Booking Page",
+      "slug": "URL Slug",
+      "slugPlaceholder": "my-booking-page",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe your booking page...",
+      "brandColor": "Brand Color",
+      "createSuccess": "Booking page created!",
+      "updateSuccess": "Booking page updated!"
+    }
+  }
+}

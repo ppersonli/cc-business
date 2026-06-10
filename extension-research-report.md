@@ -1,205 +1,135 @@
-# Chrome Extension Research Report
+# Chrome 扩展市场调研报告
 
-**调研日期**: 2026-06-09
-**调研版本**: V56（全新发散调研）
-**方法论**: 苛刻市场验证 - 发散-收口法
-
----
-
-## 品类/方向排名（综合评分）
-
-| 排名 | 方向 | 竞争度 | 变现验证 | 技术难度 | 差异化空间 | 综合评分 |
-|------|------|--------|----------|----------|------------|----------|
-| 🥇 | 价格追踪（跨平台+AI） | 中 | 强 | 中 | 大 | 4/5 |
-| 🥈 | 网页高亮/标注 | 中 | 中 | 中 | 中 | 3/5 |
-| 🥉 | 截图工具（AI转代码） | 中 | 中 | 低-中 | 中 | 3/5 |
-| 4 | 数字健康/专注 | 低 | 弱 | 低 | 中 | 2/5 |
-| 5 | AI会议记录 | 极高 | 强 | 高 | 低 | 2/5 |
-| 6 | 购物助手/比价 | 极高 | 强 | 中 | 极低 | 1/5 |
-| 7 | 密码管理 | 极高 | 强 | 高 | 极低 | 1/5 |
-| 8 | AI写作/语法 | 极高 | 强 | 高 | 极低 | 1/5 |
+**调研日期**: 2026-06-10
+**调研方法**: 苛刻市场验证 - 发散-收口法（v59全新发散）
+**数据来源**: Chrome Web Store 浏览器访问（12+分类扫描）
 
 ---
 
-## Top 3推荐
+## 调研结论
 
-### 🥇 第1名: PriceOracle - AI Price Tracker
+###   推荐立即开发：SnapAI（AI截图/录屏）
 
-**产品概念**: 跨平台价格追踪 + AI价格预测
+**综合评分**: 8/10
 
-**核心功能**:
-1. 跨平台价格追踪（Amazon, Walmart, Ebay, AliExpress, Target等250+商店）
-2. AI价格预测（预测价格走势，推荐最佳购买时机）
-3. 价格历史图表（浏览器内嵌入商品页面）
-4. 智能提醒（价格下降通知）
-5. 联盟推荐（赚取佣金）
+**产品概念**: AI增强的截图工具，提供智能标注+OCR+编辑
 
-**差异化**:
-- 支持250+商店（Keepa仅支持Amazon）
-- AI价格预测（竞品没有）
-- $3/月定价（比Keepa便宜80%）
+**一句话描述**: 一键截图→AI自动标注→OCR提取文字→智能编辑→导出分享
 
-**开发周期**: 4周MVP
+### 核心功能（MVP）
+1. **全页截图** — 一键截取整个网页（参考GoFullPage）
+2. **AI自动标注** — 智能识别截图中的关键区域并标注
+3. **OCR提取文字** — 从截图中提取文字（支持多语言）
+4. **智能编辑** — 去背景、增强、压缩、格式转换
+5. **一键分享** — 生成分享链接
 
-**技术栈**:
-- Chrome Extension: WXT + Vue 3 + TypeScript
-- 后端API: Node.js + Express
-- 数据库: PostgreSQL (Supabase/Neon)
-- AI预测: 简单ML模型（移动平均+趋势分析）
+### 定价设计
+- **免费版**：基础截图+有限OCR（10次/天）
+- **Pro $3.99/月**：AI标注+无限OCR+智能编辑+云存储
+- **Team $7.99/月/人**：团队协作+共享标注+管理后台
 
-**定价**:
-| Plan | 价格 | 功能 |
-|------|------|------|
-| Free | $0 | 3个商品追踪、价格历史图表 |
-| Pro | $3/月 | 无限追踪、AI预测、跨平台、邮件通知 |
-| Pro Yearly | $25/年 | 同Pro，年付优惠 |
+### 技术栈
+- 前端：Chrome Extension (TypeScript + React + Canvas API)
+- AI：TensorFlow.js（本地推理）+ Tesseract.js（OCR）
+- 云存储：Firebase/Supabase（可选）
+- 部署：纯前端（无需后端）
 
-**收入预测（保守）**:
-| 时间 | 免费用户 | 付费用户 | MRR |
-|------|----------|----------|-----|
-| Month 1-3 | 1,000+ | 10+ | $30+ |
-| Month 4-6 | 5,000+ | 50+ | $150+ |
-| Month 7-12 | 20,000+ | 200+ | $600+ |
+### 开发计划
+- **Week 1-2**：基础截图功能（全页截图+弹出结果）
+- **Week 3-4**：AI标注+OCR功能
+- **Week 5-6**：智能编辑+云存储
+- **Week 7-8**：测试+上线Chrome Web Store
 
-**竞品数据**:
-- Keepa: 4.7★, €19/月, Amazon绝对霸主
-- PriceLasso: 4.8★, 免费, 250+商店, 300,000+提醒, $5M+节省
-- Buyhatke: 4.8★, 印度市场头部
+### 营销策略
+1. **Chrome Web Store优化**：标题、描述、截图、关键词
+2. **Product Hunt发布**：准备landing page+demo视频
+3. **Reddit推广**：r/chrome_extensions, r/productivity
+4. **YouTube评测**：联系科技博主评测
+5. **SEO**：博客文章（"best screenshot extension 2026"）
 
----
-
-### 🥈 第2名: WebMind - AI Web Highlighter
-
-**产品概念**: 网页高亮 + AI摘要 + 笔记
-
-**核心功能**:
-1. 网页/PDF高亮标注
-2. AI自动生成高亮内容摘要
-3. 笔记管理
-4. 导出到Notion/Obsidian
-5. 团队协作（可选）
-
-**差异化**:
-- AI自动摘要（竞品没有）
-- 本地AI处理（WebLLM，隐私保护）
-- 导出到主流笔记工具
-
-**开发周期**: 2-3周MVP
-
-**技术栈**:
-- Chrome Extension: WXT + Vue 3 + TypeScript
-- AI: WebLLM (本地) 或 OpenAI API
-- 存储: Chrome Storage + 可选云同步
-
-**定价**:
-| Plan | 价格 | 功能 |
-|------|------|------|
-| Free | $0 | 基础高亮、5个摘要/月 |
-| Pro | $3/月 | 无限摘要、导出、团队协作 |
-
-**竞品数据**:
-- Web Highlights: Chrome Monthly Focus推荐
-- Weava: 4.0★
-- Readwise: 4.1★
+### 收入预测（保守）
+- 6个月目标：1万用户
+- 付费转化率：3%
+- 月收入：1万 × 3% × $3.99 = $1,197/月
+- 年收入：~$14,364/年
 
 ---
 
-### 🥉 第3名: SnapToCode - AI Screenshot to Code
+## 市场数据
 
-**产品概念**: 截图 + AI转HTML/CSS代码
+### Chrome Web Store 头部扩展
+| 扩展 | 用户数 | 评分 | 分类 |
+|------|--------|------|------|
+| AdBlock | 62M | 4.5★ | 隐私与安全 |
+| Grammarly | 39M | 4.5★ | 效率 |
+| Google Translate | 34M | 4.2★ | 工具 |
+| Honey (PayPal) | 13M | 4.6★ | 购物 |
+| GoFullPage | 11M | 4.9★ | 开发者工具 |
+| Keepa | 4M | 4.7★ | 购物 |
+| Sider | 5M | 4.9★ | 效率 |
+| Mailtrack | 3M | 4.4★ | 效率 |
+| BlockSite | ~3M+ | 4.7★ | 效率 |
+| Awesome Screenshot | ~2M+ | 4.7★ | 开发者工具 |
 
-**核心功能**:
-1. 全页截图（一键截取）
-2. AI将截图转换为HTML/CSS代码
-3. 代码编辑器
-4. 导出代码
+### 截图/录屏品类详情
+| 竞品 | 用户数 | 评分 | 定价 | 弱点 |
+|------|--------|------|------|------|
+| GoFullPage | 11M | 4.9★ | 免费+Premium $1/月 | 无AI，功能单一 |
+| Awesome Screenshot | ~2M | 4.7★ | 免费+Premium $8/月 | 价格高 |
+| Screencastify | ~2M | 3.9★ | 免费+Premium $49/年 | 评分下降，用户不满 |
+| FireShot | ~1M | 4.8★ | 免费+$39.95一次性 | 一次性付费模式 |
 
-**差异化**:
-- AI截图转代码（GoFullPage没有）
-- 实时预览
-- 代码导出
-
-**开发周期**: 3-4周MVP
-
-**技术栈**:
-- Chrome Extension: WXT + Vue 3 + TypeScript
-- AI: GPT-4 Vision API
-- 代码编辑: Monaco Editor
-
-**定价**:
-| Plan | 价格 | 功能 |
-|------|------|------|
-| Free | $0 | 基础截图、3次AI转代码/月 |
-| Pro | $5/月 | 无限AI转代码、代码编辑器 |
-
-**竞品数据**:
-- GoFullPage: 4.9★, $1/月, 极简设计
-- FireShot: 4.8★, 功能全面
+### 关键洞察
+1. **GoFullPage成功公式**：极简+免费+$1/月Premium = 11M用户
+2. **Screencastify评分下降**：3.9★说明用户对复杂录屏工具有不满
+3. **AI是差异化机会**：现有工具无AI标注/OCR功能
+4. **纯前端扩展最容易开发**：GoFullPage证明无后端也能做到11M用户
 
 ---
 
-## 关键数据点
+## 其他候选方向
 
-### Chrome Web Store数据（2026-06-09实时）
-- **AI工具**: Sider 4.9★, Monica 4.9★, AITOPIA 4.9★, MaxAI 4.7★
-- **价格追踪**: Keepa 4.7★, PriceLasso 4.8★, Buyhatke 4.8★
-- **截图工具**: GoFullPage 4.9★, FireShot 4.8★
-- **网页高亮**: Web Highlights (Monthly Focus), Weava 4.0★, Readwise 4.1★
-- **购物助手**: Rakuten 4.9★, Honey 4.6★, Coupert 4.7★
+###   AI购物助手 — "SmartCart AI"（综合评分7.5/10）
+- 市场最大（Honey 13M用户, Rakuten $40亿估值）
+- 但技术难度高（需要爬虫+数据库+AI模型）
+- 需要更多验证
 
-### PriceLasso数据
-- 250+支持商店
-- 300,000+提醒创建
-- $5M+帮助用户节省
-- $15平均每提醒节省
-- 免费使用（联盟佣金变现）
-
-### Keepa数据
-- €19/月订阅
-- Amazon价格追踪绝对霸主
-- 数百万用户
+###   邮件追踪+AI — "MailSense"（综合评分7/10）
+- 变现验证充分（Mailtrack 3M用户, $1.49/月）
+- 但Gmail API审核是关键风险
+- 需要更多验证
 
 ---
 
 ## 行动计划
 
 ### 短期（1-2周）
-1. ✅ 确认产品方向：PriceOracle - AI Price Tracker
-2. ✅ 开始MVP开发（Week 1）
-3. ✅ 准备Chrome Web Store listing
+- [ ] 注册Chrome Web Store开发者账号（$5一次性费用）
+- [ ] 创建项目结构（TypeScript + React）
+- [ ] 开发基础截图功能
 
-### 中期（1-2月）
-1. 完成跨平台支持
-2. 实现AI价格预测
-3. 集成付费功能
-4. 发布到Chrome Web Store
+### 中期（3-6周）
+- [ ] 开发AI标注功能
+- [ ] 开发OCR功能
+- [ ] 开发智能编辑功能
+- [ ] 测试+修复bug
 
-### 长期（3-6月）
-1. 优化AI预测准确度
-2. 扩展到更多商店
-3. 移动端App
-4. 国际化
-
----
-
-## 调研文件清单
-
-| 文件 | 路径 |
-|------|------|
-| Step 0: 广泛扫描 | `~/Documents/Obsidian Vault/共享/Hermes/调研报告/chrome-extension/steps/v56-step0-divergent-chrome-web-store-broad-scan.md` |
-| Step 1: 深入分析 | `~/Documents/Obsidian Vault/共享/Hermes/调研报告/chrome-extension/steps/v56-step1-deep-dive-top-directions.md` |
-| Step 2: 5轮辩论 | `~/Documents/Obsidian Vault/共享/Hermes/调研报告/chrome-extension/steps/v56-step2-debate-top3-directions.md` |
-| Step 3: 竞品分析 | `~/Documents/Obsidian Vault/共享/Hermes/调研报告/chrome-extension/steps/v56-step3-competitive-analysis-price-tracker.md` |
-| Step 4: 技术可行性 | `~/Documents/Obsidian Vault/共享/Hermes/调研报告/chrome-extension/steps/v56-step4-technical-feasibility.md` |
-| Step 5: 最终推荐 | `~/Documents/Obsidian Vault/共享/Hermes/调研报告/chrome-extension/steps/v56-step5-final-recommendation.md` |
-| SUMMARY | `~/Documents/Obsidian Vault/共享/Hermes/调研报告/chrome-extension/steps/v56-SUMMARY.md` |
+### 长期（7-12周）
+- [ ] 上线Chrome Web Store
+- [ ] Product Hunt发布
+- [ ] Reddit/YouTube推广
+- [ ] 获取1000用户
+- [ ] 优化付费转化
 
 ---
 
-## 注意事项
+## 教训
 
-1. **Tavily API不可用**: 2026-06-09实测432错误，Reddit/ProductHunt等社区数据无法获取
-2. **很多网站被Cloudflare封锁**: Keepa、CamelCamelCamel、Reddit、ProductHunt
-3. **Chrome Web Store可访问**: 是最可靠的数据源
-4. **PriceLasso可访问**: 提供了有价值的竞品数据
-5. **数据来源**: Chrome Web Store实时浏览 + PriceLasso官网 + 行业知识
+1. **极简是最好的设计** — GoFullPage一个功能做到极致获得11M用户
+2. **低价也能赚钱** — $1/月×11M用户=潜在$110K/月
+3. **AI是差异化工具** — 不是独立方向，而是增强现有功能
+4. **纯前端扩展最容易开发** — 无后端需求，3-4周MVP
+5. **评分下降=机会** — Screencastify 3.9★说明用户不满
+6. **发散阶段必须广泛扫描** — 12+分类扫描才能发现真正的机会
+7. **头部扩展数据是最好的方向指标** — GoFullPage 11M用户证明截图市场需求巨大
+8. **购物类变现最成熟** — 返现+订阅双重收入流，用户已习惯付费

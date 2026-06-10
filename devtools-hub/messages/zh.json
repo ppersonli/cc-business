@@ -70,7 +70,16 @@
     "noResults": "未找到工具"
   },
   "home": {
-    "subtitle": "免费在线开发者工具。100% 客户端运行，数据不会发送到服务器。"
+    "subtitle": "免费在线开发者工具。100% 客户端运行，数据不会发送到服务器。",
+    "tryPixiaoli": "也试试 pixiaoli.cn — AI驱动的漫画与网漫创作平台",
+    "pixiaoliName": "pixiaoli.cn",
+    "pixiaoliDesc": "AI驱动的漫画与网漫创作平台，面向ACGN创作者和爱好者。创作、分享、探索原创内容。",
+    "pixiaoliTags": [
+      "AI漫画",
+      "网漫",
+      "ACGN",
+      "创作平台"
+    ]
   },
   "categories": {
     "Data": "数据",

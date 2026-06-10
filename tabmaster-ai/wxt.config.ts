@@ -8,11 +8,22 @@ export default defineConfig({
     default_locale: 'en',
     permissions: ['storage', 'sidePanel', 'tabs', 'cookies', 'commands'],
     host_permissions: ['https://tools.pixiaoli.cn/*', 'https://api.openai.com/*'],
-    side_panel: {
-      default_path: 'sidepanel/index.html',
+    icons: {
+      '16': 'icon/icon-16.png',
+      '32': 'icon/icon-32.png',
+      '48': 'icon/icon-48.png',
+      '128': 'icon/icon-128.png',
     },
     action: {
       default_title: 'TabMaster AI',
+      default_icon: {
+        '16': 'icon/icon-16.png',
+        '32': 'icon/icon-32.png',
+        '48': 'icon/icon-48.png',
+      },
+    },
+    side_panel: {
+      default_path: 'sidepanel/index.html',
     },
     commands: {
       _execute_side_panel: {

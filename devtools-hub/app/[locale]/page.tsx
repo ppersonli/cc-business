@@ -37,37 +37,6 @@ export default function Home() {
         </p>
       </div>
 
-      {/* pixiaoli.cn Promo Banner */}
-      <a
-        href="https://pixiaoli.cn"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="promo-banner"
-        style={{
-          display: 'block',
-          textDecoration: 'none',
-          marginBottom: 32,
-          borderRadius: 'var(--radius-lg, 16px)',
-          background: 'linear-gradient(135deg, #e0e7ff 0%, #fce7f3 50%, #fdf2f8 100%)',
-          border: '1px solid #c4b5fd40',
-          padding: '20px 24px',
-          transition: 'all 0.25s ease',
-          boxShadow: 'var(--shadow-sm)',
-        }}
-        onMouseEnter={e => {
-          e.currentTarget.style.boxShadow = '0 6px 24px rgba(139,92,246,0.12)'
-          e.currentTarget.style.transform = 'translateY(-3px)'
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.boxShadow = 'var(--shadow-sm)'
-          e.currentTarget.style.transform = 'translateY(0)'
-        }}
-      >
-        <span style={{ fontSize: 15, color: '#4c1d95', fontWeight: 500 }}>
-          {'  Also try pixiaoli.cn — AI-powered manga & webtoon creation platform'}
-        </span>
-      </a>
-
       {/* Featured: WeChat Markdown Editor */}
       <Link
         href={`/${locale}/tools/wechat-markdown-editor/`}
@@ -149,6 +118,84 @@ export default function Home() {
           ))}
         </div>
       </Link>
+
+      {/* Featured: pixiaoli.cn */}
+      <a
+        href="https://pixiaoli.cn"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          display: 'block',
+          textDecoration: 'none',
+          marginBottom: 48,
+          borderRadius: 'var(--radius-lg, 16px)',
+          background: 'linear-gradient(135deg, #7c3aed10 0%, #7c3aed08 50%, transparent 100%)',
+          border: '1px solid #7c3aed30',
+          padding: '32px 36px',
+          transition: 'all 0.25s ease',
+          boxShadow: 'var(--shadow-sm)',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.borderColor = '#7c3aed'
+          e.currentTarget.style.boxShadow = '0 8px 30px #7c3aed18'
+          e.currentTarget.style.transform = 'translateY(-3px)'
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.borderColor = '#7c3aed30'
+          e.currentTarget.style.boxShadow = 'var(--shadow-sm)'
+          e.currentTarget.style.transform = 'translateY(0)'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+          <div style={{
+            width: 48,
+            height: 48,
+            borderRadius: 'var(--radius-sm)',
+            background: '#7c3aed18',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+            overflow: 'hidden',
+          }}>
+            <img src="/pixiaoli-icon.jpg" alt="pixiaoli.cn" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 'var(--radius-sm)' }} />
+          </div>
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 20, color: 'var(--text-primary)' }}>
+              {t('home.pixiaoliName')}
+            </div>
+            <span style={{
+              fontSize: 11,
+              fontWeight: 600,
+              color: '#7c3aed',
+              background: '#7c3aed15',
+              padding: '2px 8px',
+              borderRadius: 4,
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+            }}>
+              ★ {locale === 'zh' ? '精选' : locale === 'de' ? 'Empfohlen' : 'Featured'}
+            </span>
+          </div>
+        </div>
+        <p style={{ color: 'var(--text-secondary)', fontSize: 15, lineHeight: 1.6, margin: 0 }}>
+          {t('home.pixiaoliDesc')}
+        </p>
+        <div style={{ display: 'flex', gap: 8, marginTop: 16, flexWrap: 'wrap' }}>
+          {(t.raw('home.pixiaoliTags') || ['AI Manga', 'Webtoon', 'ACGN', 'Creative Platform']).map((tag: string) => (
+            <span key={tag} style={{
+              fontSize: 12,
+              color: 'var(--text-muted)',
+              background: 'var(--bg-secondary)',
+              border: '1px solid var(--border)',
+              padding: '4px 10px',
+              borderRadius: 6,
+            }}>
+              {tag}
+            </span>
+          ))}
+        </div>
+      </a>
 
       {categories.map(cat => (
         <section key={cat} style={{ marginBottom: 40 }}>

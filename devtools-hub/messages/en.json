@@ -70,7 +70,16 @@
     "noResults": "No tools found"
   },
   "home": {
-    "subtitle": "Free online developer tools. 100% client-side, no data sent to servers."
+    "subtitle": "Free online developer tools. 100% client-side, no data sent to servers.",
+    "tryPixiaoli": "Also try pixiaoli.cn — AI-powered manga & webtoon creation platform",
+    "pixiaoliName": "pixiaoli.cn",
+    "pixiaoliDesc": "AI-powered manga & webtoon creation platform for ACGN creators and enthusiasts. Create, share, and explore original content.",
+    "pixiaoliTags": [
+      "AI Manga",
+      "Webtoon",
+      "ACGN",
+      "Creative Platform"
+    ]
   },
   "categories": {
     "Data": "Data",

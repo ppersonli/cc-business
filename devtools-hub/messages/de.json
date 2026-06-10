@@ -70,7 +70,16 @@
     "noResults": "Keine Tools gefunden"
   },
   "home": {
-    "subtitle": "Kostenlose Online-Entwickler-Tools. 100% clientseitig, keine Daten an Server gesendet."
+    "subtitle": "Kostenlose Online-Entwickler-Tools. 100% clientseitig, keine Daten an Server gesendet.",
+    "tryPixiaoli": "Probiere auch pixiaoli.cn — KI-gestützte Manga- & Webtoon-Erstellungsplattform",
+    "pixiaoliName": "pixiaoli.cn",
+    "pixiaoliDesc": "KI-gestützte Manga- & Webtoon-Erstellungsplattform für ACGN-Kreative und Enthusiasten. Erstelle, teile und entdecke originalen Inhalt.",
+    "pixiaoliTags": [
+      "KI-Manga",
+      "Webtoon",
+      "ACGN",
+      "Kreativplattform"
+    ]
   },
   "categories": {
     "Data": "Daten",

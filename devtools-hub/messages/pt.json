@@ -70,7 +70,16 @@
     "noResults": "Nenhuma ferramenta encontrada"
   },
   "home": {
-    "subtitle": "Ferramentas de desenvolvimento gratuitas online. 100% no lado do cliente, sem envio de dados para servidores."
+    "subtitle": "Ferramentas de desenvolvimento gratuitas online. 100% no lado do cliente, sem envio de dados para servidores.",
+    "tryPixiaoli": "Experimente também pixiaoli.cn — Plataforma de criação de mangá e webtoon com IA",
+    "pixiaoliName": "pixiaoli.cn",
+    "pixiaoliDesc": "Plataforma de criação de mangá e webtoon com IA para criadores e entusiastas ACGN. Crie, compartilhe e explore conteúdo original.",
+    "pixiaoliTags": [
+      "Mangá IA",
+      "Webtoon",
+      "ACGN",
+      "Plataforma Criativa"
+    ]
   },
   "categories": {
     "Data": "Dados",

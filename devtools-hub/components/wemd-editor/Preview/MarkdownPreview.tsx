@@ -8,6 +8,7 @@ import { createParser } from '../../../lib/wemd/parser'
 import { useThemeStore } from '../../../lib/wemd/stores/themeStore'
 import { useSettingsStore } from '../../../lib/wemd/stores/settingsStore'
 import { getAllThemes } from '../../../lib/wemd/themes'
+import { convertCssToWeChatDarkMode } from '../../../lib/wemd/themes/darkMode'
 import type { Theme } from '../../../lib/wemd/types'
 
 const parser = createParser()
@@ -45,20 +46,39 @@ function loadMermaid(): Promise<any> {
   })
 }
 
+// Load KaTeX CSS via CDN link tag (once)
+function loadKaTeXCSS(): void {
+  if (document.querySelector('link[data-katex]')) return
+  const link = document.createElement('link')
+  link.rel = 'stylesheet'
+  link.href = 'https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css'
+  link.dataset.katex = 'true'
+  document.head.appendChild(link)
+}
+
 const MarkdownPreview = forwardRef<HTMLDivElement, MarkdownPreviewProps>(
   ({ content, wechatMode }, ref) => {
     const { currentThemeId, customThemes } = useThemeStore()
-    const { isDarkUI } = useSettingsStore()
+    const { isDarkUI, isDarkPreview } = useSettingsStore()
 
     const html = useMemo(() => parser.render(content), [content])
     const allThemes = getAllThemes(customThemes)
     const theme = allThemes.find((t: Theme) => t.id === currentThemeId)
-    const themeCSS = theme?.css || ''
+    const rawThemeCSS = theme?.css || ''
 
-    const bg = isDarkUI ? '#0f172a' : '#ffffff'
+    // Apply dark mode conversion when dark preview is enabled
+    const themeCSS = useMemo(() => {
+      if (!isDarkPreview) return rawThemeCSS
+      return convertCssToWeChatDarkMode(rawThemeCSS)
+    }, [rawThemeCSS, isDarkPreview])
+
+    const bg = isDarkPreview ? '#1a1a2e' : isDarkUI ? '#0f172a' : '#ffffff'
 
     // Initialize mermaid diagrams after render
     useEffect(() => {
+      // Load KaTeX CSS on first render
+      loadKaTeXCSS()
+
       // Use rAF to ensure DOM is committed after dangerouslySetInnerHTML
       const raf = requestAnimationFrame(() => {
         const renderMermaid = () => {
@@ -70,7 +90,7 @@ const MarkdownPreview = forwardRef<HTMLDivElement, MarkdownPreviewProps>(
           loadMermaid().then((mermaid) => {
             mermaid.initialize({
               startOnLoad: false,
-              theme: isDarkUI ? 'dark' : 'default',
+              theme: (isDarkUI || isDarkPreview) ? 'dark' : 'default',
               securityLevel: 'loose',
             })
 
@@ -108,7 +128,7 @@ const MarkdownPreview = forwardRef<HTMLDivElement, MarkdownPreviewProps>(
         }
       })
       return () => cancelAnimationFrame(raf)
-    }, [html, isDarkUI])
+    }, [html, isDarkUI, isDarkPreview])
 
     return (
       <div
@@ -132,6 +152,11 @@ const MarkdownPreview = forwardRef<HTMLDivElement, MarkdownPreviewProps>(
           ${isDarkUI ? `
             .wemd-preview .footnotes { border-top-color: #334155; }
             .wemd-preview .footnotes li { color: #94a3b8; }
+          ` : ''}
+          ${isDarkPreview ? `
+            .wemd-preview { color: #e0e0e0; }
+            .wemd-preview .footnotes { border-top-color: #333; }
+            .wemd-preview .footnotes li { color: #aaa; }
           ` : ''}
         ` }} />
         <div

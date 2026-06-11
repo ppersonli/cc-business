@@ -6,6 +6,8 @@ import { create } from 'zustand'
 interface SettingsState {
   isDarkUI: boolean
   toggleDarkUI: () => void
+  isDarkPreview: boolean
+  toggleDarkPreview: () => void
   showThemePanel: boolean
   setShowThemePanel: (show: boolean) => void
 }
@@ -24,6 +26,8 @@ export const useSettingsStore = create<SettingsState>((set) => ({
       }
       return { isDarkUI: next }
     }),
+  isDarkPreview: false,
+  toggleDarkPreview: () => set((state) => ({ isDarkPreview: !state.isDarkPreview })),
   showThemePanel: false,
   setShowThemePanel: (show) => set({ showThemePanel: show }),
 }))

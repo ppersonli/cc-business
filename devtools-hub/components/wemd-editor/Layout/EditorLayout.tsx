@@ -16,6 +16,7 @@ import type { Theme } from '../../../lib/wemd/types'
 import CodeMirrorEditor from '../Editor/CodeMirrorEditor'
 import Toolbar from '../Editor/Toolbar'
 import StatusBar from '../Editor/StatusBar'
+import SearchPanel from '../Editor/SearchPanel'
 import HistoryPane from '../Sidebar/HistoryPane'
 import MarkdownPreview from '../Preview/MarkdownPreview'
 import ThemePanel from '../Theme/ThemePanel'
@@ -34,7 +35,7 @@ function useIsMobile(breakpoint = 768) {
 export default function EditorLayout() {
   const { content, setSaveStatus, setLastSaved } = useEditorStore()
   const { currentThemeId } = useThemeStore()
-  const { isDarkUI, toggleDarkUI, showThemePanel, setShowThemePanel } = useSettingsStore()
+  const { isDarkUI, toggleDarkUI, isDarkPreview, toggleDarkPreview, showThemePanel, setShowThemePanel } = useSettingsStore()
   const { activeId, updateArticle } = useHistoryStore()
   const [copied, setCopied] = useState(false)
   const [copiedHTML, setCopiedHTML] = useState(false)
@@ -44,6 +45,7 @@ export default function EditorLayout() {
   const [previewTab, setPreviewTab] = useState<'preview' | 'wechat'>('preview')
   const [showStorageModal, setShowStorageModal] = useState(false)
   const [showImageHostModal, setShowImageHostModal] = useState(false)
+  const [showSearchPanel, setShowSearchPanel] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const editorWrapRef = useRef<HTMLDivElement>(null)
   const previewRef = useRef<HTMLDivElement>(null)
@@ -79,6 +81,18 @@ export default function EditorLayout() {
 
   // Sync scroll
   useSyncScroll(editorWrapRef, previewRef)
+
+  // Ctrl+F keyboard shortcut for search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+        e.preventDefault()
+        setShowSearchPanel((prev) => !prev)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   // Get current theme name
   const currentTheme = builtInThemes.find((t: Theme) => t.id === currentThemeId)
@@ -392,7 +406,8 @@ export default function EditorLayout() {
             borderBottom: isMobile ? `1px solid ${border}` : 'none',
           }}
         >
-          <Toolbar />
+          <Toolbar onToggleSearch={() => setShowSearchPanel((prev) => !prev)} />
+          <SearchPanel isOpen={showSearchPanel} onClose={() => setShowSearchPanel(false)} />
           <div ref={editorWrapRef} style={{ flex: 1, overflow: 'hidden', minHeight: 0 }}>
             <CodeMirrorEditor />
           </div>
@@ -450,6 +465,30 @@ export default function EditorLayout() {
               }}
             >
               微信排版效果
+            </button>
+            {/* Dark mode preview toggle */}
+            <button
+              onClick={toggleDarkPreview}
+              style={{
+                padding: '5px 12px',
+                marginLeft: 'auto',
+                backgroundColor: isDarkPreview ? (isDarkUI ? '#3b82f6' : '#07c160') : 'transparent',
+                border: `1px solid ${isDarkPreview ? 'transparent' : border}`,
+                borderRadius: '6px',
+                color: isDarkPreview ? '#ffffff' : textMuted,
+                fontSize: '12px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                transition: 'all 0.15s',
+              }}
+              title="暗色模式预览"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+              暗色模式
             </button>
           </div>
 

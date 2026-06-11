@@ -13,6 +13,10 @@ interface ToolbarAction {
   action: (view: EditorView) => void
 }
 
+interface ToolbarProps {
+  onToggleSearch?: () => void
+}
+
 function insertAround(before: string, after: string) {
   return (view: EditorView) => {
     const { from, to } = view.state.selection.main
@@ -78,7 +82,7 @@ const actions: ToolbarAction[] = [
   { label: '脚注', icon: '¹', action: insertBlock('[^1]') },
 ]
 
-export default function Toolbar() {
+export default function Toolbar({ onToggleSearch }: ToolbarProps) {
   const { editorView } = useEditorStore()
   const { isDarkUI } = useSettingsStore()
 
@@ -110,6 +114,32 @@ export default function Toolbar() {
         WebkitOverflowScrolling: 'touch',
       }}
     >
+      {onToggleSearch && (
+        <button
+          onClick={onToggleSearch}
+          title="搜索替换 (Ctrl+F)"
+          style={{
+            padding: '4px 7px',
+            backgroundColor: btnBg,
+            border: `1px solid ${border}`,
+            borderRadius: '4px',
+            color: text,
+            fontSize: '12px',
+            cursor: 'pointer',
+            lineHeight: '1.4',
+            minWidth: '26px',
+            textAlign: 'center' as const,
+            transition: 'background-color 0.15s',
+            flexShrink: 0,
+            marginRight: '4px',
+            fontWeight: 600,
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = btnHover }}
+          onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = btnBg }}
+        >
+          🔍
+        </button>
+      )}
       {actions.map((action) => (
         <button
           key={action.label}

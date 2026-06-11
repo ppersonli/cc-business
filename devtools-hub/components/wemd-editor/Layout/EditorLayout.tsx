@@ -17,9 +17,19 @@ import CodeMirrorEditor from '../Editor/CodeMirrorEditor'
 import Toolbar from '../Editor/Toolbar'
 import StatusBar from '../Editor/StatusBar'
 import SearchPanel from '../Editor/SearchPanel'
+import AIPanel from '../Editor/AIPanel'
+import ShortcutsModal from '../Editor/ShortcutsModal'
 import HistoryPane from '../Sidebar/HistoryPane'
+import TemplateLibrary from '../Sidebar/TemplateLibrary'
 import MarkdownPreview from '../Preview/MarkdownPreview'
+import StatsPanel from '../Preview/StatsPanel'
 import ThemePanel from '../Theme/ThemePanel'
+import UpgradeModal from './UpgradeModal'
+import OnboardingTour from './OnboardingTour'
+import ProPaywall from './ProPaywall'
+import { exportAsPdf } from '../../../lib/wemd/export/pdf'
+import { exportMarkdown, importMarkdown } from '../../../lib/wemd/export/markdown'
+import { copyShareLink, parseShareContent } from '../../../lib/wemd/share/shareLink'
 
 function useIsMobile(breakpoint = 768) {
   const [mobile, setMobile] = useState(false)
@@ -42,15 +52,45 @@ export default function EditorLayout() {
   const [splitRatio, setSplitRatio] = useState(0.5)
   const [isDragging, setIsDragging] = useState(false)
   const [showSidebar, setShowSidebar] = useState(false)
-  const [previewTab, setPreviewTab] = useState<'preview' | 'wechat'>('preview')
+  const [previewTab, setPreviewTab] = useState<'preview' | 'wechat' | 'stats'>('preview')
   const [showStorageModal, setShowStorageModal] = useState(false)
   const [showImageHostModal, setShowImageHostModal] = useState(false)
   const [showSearchPanel, setShowSearchPanel] = useState(false)
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+  const [showAIPanel, setShowAIPanel] = useState(false)
+  const [showStatsPanel, setShowStatsPanel] = useState(false)
+  const [showTemplateLibrary, setShowTemplateLibrary] = useState(false)
+  const [showOnboarding, setShowOnboarding] = useState(true)
+  const [showShortcutsModal, setShowShortcutsModal] = useState(false)
+  const [upgradeFeatureName, setUpgradeFeatureName] = useState<string>('')
+  const [isPro, setIsPro] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const editorWrapRef = useRef<HTMLDivElement>(null)
   const previewRef = useRef<HTMLDivElement>(null)
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isMobile = useIsMobile()
+
+  // Check subscription status on mount
+  useEffect(() => {
+    fetch('/api/wemd/subscription', { credentials: 'include' })
+      .then((r) => r.json())
+      .then((data) => setIsPro(data.isPro === true))
+      .catch(() => setIsPro(false))
+
+    // Load shared content from URL hash
+    const shared = parseShareContent()
+    if (shared) {
+      useEditorStore.getState().setContent(shared)
+      // Clean URL hash
+      window.history.replaceState(null, '', window.location.pathname + window.location.search)
+    }
+  }, [])
+
+  // Helper: show upgrade modal for a Pro feature
+  const showUpgradeFor = useCallback((featureName: string) => {
+    setUpgradeFeatureName(featureName)
+    setShowUpgradeModal(true)
+  }, [])
 
   // Prevent body from scrolling — editor manages its own scroll
   useEffect(() => {
@@ -131,6 +171,24 @@ export default function EditorLayout() {
     document.body.removeChild(a)
     URL.revokeObjectURL(url)
   }, [content, currentThemeId])
+
+  // Import .md file
+  const handleImportMd = useCallback(async () => {
+    const content = await importMarkdown()
+    if (content !== null) {
+      useEditorStore.getState().setContent(content)
+    }
+  }, [])
+
+  // Share link
+  const handleShareLink = useCallback(async () => {
+    const success = await copyShareLink(content)
+    if (success) {
+      alert('分享链接已复制到剪贴板！')
+    } else {
+      alert('文章内容过长，无法生成分享链接（限制 8000 字符）')
+    }
+  }, [content])
 
   // Drag to resize
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
@@ -301,9 +359,40 @@ export default function EditorLayout() {
             )}
           </button>
 
+          {/* 导入 .md */}
+          <button
+            onClick={handleImportMd}
+            style={headerBtnStyle}
+            title="导入 Markdown 文件"
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = btnHover }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = btnBg }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            {!isMobile && '导入'}
+          </button>
+
+          {/* 导出 .md */}
+          <button
+            onClick={() => exportMarkdown(content)}
+            style={headerBtnStyle}
+            title="导出为 .md 文件"
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = btnHover }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = btnBg }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+            </svg>
+            {!isMobile && '.md'}
+          </button>
+
           {/* 下载 HTML */}
           <button
-            onClick={handleDownloadHTML}
+            onClick={() => isPro ? handleDownloadHTML() : showUpgradeFor('Download as HTML')}
             style={headerBtnStyle}
             title="下载为 HTML 文件"
             onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = btnHover }}
@@ -315,7 +404,74 @@ export default function EditorLayout() {
               <line x1="12" y1="15" x2="12" y2="3" />
             </svg>
             {!isMobile && '下载'}
+            {!isPro && <span style={{ fontSize: '9px', verticalAlign: 'super', color: '#f59e0b', marginLeft: '2px' }}>PRO</span>}
           </button>
+
+          {/* PDF 导出 */}
+          <button
+            onClick={() => isPro ? exportAsPdf(content, { themeId: currentThemeId, linkToFootnote }) : showUpgradeFor('PDF Export')}
+            style={headerBtnStyle}
+            title="导出为 PDF"
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = btnHover }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = btnBg }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+            </svg>
+            {!isMobile && 'PDF'}
+            {!isPro && <span style={{ fontSize: '9px', verticalAlign: 'super', color: '#f59e0b', marginLeft: '2px' }}>PRO</span>}
+          </button>
+
+          {/* AI 写作助手 */}
+          <button
+            onClick={() => isPro ? setShowAIPanel(!showAIPanel) : showUpgradeFor('AI Writing Assistant')}
+            style={{
+              ...headerBtnStyle,
+              borderColor: showAIPanel ? '#8b5cf6' : border,
+              color: showAIPanel ? '#8b5cf6' : text,
+              backgroundColor: showAIPanel ? (isDarkUI ? '#2e1065' : '#f5f3ff') : btnBg,
+            }}
+            title="AI 写作助手"
+            onMouseEnter={(e) => { if (!showAIPanel) e.currentTarget.style.backgroundColor = btnHover }}
+            onMouseLeave={(e) => { if (!showAIPanel) e.currentTarget.style.backgroundColor = btnBg }}
+          >
+            <span style={{ fontSize: '14px' }}>✨</span>
+            {!isMobile && 'AI 助手'}
+            {!isPro && <span style={{ fontSize: '9px', verticalAlign: 'super', color: '#f59e0b', marginLeft: '2px' }}>PRO</span>}
+          </button>
+
+          {/* Upgrade to Pro Button */}
+          {!isPro && (
+            <button
+              onClick={() => showUpgradeFor('WeMD Pro')}
+              style={{
+                padding: isMobile ? '4px 8px' : '5px 12px',
+                backgroundColor: 'transparent',
+                border: '1px solid #f59e0b',
+                borderRadius: '6px',
+                color: '#f59e0b',
+                fontSize: isMobile ? '12px' : '13px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                transition: 'all 0.15s',
+                whiteSpace: 'nowrap',
+              }}
+              title="Upgrade to Pro for AI writing, dark mode, custom CSS, and more"
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = isDarkUI ? '#422006' : '#fffbeb' }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent' }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+              {!isMobile && 'Upgrade to Pro'}
+            </button>
+          )}
 
           {/* 复制到公众号 (Primary) */}
           <button
@@ -405,14 +561,38 @@ export default function EditorLayout() {
           {showSidebar ? '隐藏列表' : '显示列表'}
         </button>
         <button
-          onClick={toggleLinkToFootnote}
+          onClick={() => setShowTemplateLibrary(!showTemplateLibrary)}
           style={{
             padding: '3px 10px',
             marginLeft: '8px',
-            backgroundColor: linkToFootnote ? (isDarkUI ? '#1e3a5f' : '#e0f2fe') : 'transparent',
-            border: `1px solid ${linkToFootnote ? (isDarkUI ? '#3b82f6' : '#0284c7') : border}`,
+            backgroundColor: showTemplateLibrary ? (isDarkUI ? '#1e3a5f' : '#e0f2fe') : 'transparent',
+            border: `1px solid ${showTemplateLibrary ? (isDarkUI ? '#3b82f6' : '#0284c7') : border}`,
             borderRadius: '4px',
-            color: linkToFootnote ? (isDarkUI ? '#3b82f6' : '#0284c7') : textMuted,
+            color: showTemplateLibrary ? (isDarkUI ? '#3b82f6' : '#0284c7') : textMuted,
+            fontSize: '12px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+          }}
+          title="模板库"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+            <line x1="3" y1="9" x2="21" y2="9" />
+            <line x1="9" y1="21" x2="9" y2="9" />
+          </svg>
+          模板库
+        </button>
+        <button
+          onClick={() => isPro ? toggleLinkToFootnote() : showUpgradeFor('Link-to-Footnote')}
+          style={{
+            padding: '3px 10px',
+            marginLeft: '8px',
+            backgroundColor: linkToFootnote && isPro ? (isDarkUI ? '#1e3a5f' : '#e0f2fe') : 'transparent',
+            border: `1px solid ${linkToFootnote && isPro ? (isDarkUI ? '#3b82f6' : '#0284c7') : border}`,
+            borderRadius: '4px',
+            color: linkToFootnote && isPro ? (isDarkUI ? '#3b82f6' : '#0284c7') : textMuted,
             fontSize: '12px',
             cursor: 'pointer',
             display: 'flex',
@@ -426,6 +606,7 @@ export default function EditorLayout() {
             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
           </svg>
           链接转脚注
+          {!isPro && <span style={{ fontSize: '9px', verticalAlign: 'super', color: '#f59e0b' }}>PRO</span>}
         </button>
       </div>
 
@@ -464,7 +645,10 @@ export default function EditorLayout() {
           <div ref={editorWrapRef} style={{ flex: 1, overflow: 'hidden', minHeight: 0 }}>
             <CodeMirrorEditor />
           </div>
-          <StatusBar />
+          <StatusBar
+            onShowShortcuts={() => setShowShortcutsModal(true)}
+            onShareLink={handleShareLink}
+          />
         </div>
 
         {/* Right - Preview */}
@@ -519,9 +703,28 @@ export default function EditorLayout() {
             >
               微信排版效果
             </button>
+            <button
+              onClick={() => isPro ? setPreviewTab('stats') : showUpgradeFor('Article Analytics')}
+              style={{
+                padding: '8px 16px',
+                backgroundColor: 'transparent',
+                border: 'none',
+                borderBottom: previewTab === 'stats' ? `2px solid ${isDarkUI ? '#3b82f6' : '#07c160'}` : '2px solid transparent',
+                color: previewTab === 'stats' ? text : textMuted,
+                fontSize: '13px',
+                fontWeight: previewTab === 'stats' ? 600 : 400,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+              }}
+            >
+              文章分析
+              {!isPro && <span style={{ fontSize: '9px', verticalAlign: 'super', color: '#f59e0b' }}>PRO</span>}
+            </button>
             {/* Dark mode preview toggle */}
             <button
-              onClick={toggleDarkPreview}
+              onClick={() => isPro ? toggleDarkPreview() : showUpgradeFor('Dark Mode Preview')}
               style={{
                 padding: '5px 12px',
                 marginLeft: 'auto',
@@ -542,22 +745,50 @@ export default function EditorLayout() {
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
               </svg>
               暗色模式
+              {!isPro && <span style={{ marginLeft: '2px', fontSize: '9px', verticalAlign: 'super', color: '#f59e0b' }}>PRO</span>}
             </button>
           </div>
 
           {/* Preview content */}
           <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            <MarkdownPreview
-              ref={previewRef}
-              content={content}
-              wechatMode={previewTab === 'wechat'}
-            />
+            {previewTab === 'stats' ? (
+              <StatsPanel content={content} />
+            ) : (
+              <MarkdownPreview
+                ref={previewRef}
+                content={content}
+                wechatMode={previewTab === 'wechat'}
+              />
+            )}
           </div>
         </div>
       </div>
 
+      {/* AI Panel */}
+      <AIPanel
+        isOpen={showAIPanel}
+        onClose={() => setShowAIPanel(false)}
+        isPro={isPro}
+        onShowUpgrade={showUpgradeFor}
+      />
+
+      {/* Template Library */}
+      <TemplateLibrary
+        isOpen={showTemplateLibrary}
+        onClose={() => setShowTemplateLibrary(false)}
+        isPro={isPro}
+        onShowUpgrade={showUpgradeFor}
+      />
+
       {/* Theme Panel */}
-      <ThemePanel isOpen={showThemePanel} onClose={() => setShowThemePanel(false)} />
+      <ThemePanel isOpen={showThemePanel} onClose={() => setShowThemePanel(false)} isPro={isPro} onShowUpgrade={showUpgradeFor} />
+
+      {/* Upgrade Modal */}
+      <UpgradeModal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+        featureName={upgradeFeatureName}
+      />
 
       {/* Storage Mode Modal */}
       {showStorageModal && (
@@ -722,6 +953,19 @@ export default function EditorLayout() {
             </div>
           </div>
         </>
+      )}
+      {/* Shortcuts Modal */}
+      <ShortcutsModal
+        isOpen={showShortcutsModal}
+        onClose={() => setShowShortcutsModal(false)}
+      />
+
+      {/* Pro Paywall Banner */}
+      <ProPaywall isPro={isPro} onShowUpgrade={showUpgradeFor} />
+
+      {/* Onboarding Tour */}
+      {showOnboarding && (
+        <OnboardingTour onComplete={() => setShowOnboarding(false)} />
       )}
     </div>
   )

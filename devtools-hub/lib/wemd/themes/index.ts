@@ -32,6 +32,20 @@ export const builtInThemes: Theme[] = [
   sunsetFilm,
 ]
 
+/** Theme IDs available for free users */
+export const FREE_THEME_IDS: string[] = [
+  'basic',
+  'custom-default',
+  'code-github',
+  'knowledge-base',
+  'receipt',
+]
+
+/** Check if a theme requires Pro subscription */
+export function isProTheme(id: string): boolean {
+  return !FREE_THEME_IDS.includes(id)
+}
+
 export function getThemeById(id: string): Theme | undefined {
   return builtInThemes.find((t) => t.id === id)
 }

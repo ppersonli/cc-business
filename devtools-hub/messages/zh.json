@@ -309,8 +309,8 @@
     "wechat-markdown-editor": {
       "name": "微信 Markdown 编辑器",
       "description": "编写 Markdown 实时预览，一键复制精美样式内容到微信",
-      "about": "专为微信公众号设计的全功能 Markdown 编辑器。编写 Markdown 实时预览，选择 10+ 精美主题，一键复制带样式的 HTML 到微信。",
-      "features": "10+ 内置主题、一键复制到微信、CodeMirror 编辑器、实时预览、语法高亮、暗色模式、本地存储。"
+      "about": "专为微信公众号设计的全功能 Markdown 编辑器。编写 Markdown 实时预览，选择 10+ 精美主题，一键复制带样式的 HTML 到微信。Pro 版包含 AI 写作助手、文章分析、高级模板和 PDF 导出。",
+      "features": "10+ 内置主题、一键复制到微信、AI 写作助手、文章分析、8 个高级模板、PDF 导出、暗色模式预览、自定义 CSS、可视化主题设计器。"
     },
     "extension-shield": {
       "name": "扩展盾牌",

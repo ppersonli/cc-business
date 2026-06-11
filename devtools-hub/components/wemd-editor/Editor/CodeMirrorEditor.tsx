@@ -13,6 +13,7 @@ import { searchKeymap, highlightSelectionMatches } from '@codemirror/search'
 import { minimalSetup } from 'codemirror'
 import { useEditorStore } from '../../../lib/wemd/stores/editorStore'
 import { useSettingsStore } from '../../../lib/wemd/stores/settingsStore'
+import { handlePasteImage, handleDropImage } from '../../../lib/wemd/upload/imageUpload'
 
 // Custom Markdown keyboard shortcuts
 function wrapSelection(view: EditorView, before: string, after: string): boolean {
@@ -125,6 +126,10 @@ export default function CodeMirrorEditor() {
           indentWithTab,
         ]),
         EditorView.updateListener.of(handleChange),
+        EditorView.domEventHandlers({
+          paste: (event, view) => handlePasteImage(event, view),
+          drop: (event, view) => handleDropImage(event, view),
+        }),
       ],
     })
 

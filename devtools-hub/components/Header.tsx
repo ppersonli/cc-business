@@ -103,6 +103,23 @@ export default function Header() {
           >
             {t('common.github')}
           </a>
+          <Link
+            href="/tools/wechat-markdown-editor/pricing"
+            style={{
+              padding: '5px 12px',
+              borderRadius: 'var(--radius-sm)',
+              border: '1px solid #f59e0b',
+              color: '#f59e0b',
+              textDecoration: 'none',
+              fontSize: 13,
+              fontWeight: 600,
+              transition: 'all 0.15s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(245, 158, 11, 0.1)' }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}
+          >
+            ⭐ WeMD Pro
+          </Link>
 
           {/* Language Switcher */}
           <div ref={langRef} style={{ position: 'relative' }}>
@@ -254,6 +271,13 @@ export default function Header() {
           >
             {t('common.github')}
           </a>
+          <Link
+            href="/tools/wechat-markdown-editor/pricing"
+            onClick={() => setMobileOpen(false)}
+            style={{ color: '#f59e0b', textDecoration: 'none', fontSize: 14, fontWeight: 600, padding: '8px 0' }}
+          >
+            ⭐ WeMD Pro
+          </Link>
           <div style={{ borderTop: '1px solid var(--border)', margin: '4px 0', paddingTop: 8 }}>
             <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               Language

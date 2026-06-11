@@ -6,7 +6,7 @@
 import { useState } from 'react'
 import { useThemeStore } from '../../../lib/wemd/stores/themeStore'
 import { useSettingsStore } from '../../../lib/wemd/stores/settingsStore'
-import { builtInThemes } from '../../../lib/wemd/themes'
+import { builtInThemes, isProTheme } from '../../../lib/wemd/themes'
 import type { Theme } from '../../../lib/wemd/types'
 import ThemeDesigner from './ThemeDesigner'
 import CustomCSSEditor from './CustomCSSEditor'
@@ -14,13 +14,15 @@ import CustomCSSEditor from './CustomCSSEditor'
 interface ThemePanelProps {
   isOpen: boolean
   onClose: () => void
+  isPro?: boolean
+  onShowUpgrade?: (feature: string) => void
 }
 
 const SAMPLE_HTML = `<h3 style="margin:0 0 8px">Heading</h3><p style="margin:0 0 6px">Body text with <strong>bold</strong> and <em>italic</em>.</p><pre class="hljs" style="margin:0;padding:6px;border-radius:4px;font-size:11px"><code>code()</code></pre>`
 
 type TabKey = 'themes' | 'css' | 'designer'
 
-export default function ThemePanel({ isOpen, onClose }: ThemePanelProps) {
+export default function ThemePanel({ isOpen, onClose, isPro = false, onShowUpgrade }: ThemePanelProps) {
   const { currentThemeId, setCurrentThemeId, customThemes } = useThemeStore()
   const { isDarkUI } = useSettingsStore()
   const [activeTab, setActiveTab] = useState<TabKey>('themes')
@@ -107,25 +109,39 @@ export default function ThemePanel({ isOpen, onClose }: ThemePanelProps) {
             borderBottom: `1px solid ${border}`,
           }}
         >
-          {tabs.map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              style={{
-                flex: 1,
-                padding: '10px 0',
-                backgroundColor: activeTab === tab.key ? activeBg : 'transparent',
-                border: 'none',
-                borderBottom: activeTab === tab.key ? `2px solid ${activeBorder}` : '2px solid transparent',
-                color: activeTab === tab.key ? activeBorder : textMuted,
-                fontSize: '13px',
-                fontWeight: activeTab === tab.key ? 600 : 400,
-                cursor: 'pointer',
-              }}
-            >
-              {tab.label}
-            </button>
-          ))}
+          {tabs.map((tab) => {
+            const isProTab = (tab.key === 'css' || tab.key === 'designer') && !isPro
+            return (
+              <button
+                key={tab.key}
+                onClick={() => {
+                  if (isProTab && onShowUpgrade) {
+                    onShowUpgrade(tab.key === 'css' ? 'Custom CSS' : 'Visual Theme Designer')
+                  } else {
+                    setActiveTab(tab.key)
+                  }
+                }}
+                style={{
+                  flex: 1,
+                  padding: '10px 0',
+                  backgroundColor: activeTab === tab.key ? activeBg : 'transparent',
+                  border: 'none',
+                  borderBottom: activeTab === tab.key ? `2px solid ${activeBorder}` : '2px solid transparent',
+                  color: activeTab === tab.key ? activeBorder : textMuted,
+                  fontSize: '13px',
+                  fontWeight: activeTab === tab.key ? 600 : 400,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '4px',
+                }}
+              >
+                {tab.label}
+                {isProTab && <span style={{ fontSize: '9px', color: '#f59e0b', fontWeight: 700 }}>PRO</span>}
+              </button>
+            )
+          })}
         </div>
 
         {/* Content */}
@@ -138,6 +154,10 @@ export default function ThemePanel({ isOpen, onClose }: ThemePanelProps) {
                   <button
                     key={theme.id}
                     onClick={() => {
+                      if (isProTheme(theme.id) && !isPro) {
+                        onShowUpgrade?.(`Theme: ${theme.name}`)
+                        return
+                      }
                       setCurrentThemeId(theme.id)
                       onClose()
                     }}
@@ -149,9 +169,11 @@ export default function ThemePanel({ isOpen, onClose }: ThemePanelProps) {
                       backgroundColor: isActive ? activeBg : surfaceBg,
                       border: `2px solid ${isActive ? activeBorder : border}`,
                       borderRadius: '8px',
-                      cursor: 'pointer',
+                      cursor: isProTheme(theme.id) && !isPro ? 'not-allowed' : 'pointer',
                       textAlign: 'left' as const,
                       transition: 'all 0.15s',
+                      opacity: isProTheme(theme.id) && !isPro ? 0.7 : 1,
+                      position: 'relative' as const,
                     }}
                   >
                     <div
@@ -175,9 +197,23 @@ export default function ThemePanel({ isOpen, onClose }: ThemePanelProps) {
                         fontSize: '12px',
                         fontWeight: isActive ? 600 : 400,
                         color: isActive ? activeBorder : text,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
                       }}
                     >
                       {theme.name}
+                      {isProTheme(theme.id) && !isPro && (
+                        <span style={{
+                          fontSize: '9px',
+                          fontWeight: 700,
+                          color: '#f59e0b',
+                          backgroundColor: isDarkUI ? '#422006' : '#fffbeb',
+                          border: '1px solid #f59e0b',
+                          padding: '1px 5px',
+                          borderRadius: '4px',
+                        }}>PRO</span>
+                      )}
                     </span>
                   </button>
                 )
@@ -215,12 +251,62 @@ export default function ThemePanel({ isOpen, onClose }: ThemePanelProps) {
             </div>
           )}
 
-          {activeTab === 'css' && (
+          {activeTab === 'css' && isPro && (
             <CustomCSSEditor />
           )}
 
-          {activeTab === 'designer' && (
+          {activeTab === 'css' && !isPro && (
+            <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+              <span style={{ fontSize: '32px', display: 'block', marginBottom: '12px' }}>💅</span>
+              <h3 style={{ fontSize: '16px', fontWeight: 600, color: text, marginBottom: '8px' }}>自定义 CSS 编辑器</h3>
+              <p style={{ fontSize: '13px', color: textMuted, marginBottom: '16px', lineHeight: '1.6' }}>
+                使用 CSS 代码精细控制每个元素的样式，包括字体、颜色、间距、边框等所有细节。
+              </p>
+              <button
+                onClick={() => onShowUpgrade?.('Custom CSS Editor')}
+                style={{
+                  padding: '8px 24px',
+                  backgroundColor: '#f59e0b',
+                  border: 'none',
+                  borderRadius: '6px',
+                  color: '#ffffff',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                升级 Pro 解锁
+              </button>
+            </div>
+          )}
+
+          {activeTab === 'designer' && isPro && (
             <ThemeDesigner onClose={onClose} />
+          )}
+
+          {activeTab === 'designer' && !isPro && (
+            <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+              <span style={{ fontSize: '32px', display: 'block', marginBottom: '12px' }}>🎨</span>
+              <h3 style={{ fontSize: '16px', fontWeight: 600, color: text, marginBottom: '8px' }}>可视化主题设计器</h3>
+              <p style={{ fontSize: '13px', color: textMuted, marginBottom: '16px', lineHeight: '1.6' }}>
+                通过滑块和颜色选择器可视化调整 10 个分类的样式参数，实时预览效果，无需编写代码。
+              </p>
+              <button
+                onClick={() => onShowUpgrade?.('Visual Theme Designer')}
+                style={{
+                  padding: '8px 24px',
+                  backgroundColor: '#f59e0b',
+                  border: 'none',
+                  borderRadius: '6px',
+                  color: '#ffffff',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                升级 Pro 解锁
+              </button>
+            </div>
           )}
         </div>
       </div>

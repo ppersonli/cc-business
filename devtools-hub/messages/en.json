@@ -309,8 +309,8 @@
     "wechat-markdown-editor": {
       "name": "WeChat Markdown Editor",
       "description": "Write Markdown with live preview and copy beautifully styled content to WeChat with one click",
-      "about": "A full-featured Markdown editor designed for WeChat public accounts. Write Markdown with live preview, choose from 10+ beautiful themes, and copy styled HTML directly to WeChat with one click.",
-      "features": "10+ built-in themes, one-click copy to WeChat, CodeMirror editor, live preview, syntax highlighting, dark mode, local storage."
+      "about": "A full-featured Markdown editor designed for WeChat public accounts. Write Markdown with live preview, choose from 10+ beautiful themes, and copy styled HTML directly to WeChat with one click. Pro features include AI writing assistant, article analytics, premium templates, and PDF export.",
+      "features": "10+ built-in themes, one-click copy to WeChat, AI writing assistant, article analytics, 8 premium templates, PDF export, dark mode preview, custom CSS, visual theme designer."
     },
     "extension-shield": {
       "name": "Extension Shield",

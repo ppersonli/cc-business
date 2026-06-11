@@ -1,0 +1,27 @@
+:root {
+  --wm-primary: #7c3aed;
+  --wm-primary-light: #a855f7;
+  --wm-bg: #0f0f0f;
+  --wm-bg-secondary: #1a1a1a;
+  --wm-text: #e5e5e5;
+  --wm-text-muted: #a3a3a3;
+  --wm-border: #2a2a2a;
+  --wm-yellow: #fef08a;
+  --wm-green: #86efac;
+  --wm-blue: #93c5fd;
+  --wm-pink: #f9a8d4;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--wm-bg);
+  color: var(--wm-text);
+  width: 400px;
+  min-height: 500px;
+}

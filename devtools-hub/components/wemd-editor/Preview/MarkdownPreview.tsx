@@ -149,9 +149,16 @@ const MarkdownPreview = forwardRef<HTMLDivElement, MarkdownPreviewProps>(
           .wemd-preview .mermaid { margin: 16px 0; text-align: center; overflow: hidden; max-width: 100%; }
           .wemd-preview .mermaid svg { max-width: 100%; height: auto; }
           .wemd-preview .mermaid > div { max-width: 100%; overflow: auto; }
+          .wemd-preview .wemd-code-block { position: relative; margin: 16px 0; border-radius: 8px; overflow: hidden; }
+          .wemd-preview .wemd-code-bar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: #f6f8fa; border-bottom: 1px solid #e2e8f0; }
+          .wemd-preview .wemd-code-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+          .wemd-preview .wemd-code-lang { margin-left: auto; font-size: 11px; color: #8b949e; font-family: 'SF Mono', monospace; text-transform: lowercase; }
+          .wemd-preview .wemd-code-block pre.hljs { margin: 0; border-radius: 0 0 8px 8px; }
           ${isDarkUI ? `
             .wemd-preview .footnotes { border-top-color: #334155; }
             .wemd-preview .footnotes li { color: #94a3b8; }
+            .wemd-preview .wemd-code-bar { background: #1e293b; border-bottom-color: #334155; }
+            .wemd-preview .wemd-code-lang { color: #64748b; }
           ` : ''}
           ${isDarkPreview ? `
             .wemd-preview { color: #e0e0e0; }

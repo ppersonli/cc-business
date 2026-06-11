@@ -35,7 +35,7 @@ function useIsMobile(breakpoint = 768) {
 export default function EditorLayout() {
   const { content, setSaveStatus, setLastSaved } = useEditorStore()
   const { currentThemeId } = useThemeStore()
-  const { isDarkUI, toggleDarkUI, isDarkPreview, toggleDarkPreview, showThemePanel, setShowThemePanel } = useSettingsStore()
+  const { isDarkUI, toggleDarkUI, isDarkPreview, toggleDarkPreview, linkToFootnote, toggleLinkToFootnote, showThemePanel, setShowThemePanel } = useSettingsStore()
   const { activeId, updateArticle } = useHistoryStore()
   const [copied, setCopied] = useState(false)
   const [copiedHTML, setCopiedHTML] = useState(false)
@@ -99,7 +99,7 @@ export default function EditorLayout() {
 
   // Copy to WeChat
   const handleCopy = useCallback(async () => {
-    const success = await copyToWechat(content, currentThemeId)
+    const success = await copyToWechat(content, currentThemeId, [], { linkToFootnote })
     if (success) {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
@@ -108,7 +108,7 @@ export default function EditorLayout() {
 
   // Copy raw HTML
   const handleCopyHTML = useCallback(async () => {
-    const html = exportAsHtml(content, currentThemeId)
+    const html = exportAsHtml(content, currentThemeId, [], { linkToFootnote })
     try {
       await navigator.clipboard.writeText(html)
       setCopiedHTML(true)
@@ -116,6 +116,20 @@ export default function EditorLayout() {
     } catch {
       // clipboard unavailable
     }
+  }, [content, currentThemeId])
+
+  // Download as HTML file
+  const handleDownloadHTML = useCallback(() => {
+    const html = exportAsHtml(content, currentThemeId, [], { linkToFootnote })
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'wechat-article.html'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
   }, [content, currentThemeId])
 
   // Drag to resize
@@ -287,6 +301,22 @@ export default function EditorLayout() {
             )}
           </button>
 
+          {/* 下载 HTML */}
+          <button
+            onClick={handleDownloadHTML}
+            style={headerBtnStyle}
+            title="下载为 HTML 文件"
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = btnHover }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = btnBg }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            {!isMobile && '下载'}
+          </button>
+
           {/* 复制到公众号 (Primary) */}
           <button
             onClick={handleCopy}
@@ -373,6 +403,29 @@ export default function EditorLayout() {
             )}
           </svg>
           {showSidebar ? '隐藏列表' : '显示列表'}
+        </button>
+        <button
+          onClick={toggleLinkToFootnote}
+          style={{
+            padding: '3px 10px',
+            marginLeft: '8px',
+            backgroundColor: linkToFootnote ? (isDarkUI ? '#1e3a5f' : '#e0f2fe') : 'transparent',
+            border: `1px solid ${linkToFootnote ? (isDarkUI ? '#3b82f6' : '#0284c7') : border}`,
+            borderRadius: '4px',
+            color: linkToFootnote ? (isDarkUI ? '#3b82f6' : '#0284c7') : textMuted,
+            fontSize: '12px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+          }}
+          title="链接转脚注：将带标题的链接转为编号脚注（微信不支持外部链接）"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+          </svg>
+          链接转脚注
         </button>
       </div>
 

@@ -8,6 +8,8 @@ interface SettingsState {
   toggleDarkUI: () => void
   isDarkPreview: boolean
   toggleDarkPreview: () => void
+  linkToFootnote: boolean
+  toggleLinkToFootnote: () => void
   showThemePanel: boolean
   setShowThemePanel: (show: boolean) => void
 }
@@ -28,6 +30,8 @@ export const useSettingsStore = create<SettingsState>((set) => ({
     }),
   isDarkPreview: false,
   toggleDarkPreview: () => set((state) => ({ isDarkPreview: !state.isDarkPreview })),
+  linkToFootnote: false,
+  toggleLinkToFootnote: () => set((state) => ({ linkToFootnote: !state.linkToFootnote })),
   showThemePanel: false,
   setShowThemePanel: (show) => set({ showThemePanel: show }),
 }))

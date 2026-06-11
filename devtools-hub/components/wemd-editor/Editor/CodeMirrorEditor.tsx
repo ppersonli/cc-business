@@ -5,7 +5,7 @@
 
 import { useEffect, useRef, useCallback } from 'react'
 import { EditorView, lineNumbers, highlightActiveLine, highlightActiveLineGutter, keymap } from '@codemirror/view'
-import { EditorState } from '@codemirror/state'
+import { EditorState, Prec } from '@codemirror/state'
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { syntaxHighlighting, defaultHighlightStyle, bracketMatching, foldGutter } from '@codemirror/language'
 import { history, historyKeymap, defaultKeymap, indentWithTab } from '@codemirror/commands'
@@ -13,6 +13,45 @@ import { searchKeymap, highlightSelectionMatches } from '@codemirror/search'
 import { minimalSetup } from 'codemirror'
 import { useEditorStore } from '../../../lib/wemd/stores/editorStore'
 import { useSettingsStore } from '../../../lib/wemd/stores/settingsStore'
+
+// Custom Markdown keyboard shortcuts
+function wrapSelection(view: EditorView, before: string, after: string): boolean {
+  const { from, to } = view.state.selection.main
+  const selected = view.state.doc.sliceString(from, to)
+  if (selected) {
+    // If already wrapped, unwrap
+    if (selected.startsWith(before) && selected.endsWith(after)) {
+      const inner = selected.slice(before.length, selected.length - after.length)
+      view.dispatch({
+        changes: { from, to, insert: inner },
+        selection: { anchor: from, head: from + inner.length },
+      })
+    } else {
+      const wrapped = `${before}${selected}${after}`
+      view.dispatch({
+        changes: { from, to, insert: wrapped },
+        selection: { anchor: from + before.length, head: to + before.length },
+      })
+    }
+  } else {
+    const placeholder = 'text'
+    const wrapped = `${before}${placeholder}${after}`
+    view.dispatch({
+      changes: { from, to: from, insert: wrapped },
+      selection: { anchor: from + before.length, head: from + before.length + placeholder.length },
+    })
+  }
+  return true
+}
+
+const markdownShortcuts = Prec.highest(keymap.of([
+  { key: 'Mod-b', run: (view) => wrapSelection(view, '**', '**') },
+  { key: 'Mod-i', run: (view) => wrapSelection(view, '*', '*') },
+  { key: 'Mod-k', run: (view) => wrapSelection(view, '[', '](url)') },
+  { key: 'Mod-Shift-x', run: (view) => wrapSelection(view, '~~', '~~') },
+  { key: 'Mod-Shift-h', run: (view) => wrapSelection(view, '==', '==') },
+  { key: 'Mod-Shift-u', run: (view) => wrapSelection(view, '<u>', '</u>') },
+]))
 
 const lightTheme = EditorView.theme({
   '&': { backgroundColor: '#ffffff', color: '#1e293b', minHeight: 0 },
@@ -78,6 +117,7 @@ export default function CodeMirrorEditor() {
         syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
         EditorView.lineWrapping,
         isDarkUI ? darkTheme : lightTheme,
+        markdownShortcuts,
         keymap.of([
           ...defaultKeymap,
           ...historyKeymap,

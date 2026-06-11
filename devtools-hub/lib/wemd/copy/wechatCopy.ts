@@ -4,6 +4,7 @@
 import juice from 'juice'
 import { createParser } from '../parser'
 import { getThemeById, getAllThemes } from '../themes'
+import { convertLinksToFootnotes } from './linkToFootnote'
 import type { Theme } from '../types'
 
 const parser = createParser()
@@ -21,11 +22,17 @@ function expandCSSVariables(css: string): string {
 export async function copyToWechat(
   markdown: string,
   themeId: string,
-  customThemes: Theme[] = []
+  customThemes: Theme[] = [],
+  options: { linkToFootnote?: boolean } = {}
 ): Promise<boolean> {
   try {
     // 1. Parse markdown to HTML
-    const html = parser.render(markdown)
+    let html = parser.render(markdown)
+
+    // 1.5 Optional link-to-footnote conversion
+    if (options.linkToFootnote) {
+      html = convertLinksToFootnotes(html)
+    }
 
     // 2. Get theme CSS
     const allThemes = getAllThemes(customThemes)
@@ -79,9 +86,13 @@ export async function copyToWechat(
 export function exportAsHtml(
   markdown: string,
   themeId: string,
-  customThemes: Theme[] = []
+  customThemes: Theme[] = [],
+  options: { linkToFootnote?: boolean } = {}
 ): string {
-  const html = parser.render(markdown)
+  let html = parser.render(markdown)
+  if (options.linkToFootnote) {
+    html = convertLinksToFootnotes(html)
+  }
   const allThemes = getAllThemes(customThemes)
   const theme = allThemes.find((t) => t.id === themeId)
   const themeCSS = theme?.css || ''

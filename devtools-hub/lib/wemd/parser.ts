@@ -27,16 +27,21 @@ export function createParser(): MarkdownIt {
     if (lang === 'mermaid') {
       return `<div class="mermaid">${md.utils.escapeHtml(str)}</div>`
     }
+
+    // Mac code bar with traffic light dots
+    const langLabel = lang ? `<span class="wemd-code-lang">${md.utils.escapeHtml(lang)}</span>` : ''
+    const codeBar = `<div class="wemd-code-bar"><span class="wemd-code-dot" style="background:#ff5f56"></span><span class="wemd-code-dot" style="background:#ffbd2e"></span><span class="wemd-code-dot" style="background:#27c93f"></span>${langLabel}</div>`
+
     if (lang && hljs.getLanguage(lang)) {
       try {
         const result = hljs.highlight(str, { language: lang, ignoreIllegals: true })
-        return `<pre class="hljs"><code>${result.value}</code></pre>`
+        return `<div class="wemd-code-block">${codeBar}<pre class="hljs"><code>${result.value}</code></pre></div>`
       } catch {
         // fall through
       }
     }
     const escaped: string = md.utils.escapeHtml(str)
-    return `<pre class="hljs"><code>${escaped}</code></pre>`
+    return `<div class="wemd-code-block">${codeBar}<pre class="hljs"><code>${escaped}</code></pre></div>`
   }
 
   // GFM tables

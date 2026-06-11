@@ -1,0 +1,27 @@
+{
+  "name": "webmind-extension",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "build": "wxt build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "zip": "wxt zip",
+    "postinstall": "wxt prepare"
+  },
+  "dependencies": {
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.7",
+    "@vue/test-utils": "^2.4.10",
+    "@wxt-dev/module-vue": "^1.0.3",
+    "happy-dom": "^20.9.0",
+    "typescript": "^5.8.3",
+    "vitest": "^4.1.8",
+    "wxt": "^0.20.0"
+  }
+}

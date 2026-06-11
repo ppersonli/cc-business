@@ -35,6 +35,9 @@ importers:
       '@types/better-sqlite3':
         specifier: ^7.6.13
         version: 7.6.13
+      '@waffo/pancake-ts':
+        specifier: ^0.11.0
+        version: 0.11.0
       better-sqlite3:
         specifier: ^12.10.0
         version: 12.10.0
@@ -1149,6 +1152,10 @@ packages:
 
   '@vitest/utils@4.1.8':
     resolution: {integrity: sha512-uOJamYALNhfJ6iolExyQM40yIQwDqYnkKtQ5VCiSe17E33H0aQ/u+1GlRuz4LZBk6Mm3sg90G9hEbmEt37C1Zg==}
+
+  '@waffo/pancake-ts@0.11.0':
+    resolution: {integrity: sha512-BJZrJ+aiyYOfvl8lu9es1dYMuj0JvNx8G2n75L1QgZosVqVntQ9G0sZBADjfwBEXL+HrltRI2Vt0Qc6+X65xSQ==}
+    engines: {node: '>=20.0.0'}
 
   abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -4097,6 +4104,8 @@ snapshots:
       '@vitest/pretty-format': 4.1.8
       convert-source-map: 2.0.0
       tinyrainbow: 3.1.0
+
+  '@waffo/pancake-ts@0.11.0': {}
 
   abbrev@1.1.1: {}
 

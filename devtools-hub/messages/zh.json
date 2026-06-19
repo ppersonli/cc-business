@@ -99,7 +99,7 @@
     "Text": "文本",
     "Network": "网络",
     "Security": "安全",
-    "Social": "社交"
+    "Social": "社交", "SEO": "SEO", "Project Management": "项目管理", "Extension": "扩展", "Server": "服务器", "Writing": "写作"
   },
   "tools": {
     "json-formatter": {
@@ -363,6 +363,12 @@
       "description": "AI 驱动的着陆页 CRO 分析工具，提供截图分析和优化建议",
       "about": "使用 AI 分析你的着陆页。获取截图、5 维度 CRO 评分和优先级优化建议。",
       "features": "AI 截图分析、5 维度 CRO 评分、桌面/移动端对比、PDF 报告导出、可操作优化建议。"
+    },
+    "buildflow": {
+      "name": "BuildFlow",
+      "description": "使用看板、文档管理和团队协作进行项目管理",
+      "about": "使用看板、任务跟踪和团队协作工具管理项目。",
+      "features": "看板、项目管理、任务跟踪、团队协作、文档管理。"
     },
     "color-contrast": {
       "name": "颜色对比度检查器",

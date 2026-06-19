@@ -1,6 +1,6 @@
 {
   "buildCommand": "npx next build",
   "outputDirectory": ".next",
-  "installCommand": "npm install --ignore-scripts",
+  "installCommand": "pnpm install",
   "framework": "nextjs"
 }

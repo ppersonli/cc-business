@@ -99,7 +99,7 @@
     "Text": "텍스트",
     "Network": "네트워크",
     "Security": "보안",
-    "Social": "소셜"
+    "Social": "소셜", "SEO": "SEO", "Project Management": "프로젝트 관리", "Extension": "확장 프로그램", "Server": "서버", "Writing": "글쓰기"
   },
   "tools": {
     "json-formatter": {
@@ -363,6 +363,12 @@
       "description": "AI-powered landing page CRO analyzer with screenshot analysis and actionable optimization suggestions",
       "about": "Analyze your landing page with AI. Get screenshots, scores across 5 CRO dimensions, and prioritized optimization suggestions.",
       "features": "AI screenshot analysis, 5-dimension CRO scoring, visual desktop/mobile comparison, PDF report export, actionable suggestions."
+    },
+    "buildflow": {
+      "name": "BuildFlow",
+      "description": "Construction project management with kanban boards, document management, and team collaboration",
+      "about": "Manage construction and development projects with kanban boards, task tracking, and team collaboration tools.",
+      "features": "Kanban boards, project management, task tracking, team collaboration, document management."
     },
     "color-contrast": {
       "name": "Color Contrast Checker",

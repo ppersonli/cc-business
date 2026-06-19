@@ -65,5 +65,13 @@
     "tailwindcss": "^4.1.8",
     "typescript": "^5.8.3",
     "vitest": "^4.1.8"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "better-sqlite3",
+      "sharp"
+    ]
   }
 }

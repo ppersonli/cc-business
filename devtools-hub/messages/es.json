@@ -99,7 +99,7 @@
     "Text": "Texto",
     "Network": "Red",
     "Security": "Seguridad",
-    "Social": "Social"
+    "Social": "Social", "SEO": "SEO", "Project Management": "Gestión de Proyectos", "Extension": "Extensión", "Server": "Servidor", "Writing": "Escritura"
   },
   "tools": {
     "json-formatter": {
@@ -363,6 +363,12 @@
       "description": "AI-powered landing page CRO analyzer with screenshot analysis and actionable optimization suggestions",
       "about": "Analyze your landing page with AI. Get screenshots, scores across 5 CRO dimensions, and prioritized optimization suggestions.",
       "features": "AI screenshot analysis, 5-dimension CRO scoring, visual desktop/mobile comparison, PDF report export, actionable suggestions."
+    },
+    "buildflow": {
+      "name": "BuildFlow",
+      "description": "Construction project management with kanban boards, document management, and team collaboration",
+      "about": "Manage construction and development projects with kanban boards, task tracking, and team collaboration tools.",
+      "features": "Kanban boards, project management, task tracking, team collaboration, document management."
     },
     "color-contrast": {
       "name": "Color Contrast Checker",

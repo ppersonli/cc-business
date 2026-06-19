@@ -6,6 +6,7 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 const nextConfig = {
   images: { unoptimized: true },
   trailingSlash: true,
+  serverExternalPackages: ['playwright', 'playwright-core', 'better-sqlite3', '@libsql/client'],
 }
 
 export default withNextIntl(nextConfig)

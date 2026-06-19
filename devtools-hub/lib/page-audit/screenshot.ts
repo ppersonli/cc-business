@@ -21,7 +21,10 @@ let playwrightModule: any = null
 async function getPlaywright(): Promise<any> {
   if (playwrightModule) return playwrightModule
   try {
-    playwrightModule = await import('playwright')
+    // Use dynamic require that webpack cannot statically analyze
+    // This prevents bundling playwright (which has native deps) in Next.js builds
+    const dynamicRequire = new Function('modulePath', 'return require(modulePath)') as (id: string) => any
+    playwrightModule = dynamicRequire('playwright')
     return playwrightModule
   } catch {
     return null

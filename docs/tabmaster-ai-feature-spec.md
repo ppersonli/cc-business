@@ -64,7 +64,7 @@ TabMaster AI is an AI-powered Chrome tab manager and workflow automation extensi
 | AI API | OpenAI GPT-4o-mini | Cost-effective ($0.15/1M input tokens) |
 | Storage | chrome.storage.local | 10MB limit, sufficient for snapshots |
 | UI | Side Panel API | Persistent access, better than popup |
-| Payments | Waffo Pancake | Shared with tools.pixiaoli.cn |
+| Payments | Waffo Pancake | Shared with tools.ovanime.com |
 
 ### 3.2 Project Structure
 
@@ -136,7 +136,7 @@ tabmaster-ai/
     "commands"
   ],
   "host_permissions": [
-    "https://tools.pixiaoli.cn/*",
+    "https://tools.ovanime.com/*",
     "https://api.openai.com/*"
   ],
   "side_panel": {
@@ -176,9 +176,9 @@ tabmaster-ai/
 | `storage` | Save snapshots, settings, AI cache |
 | `sidePanel` | Main UI lives in side panel |
 | `tabs` | Read tab titles/URLs, activate/close tabs |
-| `cookies` | Read auth_token from tools.pixiaoli.cn for subscription |
+| `cookies` | Read auth_token from tools.ovanime.com for subscription |
 | `commands` | Keyboard shortcut to open side panel |
-| `host_permissions: tools.pixiaoli.cn` | Subscription status API |
+| `host_permissions: tools.ovanime.com` | Subscription status API |
 | `host_permissions: api.openai.com` | AI API calls for classification/search |
 
 ---
@@ -314,7 +314,7 @@ interface Snapshot {
 ### 5.2 Visual Design
 
 - **Theme**: Light/dark mode support
-- **Colors**: Green accent (#07C160) matching tools.pixiaoli.cn
+- **Colors**: Green accent (#07C160) matching tools.ovanime.com
 - **Typography**: System font stack
 - **Animations**: Subtle transitions for category switching
 - **Responsive**: Side panel width 400px (Chrome default)
@@ -326,7 +326,7 @@ interface Snapshot {
 ### 6.1 Auth Flow (Cookie-Based)
 
 Same as SnapGen:
-1. User logs in on tools.pixiaoli.cn
+1. User logs in on tools.ovanime.com
 2. Extension reads `auth_token` cookie
 3. Extension calls `/api/subscription/status`
 4. Backend returns plan info

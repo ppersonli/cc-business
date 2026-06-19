@@ -13,7 +13,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid plan. Must be pro, pro-byok, or pro-yearly' }, { status: 400 });
     }
 
-    const FRONTEND_URL = process.env.FRONTEND_URL || 'https://tools.pixiaoli.cn';
+    const FRONTEND_URL = process.env.FRONTEND_URL || 'https://tools.ovanime.com';
     const PANCAKE_API_KEY = process.env.PANCAKE_API_KEY;
 
     if (!PANCAKE_API_KEY) {

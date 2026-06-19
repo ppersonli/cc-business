@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tools.pixiaoli.cn/sitemap.xml
+Sitemap: https://tools.ovanime.com/sitemap.xml

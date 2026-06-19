@@ -12,7 +12,7 @@ export default defineConfig({
       'activeTab',
       'cookies',
     ],
-    host_permissions: ['https://tools.pixiaoli.cn/*'],
+    host_permissions: ['https://tools.ovanime.com/*'],
     icons: {
       16: 'icon/icon-16.png',
       32: 'icon/icon-32.png',

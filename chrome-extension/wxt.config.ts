@@ -6,7 +6,7 @@ export default defineConfig({
     name: 'SnapGen - AI Screenshot to Code',
     description: 'Screenshot → AI analysis: get descriptions, code, and UI feedback instantly',
     permissions: ['storage', 'sidePanel', 'commands', 'tabs', 'cookies'],
-    host_permissions: ['https://api.openai.com/*', 'https://api.anthropic.com/*', 'https://tools.pixiaoli.cn/*'],
+    host_permissions: ['https://api.openai.com/*', 'https://api.anthropic.com/*', 'https://tools.ovanime.com/*'],
     icons: {
       16: 'icon/icon-16.png',
       32: 'icon/icon-32.png',

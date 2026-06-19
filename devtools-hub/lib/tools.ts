@@ -50,6 +50,18 @@ export const tools: Tool[] = [
   { name: 'Lorem Ipsum Generator', slug: 'lorem-ipsum', description: 'Generate placeholder text for your designs. Customize paragraph count, word count, and format. Copy or download as plain text or HTML', category: 'Text', color: '#8b5cf6' },
   { name: 'Markdown Table Generator', slug: 'markdown-table-generator', description: 'Create Markdown tables visually with live preview. Copy as Markdown, HTML, or CSV', category: 'Text', color: '#22c55e' },
   { name: 'SocialForge', slug: 'socialforge', description: 'Open-source social media management tool for scheduling, publishing, and analytics', category: 'Social', color: '#7c3aed' },
+  { name: 'Color Contrast Checker', slug: 'color-contrast', description: 'Check WCAG color contrast ratios for web accessibility compliance', category: 'Design', color: '#0ea5e9' },
+  { name: 'Meta Tag Generator', slug: 'meta-tag-generator', description: 'Generate SEO meta tags including Open Graph and Twitter Card tags', category: 'SEO', color: '#f59e0b' },
+  { name: 'BuildFlow', slug: 'buildflow', description: 'Construction project management with kanban boards, document management, and team collaboration', category: 'Project Management', color: '#d97706' },
+  { name: 'URL Parser', slug: 'url-parser', description: 'Parse and break down any URL into its individual components with visual anatomy', category: 'Network', color: '#0ea5e9' },
+  { name: 'Robots.txt Generator', slug: 'robots-txt', description: 'Generate robots.txt files to control search engine crawler behavior with presets', category: 'SEO', color: '#16a34a' },
+  { name: 'HTTP Status Codes', slug: 'http-status-codes', description: 'Quick reference for all HTTP status codes with descriptions and SEO notes', category: 'Network', color: '#6366f1' },
+  { name: 'CSS Specificity Calculator', slug: 'css-specificity', description: 'Calculate and compare CSS selector specificity with visual breakdown', category: 'Code', color: '#f43f5e' },
+  { name: 'WebMind', slug: 'webmind', description: 'AI-powered web highlighting and knowledge management Chrome extension', category: 'Extension', color: '#8b5cf6' },
+  { name: 'Sitemap XML Generator', slug: 'sitemap-generator', description: 'Generate XML sitemaps for search engines with custom priorities and frequencies', category: 'SEO', color: '#10b981' },
+  { name: 'Open Graph Preview', slug: 'og-preview', description: 'Preview how your links appear on Facebook, Twitter, LinkedIn, and Slack', category: 'SEO', color: '#1877f2' },
+  { name: 'htaccess Generator', slug: 'htaccess-generator', description: 'Generate Apache .htaccess rules for redirects, security headers, and caching', category: 'Server', color: '#dc2626' },
+  { name: 'PageAudit', slug: 'page-audit', description: 'AI-powered landing page CRO analyzer with screenshot analysis and actionable optimization suggestions', category: 'SEO', color: '#3b82f6' },
 ]
 
 export const categories = [...new Set(tools.map(t => t.category))]

@@ -13,7 +13,7 @@ export default function ToolLayout({ tool, children }: Props) {
     '@type': 'WebApplication',
     name: tool.name,
     description: tool.description,
-    url: `https://tools.pixiaoli.cn/tools/${tool.slug}/`,
+    url: `https://tools.ovanime.com/tools/${tool.slug}/`,
     applicationCategory: 'DeveloperApplication',
     operatingSystem: 'Any',
     offers: {

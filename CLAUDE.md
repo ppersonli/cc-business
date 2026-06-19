@@ -224,7 +224,7 @@ pnpm test:e2e
 // 每个页面添加hreflang标签
 export const metadata = {
   alternates: {
-    canonical: 'https://tools.pixiaoli.cn/tools/json-formatter/',
+    canonical: 'https://tools.ovanime.com/tools/json-formatter/',
     languages: {
       'en': '/tools/json-formatter/',
       'pt': '/pt/tools/json-formatter/',
@@ -245,7 +245,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${tool.name} — Free Online Tool`,
     description: tool.description,
-    url: `https://tools.pixiaoli.cn/tools/${tool.slug}/`,
+    url: `https://tools.ovanime.com/tools/${tool.slug}/`,
     siteName: 'DevTools Hub',
     type: 'website',
   },
@@ -255,7 +255,7 @@ export const metadata: Metadata = {
     description: tool.description,
   },
   alternates: {
-    canonical: `https://tools.pixiaoli.cn/tools/${tool.slug}/`,
+    canonical: `https://tools.ovanime.com/tools/${tool.slug}/`,
   },
 }
 ```
@@ -267,7 +267,7 @@ const jsonLd = {
   '@type': 'WebApplication',
   name: tool.name,
   description: tool.description,
-  url: `https://tools.pixiaoli.cn/tools/${tool.slug}/`,
+  url: `https://tools.ovanime.com/tools/${tool.slug}/`,
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Any',
   offers: {
@@ -317,9 +317,9 @@ const jsonLd = {
 
 ### 认证流程
 ```
-用户在 tools.pixiaoli.cn 登录 (Google OAuth)
+用户在 tools.ovanime.com 登录 (Google OAuth)
         ↓
-设置 auth_token cookie (domain: tools.pixiaoli.cn)
+设置 auth_token cookie (domain: tools.ovanime.com)
         ↓
 插件通过 chrome.cookies.get 读取该 cookie
         ↓
@@ -332,7 +332,7 @@ const jsonLd = {
 ```typescript
 // 读取 auth_token cookie
 const cookie = await chrome.cookies.get({
-  url: 'https://tools.pixiaoli.cn',
+  url: 'https://tools.ovanime.com',
   name: 'auth_token',
 });
 
@@ -343,7 +343,7 @@ const payload = decodeJwtPayload(cookie.value);
 
 ### 权限要求
 - **Chrome 权限**: `cookies`（读取工具站 cookie）
-- **Cookie 来源**: `https://tools.pixiaoli.cn` 的 `auth_token`
+- **Cookie 来源**: `https://tools.ovanime.com` 的 `auth_token`
 - **注意**: 插件不存储密码，不发起 OAuth 请求，仅读取已有 cookie
 
 ### 开发注意事项
@@ -372,7 +372,7 @@ const userId = await getOrCreateUserId();
 
 // 2. 查询后端订阅状态（5分钟缓存）
 const res = await fetch(
-  `https://tools.pixiaoli.cn/api/subscription/status?userId=${userId}`
+  `https://tools.ovanime.com/api/subscription/status?userId=${userId}`
 );
 const { plan, isPro, expiresAt } = await res.json();
 
@@ -408,7 +408,7 @@ ls .output/chrome-mv3/   # 确认 manifest.json 和资源完整
 ### Manifest 要求
 - `manifest_version`: 3
 - `permissions`: 仅声明必要权限（`cookies`, `activeTab`, `storage`）
-- `host_permissions`: 仅 `https://tools.pixiaoli.cn/*`
+- `host_permissions`: 仅 `https://tools.ovanime.com/*`
 - `name`: `SnapGen - AI Screenshot to Code`
 - `description`: 不超过 132 字符
 - `icons`: 16/48/128px 必须存在

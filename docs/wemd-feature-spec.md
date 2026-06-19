@@ -1,10 +1,10 @@
-# WeMD-Style Markdown Editor for tools.pixiaoli.cn
+# WeMD-Style Markdown Editor for tools.ovanime.com
 
 ## Feature Specification Document
 
 > **Date**: 2026-06-03
 > **Reference Project**: [WeMD](https://github.com/tenngoxars/WeMD) (MIT License)
-> **Target Site**: tools.pixiaoli.cn (Next.js 15 monorepo)
+> **Target Site**: tools.ovanime.com (Next.js 15 monorepo)
 
 ---
 
@@ -26,7 +26,7 @@
 
 ## 1. Executive Summary
 
-Add a full-featured WeChat (微信公众号) Markdown editor to tools.pixiaoli.cn, modeled after the WeMD open-source project. The tool will allow users to write Markdown with GFM syntax, apply beautiful themes, preview the result in both light and dark mode, and copy the styled HTML directly into the WeChat public account editor.
+Add a full-featured WeChat (微信公众号) Markdown editor to tools.ovanime.com, modeled after the WeMD open-source project. The tool will allow users to write Markdown with GFM syntax, apply beautiful themes, preview the result in both light and dark mode, and copy the styled HTML directly into the WeChat public account editor.
 
 **Key Differentiators from Existing Markdown Tool**:
 The site already has a basic `markdown` preview tool (react-markdown + textarea). The new tool (`wechat-markdown-editor`) will be a completely separate, full-page application with CodeMirror editing, theme management, dark mode preview, copy-to-WeChat, and image hosting — a fundamentally different product.
@@ -938,7 +938,7 @@ export const metadata = {
   openGraph: {
     title: 'WeChat Markdown Editor — Free Online Tool',
     description: 'Write Markdown and copy styled content to WeChat with 10+ beautiful themes.',
-    url: 'https://tools.pixiaoli.cn/tools/wechat-markdown-editor/',
+    url: 'https://tools.ovanime.com/tools/wechat-markdown-editor/',
     siteName: 'DevTools Hub',
     type: 'website',
   },
@@ -948,7 +948,7 @@ export const metadata = {
     description: 'Write Markdown and copy styled content to WeChat with one click.',
   },
   alternates: {
-    canonical: 'https://tools.pixiaoli.cn/tools/wechat-markdown-editor/',
+    canonical: 'https://tools.ovanime.com/tools/wechat-markdown-editor/',
   },
 }
 ```
@@ -961,7 +961,7 @@ export const metadata = {
   "@type": "WebApplication",
   "name": "WeChat Markdown Editor",
   "description": "Write Markdown and copy beautifully styled content to WeChat public accounts",
-  "url": "https://tools.pixiaoli.cn/tools/wechat-markdown-editor/",
+  "url": "https://tools.ovanime.com/tools/wechat-markdown-editor/",
   "applicationCategory": "WritingApplication",
   "operatingSystem": "Any",
   "offers": {
@@ -1120,4 +1120,4 @@ All ported code should include the above attribution comment at the top of each 
 | Search & Replace | ✅ | ✅ | Basic | Basic |
 | Free | ✅ | ✅ | Freemium | ✅ |
 
-**Key differentiator**: Being part of tools.pixiaoli.cn gives SEO advantage alongside 30+ other developer tools. Cross-linking and shared traffic will drive adoption.
+**Key differentiator**: Being part of tools.ovanime.com gives SEO advantage alongside 30+ other developer tools. Cross-linking and shared traffic will drive adoption.

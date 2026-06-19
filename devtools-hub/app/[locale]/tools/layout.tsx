@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { tools } from '@/lib/tools'
 
-const baseUrl = 'https://tools.pixiaoli.cn'
+const baseUrl = 'https://tools.ovanime.com'
 
 type Props = {
   params: Promise<{ slug?: string }>

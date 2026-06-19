@@ -95,6 +95,96 @@ export async function initSchema() {
       FOREIGN KEY (scan_id) REFERENCES extension_shield_scans(id)
     )
   `);
+
+  // BuildFlow tables
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS buildflow_projects (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      name TEXT NOT NULL,
+      description TEXT DEFAULT '',
+      status TEXT NOT NULL DEFAULT 'active',
+      budget REAL DEFAULT 0,
+      currency TEXT NOT NULL DEFAULT 'USD',
+      start_date TEXT,
+      end_date TEXT,
+      address TEXT,
+      cover_color TEXT NOT NULL DEFAULT '#3b82f6',
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id)
+    )
+  `);
+
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS buildflow_columns (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      project_id INTEGER NOT NULL,
+      name TEXT NOT NULL,
+      color TEXT NOT NULL DEFAULT '#94a3b8',
+      position INTEGER NOT NULL DEFAULT 0,
+      wip_limit INTEGER,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (project_id) REFERENCES buildflow_projects(id) ON DELETE CASCADE
+    )
+  `);
+
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS buildflow_tasks (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      project_id INTEGER NOT NULL,
+      column_id INTEGER NOT NULL,
+      title TEXT NOT NULL,
+      description TEXT DEFAULT '',
+      priority TEXT NOT NULL DEFAULT 'medium',
+      category TEXT NOT NULL DEFAULT 'general',
+      position INTEGER NOT NULL DEFAULT 0,
+      assignee_id INTEGER,
+      due_date TEXT,
+      estimated_hours REAL,
+      actual_hours REAL,
+      budget REAL DEFAULT 0,
+      tags TEXT DEFAULT '[]',
+      attachments INTEGER NOT NULL DEFAULT 0,
+      comments_count INTEGER NOT NULL DEFAULT 0,
+      completed_at DATETIME,
+      created_by INTEGER NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (project_id) REFERENCES buildflow_projects(id) ON DELETE CASCADE,
+      FOREIGN KEY (column_id) REFERENCES buildflow_columns(id) ON DELETE CASCADE
+    )
+  `);
+
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS buildflow_documents (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      project_id INTEGER NOT NULL,
+      task_id INTEGER,
+      name TEXT NOT NULL,
+      type TEXT NOT NULL DEFAULT 'other',
+      url TEXT NOT NULL,
+      size INTEGER NOT NULL DEFAULT 0,
+      mime_type TEXT,
+      version INTEGER NOT NULL DEFAULT 1,
+      uploaded_by INTEGER NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (project_id) REFERENCES buildflow_projects(id) ON DELETE CASCADE,
+      FOREIGN KEY (task_id) REFERENCES buildflow_tasks(id) ON DELETE SET NULL
+    )
+  `);
+
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS buildflow_comments (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      task_id INTEGER NOT NULL,
+      author_id INTEGER NOT NULL,
+      content TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (task_id) REFERENCES buildflow_tasks(id) ON DELETE CASCADE
+    )
+  `);
 }
 
 export interface User {
@@ -346,4 +436,122 @@ export async function getShieldScanCountByUserId(
     args: [userId],
   });
   return (result.rows[0] as any).count;
+}
+
+// ===== BuildFlow Functions =====
+
+export interface BuildFlowProject {
+  id: number; user_id: number; name: string; description: string; status: string;
+  budget: number; currency: string; start_date: string | null; end_date: string | null;
+  address: string | null; cover_color: string; created_at: string; updated_at: string;
+}
+
+export interface BuildFlowColumn {
+  id: number; project_id: number; name: string; color: string; position: number; wip_limit: number | null; created_at: string;
+}
+
+export interface BuildFlowTask {
+  id: number; project_id: number; column_id: number; title: string; description: string;
+  priority: string; category: string; position: number; assignee_id: number | null;
+  due_date: string | null; tags: string; attachments: number; comments_count: number;
+  created_by: number; created_at: string; updated_at: string;
+}
+
+export async function getBuildFlowProjects(userId: number): Promise<BuildFlowProject[]> {
+  const db = getClient();
+  const result = await db.execute({
+    sql: 'SELECT * FROM buildflow_projects WHERE user_id = ? ORDER BY created_at DESC',
+    args: [userId],
+  });
+  return result.rows as unknown as BuildFlowProject[];
+}
+
+export async function getBuildFlowProject(projectId: number, userId: number): Promise<BuildFlowProject | undefined> {
+  const db = getClient();
+  const result = await db.execute({
+    sql: 'SELECT * FROM buildflow_projects WHERE id = ? AND user_id = ?',
+    args: [projectId, userId],
+  });
+  return result.rows[0] as unknown as BuildFlowProject | undefined;
+}
+
+export async function createBuildFlowProject(
+  userId: number, name: string, description: string, budget: number,
+  startDate: string | null, endDate: string | null, address: string | null,
+  currency: string, coverColor: string
+): Promise<BuildFlowProject> {
+  const db = getClient();
+  const result = await db.execute({
+    sql: `INSERT INTO buildflow_projects (user_id, name, description, budget, start_date, end_date, address, currency, cover_color)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    args: [userId, name, description, budget, startDate, endDate, address, currency, coverColor],
+  });
+  const projectId = Number(result.lastInsertRowid);
+  // Create default columns
+  const defaults = [
+    { name: 'Backlog', color: '#94a3b8' }, { name: 'To Do', color: '#3b82f6' },
+    { name: 'In Progress', color: '#f59e0b' }, { name: 'Review', color: '#8b5cf6' }, { name: 'Done', color: '#22c55e' },
+  ];
+  for (let i = 0; i < defaults.length; i++) {
+    await db.execute({
+      sql: 'INSERT INTO buildflow_columns (project_id, name, color, position) VALUES (?, ?, ?, ?)',
+      args: [projectId, defaults[i].name, defaults[i].color, i],
+    });
+  }
+  const proj = await getBuildFlowProject(projectId, userId);
+  return proj!;
+}
+
+export async function getBuildFlowColumns(projectId: number): Promise<BuildFlowColumn[]> {
+  const db = getClient();
+  const result = await db.execute({
+    sql: 'SELECT * FROM buildflow_columns WHERE project_id = ? ORDER BY position',
+    args: [projectId],
+  });
+  return result.rows as unknown as BuildFlowColumn[];
+}
+
+export async function createBuildFlowColumn(
+  projectId: number, name: string, color: string, position: number
+): Promise<BuildFlowColumn> {
+  const db = getClient();
+  const result = await db.execute({
+    sql: 'INSERT INTO buildflow_columns (project_id, name, color, position) VALUES (?, ?, ?, ?)',
+    args: [projectId, name, color, position],
+  });
+  const id = Number(result.lastInsertRowid);
+  const r = await db.execute({ sql: 'SELECT * FROM buildflow_columns WHERE id = ?', args: [id] });
+  return r.rows[0] as unknown as BuildFlowColumn;
+}
+
+export async function getBuildFlowTasks(projectId: number): Promise<BuildFlowTask[]> {
+  const db = getClient();
+  const result = await db.execute({
+    sql: 'SELECT * FROM buildflow_tasks WHERE project_id = ? ORDER BY position',
+    args: [projectId],
+  });
+  return result.rows as unknown as BuildFlowTask[];
+}
+
+export async function createBuildFlowTask(
+  projectId: number, columnId: number, title: string, description: string,
+  priority: string, category: string, position: number, createdBy: number
+): Promise<BuildFlowTask> {
+  const db = getClient();
+  const result = await db.execute({
+    sql: `INSERT INTO buildflow_tasks (project_id, column_id, title, description, priority, category, position, created_by)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    args: [projectId, columnId, title, description, priority, category, position, createdBy],
+  });
+  const id = Number(result.lastInsertRowid);
+  const r = await db.execute({ sql: 'SELECT * FROM buildflow_tasks WHERE id = ?', args: [id] });
+  return r.rows[0] as unknown as BuildFlowTask;
+}
+
+export async function moveBuildFlowTask(taskId: number, columnId: number, position: number): Promise<void> {
+  const db = getClient();
+  await db.execute({
+    sql: 'UPDATE buildflow_tasks SET column_id = ?, position = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+    args: [columnId, position, taskId],
+  });
 }

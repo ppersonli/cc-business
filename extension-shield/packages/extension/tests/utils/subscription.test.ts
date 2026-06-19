@@ -31,20 +31,20 @@ describe('getAuthCookie', () => {
 
   it('returns userId and email from valid JWT', async () => {
     const jwt = makeJwt({ sub: 'user123', email: 'test@example.com', exp: Math.floor(Date.now() / 1000) + 3600 });
-    testCookies['https://tools.pixiaoli.cn:auth_token'] = jwt;
+    testCookies['https://tools.ovanime.com:auth_token'] = jwt;
     const result = await getAuthCookie();
     expect(result).toEqual({ userId: 'user123', email: 'test@example.com' });
   });
 
   it('returns null for expired JWT', async () => {
     const jwt = makeJwt({ sub: 'user123', exp: Math.floor(Date.now() / 1000) - 3600 });
-    testCookies['https://tools.pixiaoli.cn:auth_token'] = jwt;
+    testCookies['https://tools.ovanime.com:auth_token'] = jwt;
     const result = await getAuthCookie();
     expect(result).toBeNull();
   });
 
   it('returns null for malformed JWT', async () => {
-    testCookies['https://tools.pixiaoli.cn:auth_token'] = 'not.a.jwt.at.all';
+    testCookies['https://tools.ovanime.com:auth_token'] = 'not.a.jwt.at.all';
     const result = await getAuthCookie();
     expect(result).toBeNull();
   });
@@ -58,7 +58,7 @@ describe('getOrCreateUserId', () => {
 
   it('returns authenticated userId when cookie exists', async () => {
     const jwt = makeJwt({ sub: 'auth-user', exp: Math.floor(Date.now() / 1000) + 3600 });
-    testCookies['https://tools.pixiaoli.cn:auth_token'] = jwt;
+    testCookies['https://tools.ovanime.com:auth_token'] = jwt;
     const userId = await getOrCreateUserId();
     expect(userId).toBe('auth-user');
   });

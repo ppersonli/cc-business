@@ -51,7 +51,7 @@ English
 | `sidePanel` | Displays the main capture and analysis interface in a Chrome side panel, providing a dedicated workspace for screenshot analysis. |
 | `commands` | Enables keyboard shortcut (Ctrl+Shift+S / Cmd+Shift+S) for quick screenshot capture without navigating to the extension icon. |
 | `tabs` | Captures the visible area of the current browser tab when the user requests a screenshot. Required for `chrome.tabs.captureVisibleTab()`. |
-| `cookies` | Reads the `auth_token` cookie from tools.pixiaoli.cn to verify Pro subscription status. No cookies are modified or sent to third parties. |
+| `cookies` | Reads the `auth_token` cookie from tools.ovanime.com to verify Pro subscription status. No cookies are modified or sent to third parties. |
 
 ## Host Permission Justifications
 
@@ -59,7 +59,7 @@ English
 |----------------|---------------|
 | `https://api.openai.com/*` | Sends screenshot data to OpenAI's vision API for analysis when the user selects OpenAI as their provider. |
 | `https://api.anthropic.com/*` | Sends screenshot data to Anthropic's Claude API for analysis when the user selects Claude as their provider. |
-| `https://tools.pixiaoli.cn/*` | Checks Pro subscription status via the backend API. Used only for subscription verification. |
+| `https://tools.ovanime.com/*` | Checks Pro subscription status via the backend API. Used only for subscription verification. |
 
 ## Screenshots Needed
 1. **Main capture interface** (1280×800) — Shows the side panel with capture button
@@ -71,10 +71,10 @@ English
 - **Large tile**: 1400×560
 
 ## Contact Email
-support@pixiaoli.cn
+support@ovanime.com
 
 ## Privacy Policy URL
-https://tools.pixiaoli.cn/privacy/
+https://tools.ovanime.com/privacy/
 
 ## Terms of Service URL
-https://tools.pixiaoli.cn/terms/
+https://tools.ovanime.com/terms/

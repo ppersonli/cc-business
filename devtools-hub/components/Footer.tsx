@@ -17,13 +17,13 @@ export default function Footer() {
         textAlign: 'center',
       }}>
         <a
-          href="https://pixiaoli.cn"
+          href="https://ovanime.com"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: 'var(--text-muted)', fontSize: 13, textDecoration: 'none' }}
         >
           {'  Check out our ACGN content platform: '}
-          <span style={{ fontWeight: 600 }}>pixiaoli.cn</span>
+          <span style={{ fontWeight: 600 }}>ovanime.com</span>
         </a>
       </div>
       <div className="footer-inner" style={{

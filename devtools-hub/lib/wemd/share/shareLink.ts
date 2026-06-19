@@ -19,7 +19,7 @@ export function generateShareUrl(content: string): string | null {
     const encoded = btoa(unescape(encodeURIComponent(content)));
     const baseUrl = typeof window !== 'undefined'
       ? `${window.location.origin}/tools/wechat-markdown-editor`
-      : 'https://tools.pixiaoli.cn/tools/wechat-markdown-editor';
+      : 'https://tools.ovanime.com/tools/wechat-markdown-editor';
     return `${baseUrl}#share=${encoded}`;
   } catch {
     return null;

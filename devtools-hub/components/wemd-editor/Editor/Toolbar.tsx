@@ -79,6 +79,7 @@ const actions: ToolbarAction[] = [
   { label: '分割线', icon: '—', action: insertBlock('\n---\n') },
   { label: '数学公式', icon: '∑', action: insertBlock('\n$$\nE = mc^2\n$$\n') },
   { label: 'Mermaid', icon: '◈', action: insertBlock('\n```mermaid\ngraph TD\n    A-->B\n```\n') },
+  { label: '目录', icon: '📑', action: insertBlock('\n[toc]\n') },
   { label: '脚注', icon: '¹', action: insertBlock('[^1]') },
 ]
 

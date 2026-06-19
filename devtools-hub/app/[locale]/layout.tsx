@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
-  const baseUrl = 'https://tools.pixiaoli.cn'
+  const baseUrl = 'https://tools.ovanime.com'
   const lang = locale as Locale
 
   return {

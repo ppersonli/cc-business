@@ -13,11 +13,11 @@ export default function Home() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'DevTools Hub',
-    url: `https://tools.pixiaoli.cn/${locale}/`,
+    url: `https://tools.ovanime.com/${locale}/`,
     description: t('common.subtitle'),
     potentialAction: {
       '@type': 'SearchAction',
-      target: `https://tools.pixiaoli.cn/${locale}/?q={search_term_string}`,
+      target: `https://tools.ovanime.com/${locale}/?q={search_term_string}`,
       'query-input': 'required name=search_term_string',
     },
   }
@@ -119,9 +119,9 @@ export default function Home() {
         </div>
       </Link>
 
-      {/* Featured: pixiaoli.cn */}
+      {/* Featured: ovanime.com */}
       <a
-        href="https://pixiaoli.cn"
+        href="https://ovanime.com"
         target="_blank"
         rel="noopener noreferrer"
         style={{
@@ -158,11 +158,11 @@ export default function Home() {
             flexShrink: 0,
             overflow: 'hidden',
           }}>
-            <img src="/pixiaoli-icon.jpg" alt="pixiaoli.cn" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 'var(--radius-sm)' }} />
+            <img src="/ovanime-icon.jpg" alt="ovanime.com" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 'var(--radius-sm)' }} />
           </div>
           <div>
             <div style={{ fontWeight: 700, fontSize: 20, color: 'var(--text-primary)' }}>
-              {t('home.pixiaoliName')}
+              {t('home.ovanimeName')}
             </div>
             <span style={{
               fontSize: 11,
@@ -179,10 +179,10 @@ export default function Home() {
           </div>
         </div>
         <p style={{ color: 'var(--text-secondary)', fontSize: 15, lineHeight: 1.6, margin: 0 }}>
-          {t('home.pixiaoliDesc')}
+          {t('home.ovanimeDesc')}
         </p>
         <div style={{ display: 'flex', gap: 8, marginTop: 16, flexWrap: 'wrap' }}>
-          {(t.raw('home.pixiaoliTags') || ['AI Manga', 'Webtoon', 'ACGN', 'Creative Platform']).map((tag: string) => (
+          {(t.raw('home.ovanimeTags') || ['AI Manga', 'Webtoon', 'ACGN', 'Creative Platform']).map((tag: string) => (
             <span key={tag} style={{
               fontSize: 12,
               color: 'var(--text-muted)',

@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/dashboard/', '/api/'],
       },
     ],
-    sitemap: 'https://scheduler.pixiaoli.cn/sitemap.xml',
+    sitemap: 'https://scheduler.ovanime.com/sitemap.xml',
   };
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { tools, getToolBySlug } from '@/lib/tools'
 
-const baseUrl = 'https://tools.pixiaoli.cn'
+const baseUrl = 'https://tools.ovanime.com'
 const locales = ['en', 'pt', 'es', 'ja', 'ko', 'zh', 'de'] as const
 
 export function generateToolMetadata(slug: string): Metadata {

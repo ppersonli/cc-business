@@ -10,7 +10,7 @@ export async function createCheckoutSession(
   email?: string
 ): Promise<string> {
   const res = await fetch(
-    'https://tools.pixiaoli.cn/api/extension-shield/checkout/create',
+    'https://tools.ovanime.com/api/extension-shield/checkout/create',
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

@@ -5,7 +5,7 @@ import { locales } from '@/i18n/routing'
 export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://tools.pixiaoli.cn'
+  const baseUrl = 'https://tools.ovanime.com'
 
   const entries: MetadataRoute.Sitemap = []
 

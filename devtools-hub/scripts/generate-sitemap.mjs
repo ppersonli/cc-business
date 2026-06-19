@@ -8,7 +8,7 @@ import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const SITE_URL = 'https://tools.pixiaoli.cn';
+const SITE_URL = 'https://tools.ovanime.com';
 const TODAY = new Date().toISOString().split('T')[0];
 
 // Read tools.ts and extract slugs

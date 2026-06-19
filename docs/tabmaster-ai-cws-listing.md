@@ -48,14 +48,14 @@ English (primary), Portuguese, Spanish, Japanese
 | `storage` | Saves user settings, tab snapshots, AI cache, and workflow configurations locally in the browser. No data is sent to external servers. |
 | `sidePanel` | Displays the main tab management interface in a Chrome side panel, providing persistent access to tab organization features. |
 | `tabs` | Reads tab titles, URLs, and favicons to display in the tab list. Activates tabs when user clicks on them. Required for core tab management functionality. |
-| `cookies` | Reads the `auth_token` cookie from tools.pixiaoli.cn to verify Pro subscription status. No cookies are modified or sent to third parties. |
+| `cookies` | Reads the `auth_token` cookie from tools.ovanime.com to verify Pro subscription status. No cookies are modified or sent to third parties. |
 | `commands` | Enables keyboard shortcut (Ctrl+Shift+T / Cmd+Shift+T) for quick side panel access without navigating to the extension icon. |
 
 ## Host Permission Justifications
 
 | Host Permission | Justification |
 |----------------|---------------|
-| `https://tools.pixiaoli.cn/*` | Checks Pro subscription status via the backend API. Used only for subscription verification. |
+| `https://tools.ovanime.com/*` | Checks Pro subscription status via the backend API. Used only for subscription verification. |
 | `https://api.openai.com/*` | Sends tab titles and URLs to OpenAI's GPT-4o-mini API for AI classification and search. Only tab metadata is sent, no personal data. |
 
 ## Screenshots Needed
@@ -70,10 +70,10 @@ English (primary), Portuguese, Spanish, Japanese
 - **Large tile**: 1400×560
 
 ## Contact Email
-support@pixiaoli.cn
+support@ovanime.com
 
 ## Privacy Policy URL
-https://tools.pixiaoli.cn/privacy/
+https://tools.ovanime.com/privacy/
 
 ## Terms of Service URL
-https://tools.pixiaoli.cn/terms/
+https://tools.ovanime.com/terms/

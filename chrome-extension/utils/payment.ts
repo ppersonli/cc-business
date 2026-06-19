@@ -9,7 +9,7 @@ export const PLANS = {
 
 export type PlanId = keyof typeof PLANS;
 
-const API_BASE = 'https://tools.pixiaoli.cn/api';
+const API_BASE = 'https://tools.ovanime.com/api';
 
 /**
  * Request a checkout session from the backend.

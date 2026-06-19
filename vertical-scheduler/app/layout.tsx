@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
-const BASE_URL = 'https://scheduler.pixiaoli.cn';
+const BASE_URL = 'https://scheduler.ovanime.com';
 
 export const metadata: Metadata = {
   title: { default: 'Vertical Scheduler — Industry-Specific Booking', template: '%s | Vertical Scheduler' },

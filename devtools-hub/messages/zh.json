@@ -1,7 +1,7 @@
 {
   "common": {
     "appName": "DevTools Hub",
-    "tagline": "31+ 免费客户端开发者工具",
+    "tagline": "55+ 免费客户端开发者工具",
     "subtitle": "免费在线开发者工具。100% 客户端运行，数据不会发送到服务器。",
     "tools": "工具",
     "github": "GitHub",
@@ -71,10 +71,10 @@
   },
   "home": {
     "subtitle": "免费在线开发者工具。100% 客户端运行，数据不会发送到服务器。",
-    "tryPixiaoli": "也试试 pixiaoli.cn — AI驱动的漫画与网漫创作平台",
-    "pixiaoliName": "pixiaoli.cn",
-    "pixiaoliDesc": "AI驱动的漫画与网漫创作平台，面向ACGN创作者和爱好者。创作、分享、探索原创内容。",
-    "pixiaoliTags": [
+    "tryovanime": "也试试 ovanime.com — AI驱动的漫画与网漫创作平台",
+    "ovanimeName": "ovanime.com",
+    "ovanimeDesc": "AI驱动的漫画与网漫创作平台，面向ACGN创作者和爱好者。创作、分享、探索原创内容。",
+    "ovanimeTags": [
       "AI漫画",
       "网漫",
       "ACGN",
@@ -357,6 +357,72 @@
     "socialforge": {
       "name": "SocialForge",
       "description": "开源社媒管理工具，支持定时发布、内容管理和数据分析"
+    },
+    "page-audit": {
+      "name": "PageAudit",
+      "description": "AI 驱动的着陆页 CRO 分析工具，提供截图分析和优化建议",
+      "about": "使用 AI 分析你的着陆页。获取截图、5 维度 CRO 评分和优先级优化建议。",
+      "features": "AI 截图分析、5 维度 CRO 评分、桌面/移动端对比、PDF 报告导出、可操作优化建议。"
+    },
+    "color-contrast": {
+      "name": "颜色对比度检查器",
+      "description": "检查 WCAG 颜色对比度是否符合无障碍标准",
+      "about": "验证颜色对比度是否符合 WCAG 无障碍标准。预览任意背景色上的文本，确保你的设计对所有人可读。",
+      "features": "WCAG AA/AAA 合规检查、实时对比度计算、颜色预览、CSS 输出。"
+    },
+    "meta-tag-generator": {
+      "name": "Meta 标签生成器",
+      "description": "生成 SEO Meta 标签，包括 Open Graph 和 Twitter Card 标签",
+      "about": "生成完整的 HTML Meta 标签用于 SEO，包括基础标签、Open Graph 社交分享标签和 Twitter Card 标签。",
+      "features": "基础 Meta 标签、Open Graph 标签、Twitter Card 标签、字符数指导、实时预览、一键复制。"
+    },
+    "url-parser": {
+      "name": "URL 解析器",
+      "description": "将任意 URL 解析为各个组成部分，并提供可视化结构图",
+      "about": "即时解析任何 URL，查看协议、主机名、端口、路径、查询参数和锚点，提供彩色编码的可视化分解。",
+      "features": "可视化 URL 结构图、组件提取、查询参数解析、重构 URL、一键复制。"
+    },
+    "robots-txt": {
+      "name": "Robots.txt 生成器",
+      "description": "生成 robots.txt 文件来控制搜索引擎爬虫的行为，支持预设模板",
+      "about": "使用可视化编辑器创建 robots.txt 文件。支持多个 User-agent 规则、允许/禁止路径、抓取延迟和站点地图指令。",
+      "features": "预设模板、多个 User-agent 规则、允许/禁止路径、抓取延迟、站点地图 URL、复制和下载。"
+    },
+    "http-status-codes": {
+      "name": "HTTP 状态码",
+      "description": "所有 HTTP 状态码的快速参考，包含描述和 SEO 说明",
+      "about": "浏览和搜索按类别组织的所有 HTTP 状态码，包含重定向和错误处理的 SEO 相关说明。",
+      "features": "可搜索的参考、1xx-5xx 类别、301/302/410 的 SEO 说明、Cloudflare 特定代码。"
+    },
+    "css-specificity": {
+      "name": "CSS 优先级计算器",
+      "description": "计算和比较 CSS 选择器的优先级，提供可视化分解",
+      "about": "计算任意 CSS 选择器的优先级，查看内联/ID/类/元素的分数分解，并比较多个选择器。",
+      "features": "优先级计算、可视化分解、选择器比较、快速示例、优先级解释。"
+    },
+    "webmind": {
+      "name": "WebMind",
+      "description": "AI 驱动的网页高亮和知识管理 Chrome 扩展",
+      "about": "使用 WebMind Chrome 扩展高亮、注释和组织网页内容。导出高亮为 JSON/HTML，按页面搜索和过滤。",
+      "features": "智能高亮、笔记、搜索、页面分组、导出、100% 隐私。"
+    },
+    "sitemap-generator": {
+      "name": "Sitemap XML 生成器",
+      "description": "为搜索引擎生成 XML 站点地图，支持自定义优先级和频率",
+      "about": "使用可视化编辑器创建 XML 站点地图。为每个 URL 设置自定义优先级、更改频率和最后修改日期。支持批量导入。",
+      "features": "可视化 URL 编辑器、优先级/频率设置、批量导入、XML 输出、复制和下载。"
+    },
+    "og-preview": {
+      "name": "Open Graph 预览",
+      "description": "预览链接在 Facebook、Twitter、LinkedIn 和 Slack 上的显示效果",
+      "about": "预览社交媒体链接卡片并生成 Open Graph 和 Twitter Card meta 标签，提供字符数指导。",
+      "features": "Facebook/Twitter/Slack 预览、OG 标签生成、字符计数、一键复制。"
+    },
+    "htaccess-generator": {
+      "name": "htaccess 生成器",
+      "description": "生成 Apache .htaccess 规则，用于重定向、安全头和缓存",
+      "about": "生成 .htaccess 配置，可切换 HTTPS、www、gzip、缓存、安全头和自定义重定向等选项。",
+      "features": "HTTPS/www 重定向、gzip 压缩、浏览器缓存、安全头、自定义重定向、错误页面。"
     }
   }
 }

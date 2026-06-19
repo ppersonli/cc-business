@@ -1,4 +1,4 @@
-# DevTools Hub (tools.pixiaoli.cn) — 产品需求文档
+# DevTools Hub (tools.ovanime.com) — 产品需求文档
 
 > **版本**: v2.0  
 > **日期**: 2026-06-10  
@@ -12,7 +12,7 @@
 | 维度 | 定义 |
 |------|------|
 | **产品名** | DevTools Hub |
-| **域名** | tools.pixiaoli.cn |
+| **域名** | tools.ovanime.com |
 | **一句话** | 45+ 免费在线开发者工具 — 格式化、转换、生成、测试 |
 | **目标用户** | 开发者、设计师、数据分析师、内容创作者 |
 | **核心价值** | 100% 客户端运行（无服务器传输）、免费、多语言、无广告 |
@@ -24,7 +24,7 @@
 |------|------|------|
 | SEO 搜索 | 60% | "json formatter online"、"regex tester" 等长尾词 |
 | 直接访问 | 20% | 收藏夹、书签 |
-| 外部链接 | 15% | pixiaoli.cn 导流、社交媒体 |
+| 外部链接 | 15% | ovanime.com 导流、社交媒体 |
 | 广告 | 5% | 可选 Google Ads |
 
 ---
@@ -171,7 +171,7 @@
 
 ### 共用支付架构
 ```
-用户在 tools.pixiaoli.cn 注册/登录
+用户在 tools.ovanime.com 注册/登录
         ↓
 Google OAuth → auth_token cookie
         ↓
@@ -274,4 +274,4 @@ Waffo Pancake 处理支付
 
 ---
 
-*文档结束。基于 tools.pixiaoli.cn 45 个工具的实际运营数据。*
+*文档结束。基于 tools.ovanime.com 45 个工具的实际运营数据。*

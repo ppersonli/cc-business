@@ -1,7 +1,7 @@
 {
   "common": {
     "appName": "DevTools Hub",
-    "tagline": "31+ ferramentas gratuitas para desenvolvedores, no lado do cliente",
+    "tagline": "55+ ferramentas gratuitas para desenvolvedores, no lado do cliente",
     "subtitle": "Ferramentas de desenvolvimento gratuitas online. 100% no lado do cliente, sem envio de dados para servidores.",
     "tools": "Ferramentas",
     "github": "GitHub",
@@ -71,10 +71,10 @@
   },
   "home": {
     "subtitle": "Ferramentas de desenvolvimento gratuitas online. 100% no lado do cliente, sem envio de dados para servidores.",
-    "tryPixiaoli": "Experimente também pixiaoli.cn — Plataforma de criação de mangá e webtoon com IA",
-    "pixiaoliName": "pixiaoli.cn",
-    "pixiaoliDesc": "Plataforma de criação de mangá e webtoon com IA para criadores e entusiastas ACGN. Crie, compartilhe e explore conteúdo original.",
-    "pixiaoliTags": [
+    "tryovanime": "Experimente também ovanime.com — Plataforma de criação de mangá e webtoon com IA",
+    "ovanimeName": "ovanime.com",
+    "ovanimeDesc": "Plataforma de criação de mangá e webtoon com IA para criadores e entusiastas ACGN. Crie, compartilhe e explore conteúdo original.",
+    "ovanimeTags": [
       "Mangá IA",
       "Webtoon",
       "ACGN",
@@ -357,6 +357,72 @@
     "socialforge": {
       "name": "SocialForge",
       "description": "Ferramenta de código aberto para gerenciamento de redes sociais para agendamento, publicação e análises"
+    },
+    "page-audit": {
+      "name": "PageAudit",
+      "description": "AI-powered landing page CRO analyzer with screenshot analysis and actionable optimization suggestions",
+      "about": "Analyze your landing page with AI. Get screenshots, scores across 5 CRO dimensions, and prioritized optimization suggestions.",
+      "features": "AI screenshot analysis, 5-dimension CRO scoring, visual desktop/mobile comparison, PDF report export, actionable suggestions."
+    },
+    "color-contrast": {
+      "name": "Color Contrast Checker",
+      "description": "Check WCAG color contrast ratios for web accessibility compliance",
+      "about": "Verify color contrast ratios against WCAG accessibility standards. Preview text on any background color and ensure your designs are readable for everyone.",
+      "features": "WCAG AA/AAA compliance checking, real-time contrast ratio calculation, color preview, CSS output."
+    },
+    "meta-tag-generator": {
+      "name": "Meta Tag Generator",
+      "description": "Generate SEO meta tags including Open Graph and Twitter Card tags",
+      "about": "Generate complete HTML meta tags for SEO including basic tags, Open Graph for social sharing, and Twitter Card tags with live preview.",
+      "features": "Basic meta tags, Open Graph tags, Twitter Card tags, character count guidance, live preview, one-click copy."
+    },
+    "url-parser": {
+      "name": "URL Parser",
+      "description": "Parse and break down any URL into its individual components with visual anatomy",
+      "about": "Instantly parse any URL to see its protocol, hostname, port, path, query parameters, and fragment with color-coded visual breakdown.",
+      "features": "Visual URL anatomy, component extraction, query parameter parsing, reconstructed URLs, one-click copy."
+    },
+    "robots-txt": {
+      "name": "Robots.txt Generator",
+      "description": "Generate robots.txt files to control search engine crawler behavior with presets",
+      "about": "Create robots.txt files with a visual editor. Supports multiple user-agent rules, allow/disallow paths, crawl-delay, and sitemap directives.",
+      "features": "Preset templates, multiple user-agent rules, allow/disallow paths, crawl-delay, sitemap URL, copy and download."
+    },
+    "http-status-codes": {
+      "name": "HTTP Status Codes",
+      "description": "Quick reference for all HTTP status codes with descriptions and SEO notes",
+      "about": "Browse and search all HTTP status codes organized by category with SEO-relevant notes for redirects and error handling.",
+      "features": "Searchable reference, 1xx-5xx categories, SEO notes for 301/302/410, Cloudflare-specific codes."
+    },
+    "css-specificity": {
+      "name": "CSS Specificity Calculator",
+      "description": "Calculate and compare CSS selector specificity with visual breakdown",
+      "about": "Calculate CSS specificity for any selector, see the breakdown of inline/ID/class/element scores, and compare multiple selectors.",
+      "features": "Specificity calculation, visual breakdown, selector comparison, quick examples, specificity explanation."
+    },
+    "webmind": {
+      "name": "WebMind",
+      "description": "AI-powered web highlighting and knowledge management Chrome extension",
+      "about": "Highlight, annotate, and organize web content with WebMind Chrome extension. Export highlights as JSON/HTML, search and filter by page.",
+      "features": "Smart highlighting, notes, search, page grouping, export, 100% private."
+    },
+    "sitemap-generator": {
+      "name": "Sitemap XML Generator",
+      "description": "Generate XML sitemaps for search engines with custom priorities and frequencies",
+      "about": "Create XML sitemaps with a visual editor. Set custom priority, change frequency, and last modified date for each URL. Supports bulk import.",
+      "features": "Visual URL editor, priority/frequency settings, bulk import, XML output, copy and download."
+    },
+    "og-preview": {
+      "name": "Open Graph Preview",
+      "description": "Preview how your links appear on Facebook, Twitter, LinkedIn, and Slack",
+      "about": "Preview social media link cards and generate Open Graph and Twitter Card meta tags with character count guidance.",
+      "features": "Facebook/Twitter/Slack previews, OG tag generation, character count, one-click copy."
+    },
+    "htaccess-generator": {
+      "name": "htaccess Generator",
+      "description": "Generate Apache .htaccess rules for redirects, security headers, and caching",
+      "about": "Generate .htaccess configuration with toggleable options for HTTPS, www, gzip, caching, security headers, and custom redirects.",
+      "features": "HTTPS/www redirect, gzip compression, browser caching, security headers, custom redirects, error pages."
     }
   }
 }

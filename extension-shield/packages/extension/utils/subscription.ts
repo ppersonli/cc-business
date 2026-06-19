@@ -6,7 +6,7 @@ const STORAGE_KEYS = {
   USER_ID: 'es_userId',
 } as const;
 
-const BACKEND_URL = 'https://tools.pixiaoli.cn';
+const BACKEND_URL = 'https://tools.ovanime.com';
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
 export type PlanType = 'free' | 'shield-scan' | 'shield-pro-monthly';

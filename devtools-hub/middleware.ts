@@ -10,6 +10,6 @@ export const config = {
   // - static files
   // - sitemap
   matcher: [
-    '/((?!api|auth|sitemap\\.xml|favicon\\.svg|robots\\.txt|_next|.*\\..*).*)',
+    '/((?!api|auth|buildflow|webmind|sitemap\.xml|favicon\.svg|robots\.txt|_next|.*\..*).*)',
   ],
 };

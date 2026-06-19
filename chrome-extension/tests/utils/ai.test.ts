@@ -1013,7 +1013,7 @@ describe('utils/ai', () => {
       expect(result.summary).toBe('Hosted summary');
       expect(result.keyPoints).toEqual(['Point 1', 'Point 2']);
       expect(fetchSpy).toHaveBeenCalledWith(
-        expect.stringContaining('tools.pixiaoli.cn/api/summarize'),
+        expect.stringContaining('tools.ovanime.com/api/summarize'),
         expect.objectContaining({ method: 'POST' }),
       );
     });

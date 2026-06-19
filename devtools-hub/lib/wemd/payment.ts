@@ -76,7 +76,7 @@ export async function createWeMDCheckout(options: {
   const productId = WEMD_PRODUCT_IDS[options.plan];
   if (!productId) return null;
 
-  const FRONTEND_URL = process.env.FRONTEND_URL || 'https://tools.pixiaoli.cn';
+  const FRONTEND_URL = process.env.FRONTEND_URL || 'https://tools.ovanime.com';
 
   try {
     const session = await client.checkout.createSession({

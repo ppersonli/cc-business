@@ -17,5 +17,10 @@
     "build:ext": "npm run build --workspace=chrome-extension",
     "build:shield": "pnpm --filter extension-shield-scanner build && pnpm --filter extension-shield-extension build && pnpm --filter extension-shield-web build",
     "test:shield": "pnpm --filter extension-shield-scanner test && pnpm --filter extension-shield-extension test"
+  },
+  "devDependencies": {
+    "next": "^16.2.9",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
   }
 }

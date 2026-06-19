@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Privacy Policy — DevTools Hub',
   description: 'Privacy Policy for DevTools Hub developer tools.',
   alternates: {
-    canonical: 'https://tools.pixiaoli.cn/privacy/',
+    canonical: 'https://tools.ovanime.com/privacy/',
   },
 }
 
@@ -77,12 +77,12 @@ export default function PrivacyPage() {
         <h2 className="text-xl font-semibold text-white mt-8">9. User Rights</h2>
         <p>
           You have the right to access, correct, or delete your personal data. Contact us
-          at support@pixiaoli.cn to exercise these rights.
+          at support@ovanime.com to exercise these rights.
         </p>
 
         <h2 className="text-xl font-semibold text-white mt-8">10. Contact</h2>
         <p>
-          For privacy-related inquiries, contact us at support@pixiaoli.cn.
+          For privacy-related inquiries, contact us at support@ovanime.com.
         </p>
       </div>
     </main>

@@ -7,7 +7,7 @@ export default defineConfig({
     description: '__MSG_extDescription__',
     default_locale: 'en',
     permissions: ['storage', 'sidePanel', 'tabs', 'cookies', 'commands'],
-    host_permissions: ['https://tools.pixiaoli.cn/*', 'https://api.openai.com/*'],
+    host_permissions: ['https://tools.ovanime.com/*', 'https://api.openai.com/*'],
     icons: {
       '16': 'icon/icon-16.png',
       '32': 'icon/icon-32.png',

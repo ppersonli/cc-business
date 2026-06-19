@@ -4,7 +4,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useThemeStore } from '../../../lib/wemd/stores/themeStore'
+import { useThemeStore, exportThemeCSS, exportThemeJSON, importThemeJSON } from '../../../lib/wemd/stores/themeStore'
 import { useSettingsStore } from '../../../lib/wemd/stores/settingsStore'
 import { builtInThemes, isProTheme } from '../../../lib/wemd/themes'
 import type { Theme } from '../../../lib/wemd/types'
@@ -86,20 +86,70 @@ export default function ThemePanel({ isOpen, onClose, isPro = false, onShowUpgra
           <h2 style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: text }}>
             主题管理
           </h2>
-          <button
-            onClick={onClose}
-            style={{
-              padding: '4px 8px',
-              backgroundColor: 'transparent',
-              border: 'none',
-              color: textMuted,
-              fontSize: '20px',
-              cursor: 'pointer',
-              lineHeight: 1,
-            }}
-          >
-            &times;
-          </button>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <button
+              onClick={() => exportThemeCSS()}
+              title="导出当前主题 CSS"
+              style={{
+                padding: '4px 8px',
+                backgroundColor: 'transparent',
+                border: `1px solid ${border}`,
+                borderRadius: '4px',
+                color: textMuted,
+                fontSize: '11px',
+                cursor: 'pointer',
+              }}
+            >
+              导出 CSS
+            </button>
+            <button
+              onClick={() => exportThemeJSON()}
+              title="导出当前主题 JSON"
+              style={{
+                padding: '4px 8px',
+                backgroundColor: 'transparent',
+                border: `1px solid ${border}`,
+                borderRadius: '4px',
+                color: textMuted,
+                fontSize: '11px',
+                cursor: 'pointer',
+              }}
+            >
+              导出 JSON
+            </button>
+            <button
+              onClick={async () => {
+                const theme = await importThemeJSON()
+                if (theme) setCurrentThemeId(theme.id)
+              }}
+              title="导入主题 JSON 文件"
+              style={{
+                padding: '4px 8px',
+                backgroundColor: 'transparent',
+                border: `1px solid ${border}`,
+                borderRadius: '4px',
+                color: textMuted,
+                fontSize: '11px',
+                cursor: 'pointer',
+              }}
+            >
+              导入
+            </button>
+            <button
+              onClick={onClose}
+              style={{
+                padding: '4px 8px',
+                backgroundColor: 'transparent',
+                border: 'none',
+                color: textMuted,
+                fontSize: '20px',
+                cursor: 'pointer',
+                lineHeight: 1,
+              }}
+            >
+              &times;
+            </button>
+          </div>
         </div>
 
         {/* Tabs */}

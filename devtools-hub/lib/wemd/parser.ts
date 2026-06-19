@@ -13,6 +13,84 @@ import sup from 'markdown-it-sup'
 import katex from 'markdown-it-katex'
 import footnote from 'markdown-it-footnote'
 
+// Generate a slug from heading text for anchor links
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/<[^>]*>/g, '')
+    .replace(/[^\w\u4e00-\u9fff\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+    || 'heading'
+}
+
+// Custom [toc] plugin: collect headings and generate TOC
+function tocPlugin(md: MarkdownIt) {
+  // Collect headings during parsing
+  const headings: { level: number; text: string; slug: string }[] = []
+  const slugCounts: Record<string, number> = {}
+
+  function uniqueSlug(base: string): string {
+    if (slugCounts[base] === undefined) {
+      slugCounts[base] = 0
+      return base
+    }
+    slugCounts[base]++
+    return `${base}-${slugCounts[base]}`
+  }
+
+  // Add IDs to heading tokens
+  md.core.ruler.push('heading-anchors', (state) => {
+    headings.length = 0
+    Object.keys(slugCounts).forEach((k) => delete slugCounts[k])
+
+    for (let i = 0; i < state.tokens.length; i++) {
+      const token = state.tokens[i]
+      if (token.type === 'heading_open') {
+        const level = parseInt(token.tag.slice(1), 10)
+        // Get heading text from next inline token
+        const inlineToken = state.tokens[i + 1]
+        const text = inlineToken ? inlineToken.content : ''
+        const slug = uniqueSlug(slugify(text))
+        headings.push({ level, text, slug })
+        token.attrSet('id', slug)
+      }
+    }
+  })
+
+  // Replace [toc] blocks with TOC HTML
+  md.core.ruler.push('toc-replace', (state) => {
+    for (let i = 0; i < state.tokens.length; i++) {
+      const token = state.tokens[i]
+      if (token.type === 'inline' && /^\s*\[toc\]\s*$/i.test(token.content)) {
+        // Build TOC HTML from h2/h3 headings
+        const tocItems = headings.filter((h) => h.level === 2 || h.level === 3)
+        if (tocItems.length === 0) {
+          // Replace with empty
+          state.tokens[i].type = 'html_inline'
+          state.tokens[i].content = '<div class="wemd-toc" style="padding:12px;color:#999;font-size:14px;">📑 暂无目录（需要 h2/h3 标题）</div>'
+          continue
+        }
+
+        let html = '<nav class="wemd-toc" style="margin:16px 0;padding:16px 20px;background:#f8f9fa;border:1px solid #e2e8f0;border-radius:8px;">'
+        html += '<div style="font-weight:600;font-size:15px;margin-bottom:10px;color:#333;">📑 目录</div>'
+        html += '<ul style="list-style:none;padding:0;margin:0;">'
+        for (const h of tocItems) {
+          const indent = h.level === 3 ? 'padding-left:20px;' : ''
+          const fontSize = h.level === 3 ? 'font-size:13px;' : 'font-size:14px;'
+          const fontWeight = h.level === 2 ? 'font-weight:500;' : ''
+          html += `<li style="margin:4px 0;${indent}"><a href="#${h.slug}" style="color:#0366d6;text-decoration:none;${fontSize}${fontWeight}">${md.utils.escapeHtml(h.text)}</a></li>`
+        }
+        html += '</ul></nav>'
+
+        state.tokens[i].type = 'html_inline'
+        state.tokens[i].content = html
+      }
+    }
+  })
+}
+
 export function createParser(): MarkdownIt {
   const md: MarkdownIt = new MarkdownIt({
     html: true,
@@ -52,6 +130,69 @@ export function createParser(): MarkdownIt {
 
   // Footnotes
   md.use(footnote)
+
+  // Table of Contents [toc]
+  md.use(tocPlugin)
+
+  // Sliding image groups: wrap consecutive image paragraphs in horizontal scroll container
+  md.core.ruler.push('image-flow', (state) => {
+    const tokens = state.tokens
+    let i = 0
+    while (i < tokens.length) {
+      // Check if this is a paragraph containing only images
+      if (tokens[i].type === 'paragraph_open' && i + 2 < tokens.length) {
+        const inline = tokens[i + 1]
+        const close = tokens[i + 2]
+        if (inline.type === 'inline' && close.type === 'paragraph_close') {
+          const childTokens = inline.children || []
+          const isImageOnly = childTokens.length > 0 &&
+            childTokens.every((c: { type: string; content?: string }) => c.type === 'image' || c.type === 'text' && !c.content?.trim())
+          if (isImageOnly && childTokens.some((c: { type: string }) => c.type === 'image')) {
+            // Check if next paragraph is also image-only
+            let j = i + 3
+            let imageCount = 1
+            while (j + 2 < tokens.length) {
+              const nextInline = tokens[j + 1]
+              const nextClose = tokens[j + 2]
+              if (tokens[j].type === 'paragraph_open' && nextInline?.type === 'inline' && nextClose?.type === 'paragraph_close') {
+                const nextChildren = nextInline.children || []
+                const nextIsImage = nextChildren.length > 0 &&
+                  nextChildren.every((c: { type: string; content?: string }) => c.type === 'image' || c.type === 'text' && !c.content?.trim()) &&
+                  nextChildren.some((c: { type: string }) => c.type === 'image')
+                if (nextIsImage) {
+                  imageCount++
+                  j += 3
+                } else break
+              } else break
+            }
+            // If 2+ consecutive image paragraphs, wrap in image-flow container
+            if (imageCount >= 2) {
+              const openToken = new state.Token('html_block', '', 0)
+              openToken.content = '<div class="wemd-image-flow" style="display:flex;overflow-x:auto;gap:8px;padding:8px 0;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;">'
+              const closeToken2 = new state.Token('html_block', '', 0)
+              closeToken2.content = '</div>'
+              // Wrap: insert open before first, close after last
+              tokens.splice(i, 0, openToken)
+              tokens.splice(i + 1 + imageCount * 3, 0, closeToken2)
+              // Add snap-align + max-width to each image paragraph's inline tokens
+              for (let k = 0; k < imageCount; k++) {
+                const idx = i + 2 + k * 3 // inline token index
+                const children = tokens[idx].children || []
+                for (const child of children) {
+                  if (child.type === 'image') {
+                    child.attrSet('style', 'max-width:80%;min-width:200px;height:auto;border-radius:6px;scroll-snap-align:start;flex-shrink:0;object-fit:cover;')
+                  }
+                }
+              }
+              i = i + 2 + imageCount * 3 + 1
+              continue
+            }
+          }
+        }
+      }
+      i++
+    }
+  })
 
   // Alert/callout containers
   const alertTypes = [

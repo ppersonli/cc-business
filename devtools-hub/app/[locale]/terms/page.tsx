@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Terms of Service — DevTools Hub',
   description: 'Terms of Service for DevTools Hub developer tools.',
   alternates: {
-    canonical: 'https://tools.pixiaoli.cn/terms/',
+    canonical: 'https://tools.ovanime.com/terms/',
   },
 }
 
@@ -67,7 +67,7 @@ export default function TermsPage() {
 
         <h2 className="text-xl font-semibold text-white mt-8">9. Contact</h2>
         <p>
-          For questions about these terms, contact us at support@pixiaoli.cn.
+          For questions about these terms, contact us at support@ovanime.com.
         </p>
       </div>
     </main>

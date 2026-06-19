@@ -9,7 +9,7 @@ export interface SubscriptionState {
   userId: string;
 }
 
-const SITE_DOMAIN = 'tools.pixiaoli.cn';
+const SITE_DOMAIN = 'tools.ovanime.com';
 const AUTH_COOKIE_NAME = 'auth_token';
 
 function isProPlan(plan: string): boolean {
@@ -33,7 +33,7 @@ function decodeJwtPayload(token: string): Record<string, unknown> | null {
 }
 
 /**
- * Read the auth_token cookie from tools.pixiaoli.cn.
+ * Read the auth_token cookie from tools.ovanime.com.
  * Returns the decoded payload with userId and email, or null if not logged in.
  */
 export async function getAuthCookie(): Promise<{ userId: string; email: string } | null> {

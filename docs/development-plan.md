@@ -9,7 +9,7 @@
 
 ## 一、当前状态
 
-### 工具站 (tools.pixiaoli.cn) ✅
+### 工具站 (tools.ovanime.com) ✅
 - **工具数量**: 46个（含CSS Grid Generator、Lorem Ipsum Generator、Markdown Table Generator）
 - **语言**: 7种 (en/zh/de/pt/es/ja/ko)
 - **技术栈**: Next.js 15 + Tailwind CSS (静态导出)

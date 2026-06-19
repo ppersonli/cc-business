@@ -368,7 +368,7 @@ export function parseJsonResponse(text: string): SummaryResponse {
   }
 }
 
-const HOSTED_API_BASE = 'https://tools.pixiaoli.cn/api';
+const HOSTED_API_BASE = 'https://tools.ovanime.com/api';
 
 export async function summarizeViaHosted(text: string, url: string): Promise<SummaryResponse> {
   const userIdData = await browser.storage.local.get('userId');

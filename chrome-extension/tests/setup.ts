@@ -73,7 +73,7 @@ const mockCookies = {
   async get(details: { url: string; name: string }) {
     const value = mockCookies.data[details.name];
     if (value !== undefined) {
-      return { name: details.name, value, domain: '.pixiaoli.cn', path: '/' };
+      return { name: details.name, value, domain: '.ovanime.com', path: '/' };
     }
     return null;
   },

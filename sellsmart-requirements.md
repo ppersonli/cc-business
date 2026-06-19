@@ -37,14 +37,14 @@
 | E2E | **Playwright** (原生 launch) | 插件加载测试，不用 CDP |
 | 样式 | **Tailwind CSS** | 快速 UI 开发 |
 | 存储 | **chrome.storage.local** | 本地数据持久化 |
-| 认证 | **Cookie 读取** | 共用 tools.pixiaoli.cn 登录态 |
+| 认证 | **Cookie 读取** | 共用 tools.ovanime.com 登录态 |
 
 ### 权限（最小化）
 | 权限 | 用途 |
 |------|------|
 | `storage` | 保存设置、研究历史、缓存 |
 | `activeTab` | 访问当前标签页（用户点击时） |
-| `cookies` | 读取 tools.pixiaoli.cn 登录态 |
+| `cookies` | 读取 tools.ovanime.com 登录态 |
 
 **不用的权限**: `scripting`, `contextMenus`, `notifications`, `tabs`, `<all_urls>`
 
@@ -152,7 +152,7 @@
 │  [Compare All Platforms]    │  ← 对比按钮
 │                             │
 ├─────────────────────────────┤
-│  🔗 tools.pixiaoli.cn     │  ← 底部链接
+│  🔗 tools.ovanime.com     │  ← 底部链接
 └─────────────────────────────┘
 ```
 
@@ -217,8 +217,8 @@ interface Settings {
 | `cookies` | `chrome.cookies.get` 在 subscription.ts |
 
 ### 必需材料
-- [ ] 隐私政策页面（tools.pixiaoli.cn/privacy）
-- [ ] 服务条款页面（tools.pixiaoli.cn/terms）
+- [ ] 隐私政策页面（tools.ovanime.com/privacy）
+- [ ] 服务条款页面（tools.ovanime.com/terms）
 - [ ] 截图 1280×800（至少1张）
 - [ ] 宣传图 440×280 + 1400×560
 - [ ] 描述（英文）
@@ -262,7 +262,7 @@ interface Settings {
 ### Phase 4: 发布（1周）
 - [ ] Chrome Web Store 提交
 - [ ] 宣传图制作
-- [ ] Landing Page（tools.pixiaoli.cn/sellsmart）
+- [ ] Landing Page（tools.ovanime.com/sellsmart）
 - [ ] Product Hunt 发布
 
 ---
@@ -287,9 +287,9 @@ interface Settings {
 - API 访问
 - 自定义费率
 
-### 认证流程（共用 tools.pixiaoli.cn）
+### 认证流程（共用 tools.ovanime.com）
 ```
-用户在 tools.pixiaoli.cn 注册/登录
+用户在 tools.ovanime.com 注册/登录
         ↓
 设置 auth_token cookie
         ↓

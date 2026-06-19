@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { getClient } from '@/lib/db';
 import { routing } from '@/i18n/routing';
 
-const BASE_URL = 'https://scheduler.pixiaoli.cn';
+const BASE_URL = 'https://scheduler.ovanime.com';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [];

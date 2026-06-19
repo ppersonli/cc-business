@@ -180,7 +180,7 @@ async function handleUpgrade() {
       </section>
     </main>
     <div style="text-align:center; padding:16px; font-size:12px; color:#9ca3af;">
-      <a href="https://pixiaoli.cn" target="_blank" rel="noopener noreferrer" style="color:#9ca3af; text-decoration:none;">pixiaoli.cn — Create manga with AI</a>
+      <a href="https://ovanime.com" target="_blank" rel="noopener noreferrer" style="color:#9ca3af; text-decoration:none;">ovanime.com — Create manga with AI</a>
     </div>
   </div>
 </template>

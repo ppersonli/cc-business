@@ -158,7 +158,7 @@ export default function Home() {
             flexShrink: 0,
             overflow: 'hidden',
           }}>
-            <img src="/ovanime-icon.jpg" alt="ovanime.com" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 'var(--radius-sm)' }} />
+            <img src="/ovanime-icon.png" alt="ovanime.com" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 'var(--radius-sm)' }} />
           </div>
           <div>
             <div style={{ fontWeight: 700, fontSize: 20, color: 'var(--text-primary)' }}>
@@ -198,7 +198,7 @@ export default function Home() {
       </a>
 
       {/* Featured: SocialForge */}
-      <a
+      {/* <a
         href="https://github.com/socialforge/socialforge"
         target="_blank"
         rel="noopener noreferrer"
@@ -273,7 +273,7 @@ export default function Home() {
             </span>
           ))}
         </div>
-      </a>
+      </a> */}
 
       {categories.map(cat => (
         <section key={cat} style={{ marginBottom: 40 }}>
